@@ -1,0 +1,53 @@
+{
+    "name": "barryvanveen/php-cca",
+    "type": "library",
+    "description": "Create two-dimensional Cyclic Cellular Automaton with PHP",
+    "keywords": [
+        "barryvanveen",
+        "php-cca",
+        "cyclic",
+        "cellular",
+        "automaton",
+        "automata"
+    ],
+    "homepage": "https://github.com/barryvanveen/php-cca",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Barry van Veen",
+            "email": "barryvanveen@gmail.com",
+            "homepage": "https://barryvanveen.nl",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : "~7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "~6.0",
+        "squizlabs/php_codesniffer": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Barryvanveen\\PhpCca\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Barryvanveen\\PhpCca\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
