@@ -21,7 +21,8 @@
         }
     ],
     "require": {
-        "php" : "~7.0"
+        "php": "~7.0",
+        "symfony/console": "3.3"
     },
     "require-dev": {
         "phpunit/phpunit" : "~6.0",
@@ -29,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Barryvanveen\\PhpCca\\": "src"
+            "Barryvanveen\\CCA\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Barryvanveen\\PhpCca\\Tests\\": "tests"
+            "Barryvanveen\\CCA\\Tests\\": "tests"
         }
     },
     "scripts": {
