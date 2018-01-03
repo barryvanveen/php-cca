@@ -22,7 +22,7 @@ class Cell
 
     protected function getRandomState(): int
     {
-        return rand(0, $this->config->states - 1);
+        return rand(0, $this->config->states() - 1);
     }
 
     public function getState(): int
@@ -50,12 +50,12 @@ class Cell
 
     protected function getSuccessorState(): int
     {
-        return ($this->state + 1) % $this->config->states;
+        return ($this->state + 1) % $this->config->states();
     }
 
     protected function willCycle(int $count): bool
     {
-        return $count >= $this->config->threshold;
+        return $count >= $this->config->threshold();
     }
 
     public function setNextState()

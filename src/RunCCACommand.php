@@ -2,6 +2,8 @@
 
 namespace Barryvanveen\CCA;
 
+use Barryvanveen\CCA\Generators\Gif;
+use GifCreator\AnimGif;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -17,26 +19,65 @@ class RunCCACommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $cca = new CCA();
+        $starttime = microtime(true);
+
+        $config = new Config();
+
+        // Rule = 313
+        $config->states(3);
+        $config->threshold(3);
+        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodSize(1);
+
+        // Rule = GH
+        /*$config->states(8);
+        $config->threshold(5);
+        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodSize(3);*/
+
+        // Rule = LavaLamp
+        /*$config->states(3);
+        $config->threshold(10);
+        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodSize(2);*/
+
+        $cca = new CCA($config);
 
         $cca->init();
 
-        $cca->printCells();
+        $this->reportTime($output, "CCA initialized.", $starttime);
 
-        $cca->cycle();
+        do {
+            $states[] = $cca->getState();
 
-        $cca->printCells();
+            $generation = $cca->cycle();
+        } while($generation < 100);
 
-        $cca->cycle();
+        $this->reportTime($output, "Generated states.", $starttime);
 
-        $cca->printCells();
+        foreach($states as $state) {
+            $images[] = Gif::createFromState($state)->get();
+        }
 
-        $cca->cycle();
+        $this->reportTime($output, "Generated images.", $starttime);
 
-        $cca->printCells();
+        $animation = new AnimGif();
+        $animation->create($images);
+        $animation->save("output/test.gif");
 
-        $cca->cycle();
+        $this->reportTime($output, "Generated animated gif.", $starttime);
 
-        $cca->printCells();
+        return;
+    }
+
+    protected function reportTime(OutputInterface $output, string $message, float $starttime)
+    {
+        $formatter = $this->getHelper('formatter');
+
+        $endtime = microtime(true);
+
+        $duration = round($endtime - $starttime, 2);
+
+        $output->writeln("[$duration] $message");
     }
 }

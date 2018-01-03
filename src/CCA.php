@@ -11,11 +11,11 @@ class CCA
     protected $grid;
 
     /** @var int */
-    protected $generation;
+    protected $generation = 0;
 
-    public function __construct(array $config = [])
+    public function __construct(Config $config)
     {
-        $this->config = new Config($config);
+        $this->config = $config;
     }
 
     public function init()
@@ -23,7 +23,7 @@ class CCA
         $this->grid = new Grid($this->config);
     }
 
-    public function cycle($cycles = 1)
+    public function cycle(int $cycles = 1): int
     {
         while ($cycles > 0) {
             $this->grid->computeNextState();
@@ -34,6 +34,19 @@ class CCA
 
             $cycles--;
         }
+
+        return $this->generation;
+    }
+
+    public function getState()
+    {
+        $state = [
+            'config' => $this->config->toArray(),
+            'grid' => $this->grid->toArray(),
+            'generation' => $this->generation,
+        ];
+
+        return json_encode($state);
     }
 
     public function printCells()
