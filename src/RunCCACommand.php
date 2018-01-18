@@ -2,6 +2,7 @@
 
 namespace Barryvanveen\CCA;
 
+use Barryvanveen\CCA\Config\NeighborhoodOptions;
 use Barryvanveen\CCA\Generators\Gif;
 use GifCreator\AnimGif;
 use Symfony\Component\Console\Command\Command;
@@ -29,46 +30,46 @@ class RunCCACommand extends Command
         //$config->seed(1);
 
         // Rule = 313
-        /*$config->states(3);
+        $config->states(3);
         $config->threshold(3);
-        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(1);*/
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodSize(1);
 
         // Rule = GH
         /*$config->states(8);
         $config->threshold(5);
-        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(3);*/
 
         // Rule = LavaLamp
         /*$config->states(3);
         $config->threshold(10);
-        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(2);*/
 
         // Rule = Amoeba
         /*$config->states(2);
         $config->threshold(10);
-        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(3);*/
 
         /*// Rule = CCA
         $config->states(14);
         $config->threshold(1);
-        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(1);*/
 
         /*// Rule = Cubism
         $config->states(3);
         $config->threshold(5);
-        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(2);*/
 
-        // Rule = Cyclic spirals
+        /*// Rule = Cyclic spirals
         $config->states(8);
         $config->threshold(5);
-        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(3);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodSize(3);*/
 
         $cca = new CCA($config);
 
@@ -114,17 +115,29 @@ class RunCCACommand extends Command
 
         $this->reportTime($output, "Generated animated gif.", $starttime);
 
+        $this->reportConfig($output, $config);
+
         return;
     }
 
     protected function reportTime(OutputInterface $output, string $message, float $starttime)
     {
-        $formatter = $this->getHelper('formatter');
-
         $endtime = microtime(true);
 
         $duration = round($endtime - $starttime, 2);
 
         $output->writeln("[$duration] $message");
+    }
+
+    protected function reportConfig(OutputInterface $output, Config $config)
+    {
+        $output->writeln("Generated with config:");
+        $output->writeln(sprintf(" > %s: %s", "seed", $config->seed()));
+        $output->writeln(sprintf(" > %s: %s", "rows", $config->rows()));
+        $output->writeln(sprintf(" > %s: %s", "columns", $config->columns()));
+        $output->writeln(sprintf(" > %s: %s", "states", $config->states()));
+        $output->writeln(sprintf(" > %s: %s", "threshold", $config->threshold()));
+        $output->writeln(sprintf(" > %s: %s", "neighborhood type", $config->neighborhoodType()));
+        $output->writeln(sprintf(" > %s: %s", "neighborhood size", $config->neighborhoodSize()));
     }
 }

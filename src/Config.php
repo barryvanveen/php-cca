@@ -2,45 +2,26 @@
 
 namespace Barryvanveen\CCA;
 
+use Barryvanveen\CCA\Config\NeighborhoodOptions;
+use Barryvanveen\CCA\Config\Options;
 use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
 
 class Config
 {
-    const CCA_SEED = 'seed';
-    const CCA_ROWS = 'rows';
-    const CCA_COLUMNS = 'columns';
-    const CCA_STATES = 'states';
-    const CCA_THRESHOLD = 'threshold';
-    const CCA_NEIGHBORHOOD_TYPE = 'neighborhood_type';
-    const CCA_NEIGHBORHOOD_SIZE = 'neighborhood_size';
-
-    // todo: extra neighborhood constants to separate file
-    const NEIGHBORHOOD_TYPES = [
-        self::NEIGHBORHOOD_TYPE_MOORE,
-        self::NEIGHBORHOOD_TYPE_NEUMANN,
-    ];
-
-    const NEIGHBORHOOD_TYPE_MOORE = 'moore';
-    const NEIGHBORHOOD_TYPE_NEUMANN = 'neumann';
-    
-    const GIF_CELLSIZE = 'cellsize';
-
-    /** @var array */
     protected $config = [
-        self::CCA_SEED => null,
-        self::CCA_ROWS => 48,
-        self::CCA_COLUMNS => 48,
-        self::CCA_STATES => 3,
-        self::CCA_THRESHOLD => 3,
-        self::CCA_NEIGHBORHOOD_TYPE => self::NEIGHBORHOOD_TYPE_MOORE,
-        self::CCA_NEIGHBORHOOD_SIZE => 1,
-
-        self::GIF_CELLSIZE => 2,
+        Options::CELLSIZE          => 2,
+        Options::COLUMNS           => 48,
+        Options::NEIGHBORHOOD_TYPE => NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE,
+        Options::NEIGHBORHOOD_SIZE => 1,
+        Options::ROWS              => 48,
+        Options::SEED              => null,
+        Options::STATES            => 3,
+        Options::THRESHOLD         => 3,
     ];
 
     public function __construct()
     {
-        $this->config[self::CCA_SEED] = $this->makeSeed();
+        $this->config[Options::SEED] = $this->makeSeed();
     }
 
     /**
@@ -53,10 +34,10 @@ class Config
     public function rows($rows = null): int
     {
         if (isset($rows)) {
-            $this->config[self::CCA_ROWS] = (int) $rows;
+            $this->config[Options::ROWS] = (int) $rows;
         }
 
-        return $this->config[self::CCA_ROWS];
+        return $this->config[Options::ROWS];
     }
 
     /**
@@ -69,10 +50,10 @@ class Config
     public function columns($columns = null): int
     {
         if (isset($columns)) {
-            $this->config[self::CCA_COLUMNS] = (int) $columns;
+            $this->config[Options::COLUMNS] = (int) $columns;
         }
 
-        return $this->config[self::CCA_COLUMNS];
+        return $this->config[Options::COLUMNS];
     }
 
     /**
@@ -85,10 +66,10 @@ class Config
     public function states($states = null): int
     {
         if (isset($states)) {
-            $this->config[self::CCA_STATES] = (int) $states;
+            $this->config[Options::STATES] = (int) $states;
         }
 
-        return $this->config[self::CCA_STATES];
+        return $this->config[Options::STATES];
     }
 
     /**
@@ -102,17 +83,17 @@ class Config
     public function threshold($threshold = null): int
     {
         if (isset($threshold)) {
-            $this->config[self::CCA_THRESHOLD] = (int) $threshold;
+            $this->config[Options::THRESHOLD] = (int) $threshold;
         }
 
-        return $this->config[self::CCA_THRESHOLD];
+        return $this->config[Options::THRESHOLD];
     }
 
     /**
      * Set the neighborhood function, eg Moore or Neumann
      *
-     * @see Config::NEIGHBORHOOD_TYPE_MOORE
-     * @see Config::NEIGHBORHOOD_TYPE_NEUMANN
+     * @see NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE
+     * @see NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN
      *
      * @param string $neighborhoodType
      *
@@ -123,14 +104,14 @@ class Config
     public function neighborhoodType($neighborhoodType = null): string
     {
         if (isset($neighborhoodType)) {
-            if (!in_array($neighborhoodType, self::NEIGHBORHOOD_TYPES)) {
+            if (!in_array($neighborhoodType, NeighborhoodOptions::NEIGHBORHOOD_TYPES)) {
                 throw new InvalidNeighborhoodTypeException();
             }
 
-            $this->config[self::CCA_NEIGHBORHOOD_TYPE] = (string) $neighborhoodType;
+            $this->config[Options::NEIGHBORHOOD_TYPE] = (string) $neighborhoodType;
         }
 
-        return $this->config[self::CCA_NEIGHBORHOOD_TYPE];
+        return $this->config[Options::NEIGHBORHOOD_TYPE];
     }
 
     /**
@@ -143,10 +124,10 @@ class Config
     public function neighborhoodSize($neighborhoodSize = null): string
     {
         if (isset($neighborhoodSize)) {
-            $this->config[self::CCA_NEIGHBORHOOD_SIZE] = (int) $neighborhoodSize;
+            $this->config[Options::NEIGHBORHOOD_SIZE] = (int) $neighborhoodSize;
         }
 
-        return $this->config[self::CCA_NEIGHBORHOOD_SIZE];
+        return $this->config[Options::NEIGHBORHOOD_SIZE];
     }
 
     /**
@@ -159,10 +140,26 @@ class Config
     public function seed($seed = null): int
     {
         if (isset($seed)) {
-            $this->config[self::CCA_SEED] = (int) $seed;
+            $this->config[Options::SEED] = (int) $seed;
         }
 
-        return $this->config[self::CCA_SEED];
+        return $this->config[Options::SEED];
+    }
+
+    /**
+     * Set the size of each cell in the image that is created.
+     *
+     * @param int $cellsize
+     *
+     * @return int
+     */
+    public function cellsize($cellsize = null): int
+    {
+        if (isset($cellsize)) {
+            $this->config[Options::CELLSIZE] = (int) $cellsize;
+        }
+
+        return $this->config[Options::CELLSIZE];
     }
 
     public function toArray(): array

@@ -41,11 +41,7 @@ class Cell
             }
         }
 
-        if ($this->willCycle($count)) {
-            $this->nextState = $successorState;
-        } else {
-            $this->nextState = $this->state;
-        }
+        $this->nextState = $this->willCycle($count) ? $successorState : $this->state;
     }
 
     protected function getSuccessorState(): int
