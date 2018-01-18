@@ -2,7 +2,7 @@
 
 namespace Barryvanveen\CCA;
 
-use Barryvanveen\CCA\Exceptions;
+use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
 
 class Grid
 {
@@ -35,11 +35,20 @@ class Grid
         switch ($this->config->neighborhoodType()) {
             case Config::NEIGHBORHOOD_TYPE_MOORE:
                 return $this->getMooreNeighbors($coordinate);
+            case Config::NEIGHBORHOOD_TYPE_NEUMANN:
+                return $this->getNeumannNeighbors($coordinate);
         }
 
         throw new InvalidNeighborhoodTypeException();
     }
 
+    /**
+     * Retrieve an array of Moore neighborhood neighbors for the given coordinate.
+     *
+     * @param \Barryvanveen\CCA\Coordinate $coordinate
+     *
+     * @return Coordinate[]
+     */
     protected function getMooreNeighbors(Coordinate $coordinate): array
     {
         $neigbors = [];
@@ -49,6 +58,40 @@ class Grid
         for ($rowOffset = -1 * $size; $rowOffset <= $size; $rowOffset++) {
             for ($columnOffset = -1 * $size; $columnOffset <= $size; $columnOffset++) {
                 if ($rowOffset === 0 && $columnOffset === 0) {
+                    continue;
+                }
+
+                $neigbors[] = new Coordinate(
+                    $this->wrapRow($coordinate->row(), $rowOffset),
+                    $this->wrapColumn($coordinate->column(), $columnOffset),
+                    $this->config->columns()
+                );
+            }
+        }
+
+        return $neigbors;
+    }
+
+    /**
+     * Retrieve an array of Neumann neighborhood neighbors for the given coordinate.
+     *
+     * @param \Barryvanveen\CCA\Coordinate $coordinate
+     *
+     * @return Coordinate[]
+     */
+    protected function getNeumannNeighbors(Coordinate $coordinate): array
+    {
+        $neigbors = [];
+
+        $size = abs($this->config->neighborhoodSize());
+
+        for ($rowOffset = -1 * $size; $rowOffset <= $size; $rowOffset++) {
+            for ($columnOffset = -1 * $size; $columnOffset <= $size; $columnOffset++) {
+                if ($rowOffset === 0 && $columnOffset === 0) {
+                    continue;
+                }
+
+                if ((abs($rowOffset) + abs($columnOffset)) > $this->config->neighborhoodSize()) {
                     continue;
                 }
 

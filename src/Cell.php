@@ -22,7 +22,7 @@ class Cell
 
     protected function getRandomState(): int
     {
-        return rand(0, $this->config->states() - 1);
+        return mt_rand(0, $this->config->states() - 1);
     }
 
     public function getState(): int

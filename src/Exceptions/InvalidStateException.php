@@ -1,6 +1,6 @@
 <?php
 
-namespace Barryvanveen\App\Exceptions;
+namespace Barryvanveen\CCA\Exceptions;
 
 use Exception;
 

@@ -10,6 +10,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class RunCCACommand extends Command
 {
+    protected $states = [];
+
+    protected $hashes = [];
+
     protected function configure()
     {
         $this->setName('cca:run')
@@ -22,12 +26,13 @@ class RunCCACommand extends Command
         $starttime = microtime(true);
 
         $config = new Config();
+        //$config->seed(1);
 
         // Rule = 313
-        $config->states(3);
+        /*$config->states(3);
         $config->threshold(3);
         $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(1);
+        $config->neighborhoodSize(1);*/
 
         // Rule = GH
         /*$config->states(8);
@@ -41,6 +46,30 @@ class RunCCACommand extends Command
         $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(2);*/
 
+        // Rule = Amoeba
+        /*$config->states(2);
+        $config->threshold(10);
+        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodSize(3);*/
+
+        /*// Rule = CCA
+        $config->states(14);
+        $config->threshold(1);
+        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodSize(1);*/
+
+        /*// Rule = Cubism
+        $config->states(3);
+        $config->threshold(5);
+        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodSize(2);*/
+
+        // Rule = Cyclic spirals
+        $config->states(8);
+        $config->threshold(5);
+        $config->neighborhoodType(Config::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodSize(3);
+
         $cca = new CCA($config);
 
         $cca->init();
@@ -48,14 +77,32 @@ class RunCCACommand extends Command
         $this->reportTime($output, "CCA initialized.", $starttime);
 
         do {
-            $states[] = $cca->getState();
+            $state = $cca->getState();
+            $hash = hash('crc32', $state);
+
+            $cycleEnd = false;
+            if ($cycleStart = array_search($hash, $this->hashes)) {
+                $cycleEnd = count($this->states)+1;
+            }
+
+            $this->states[] = $state;
+            $this->hashes[] = $hash;
+
+            if ($cycleEnd !== false) {
+                $this->states = array_slice($this->states, $cycleStart, $cycleEnd);
+                $this->hashes = array_slice($this->hashes, $cycleStart, $cycleEnd);
+
+                $output->writeln(sprintf("Cycle detected between frame %d and %d", $cycleStart, $cycleEnd));
+
+                break;
+            }
 
             $generation = $cca->cycle();
-        } while($generation < 100);
+        } while ($generation < 10000);
 
         $this->reportTime($output, "Generated states.", $starttime);
 
-        foreach($states as $state) {
+        foreach ($this->states as $state) {
             $images[] = Gif::createFromState($state)->get();
         }
 

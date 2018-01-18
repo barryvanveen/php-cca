@@ -2,7 +2,8 @@
 
 namespace Barryvanveen\CCA\Generators;
 
-use Barryvanveen\Exceptions\InvalidStateException;
+use Barryvanveen\CCA\Exceptions\InvalidStateException;
+use Exception;
 
 class Gif
 {
@@ -12,9 +13,6 @@ class Gif
 
     /** @var array */
     protected $grid;
-
-    /** @var int */
-    protected $generation;
 
     /** @var mixed */
     protected $image;
@@ -30,8 +28,6 @@ class Gif
             $this->config = $state['config'];
 
             $this->grid = $state['grid'];
-
-            $this->generation = $state['generation'];
         } catch (Exception $e) {
             throw new InvalidStateException();
         }
@@ -79,6 +75,8 @@ class Gif
         $this->colors[9] = imagecolorallocate($this->image, 211, 102, 71);
         $this->colors[10] = imagecolorallocate($this->image, 245, 145, 115);
         $this->colors[11] = imagecolorallocate($this->image, 143, 42, 13);
+        $this->colors[12] = imagecolorallocate($this->image, 16, 18, 111);
+        $this->colors[13] = imagecolorallocate($this->image, 143, 3, 249);
     }
 
     protected function createImageOfCCA()

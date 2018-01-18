@@ -1,10 +1,10 @@
 <?php
 
-namespace Barryvanveen\App\Exceptions;
+namespace Barryvanveen\CCA\Exceptions;
 
 use Exception;
 
-class InvalidNeighborhoodException extends Exception
+class InvalidNeighborhoodTypeException extends Exception
 {
 
 }

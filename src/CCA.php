@@ -16,6 +16,13 @@ class CCA
     public function __construct(Config $config)
     {
         $this->config = $config;
+
+        $this->setSeed();
+    }
+
+    private function setSeed()
+    {
+        mt_srand($this->config->seed());
     }
 
     public function init()
@@ -43,7 +50,6 @@ class CCA
         $state = [
             'config' => $this->config->toArray(),
             'grid' => $this->grid->toArray(),
-            'generation' => $this->generation,
         ];
 
         return json_encode($state);
