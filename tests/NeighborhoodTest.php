@@ -1,6 +1,6 @@
 <?php
 
-namespace Barryvanveen\PhpCca;
+namespace Barryvanveen\CCA\Tests;
 
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;

@@ -2,7 +2,7 @@
 
 namespace Barryvanveen\CCA;
 
-use Barryvanveen\CCA\Config\NeighborhoodOptions;
+use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Generators\Gif;
 use GifCreator\AnimGif;
 use Symfony\Component\Console\Command\Command;
@@ -26,54 +26,22 @@ class RunCCACommand extends Command
     {
         $starttime = microtime(true);
 
-        $config = new Config();
-        //$config->seed(1);
+        $config = Config::createFromPreset(Presets::PRESET_313);
 
-        // Rule = 313
-        $config->states(3);
-        $config->threshold(3);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(1);
-
-        // Rule = GH
-        /*$config->states(8);
-        $config->threshold(5);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(3);*/
-
-        // Rule = LavaLamp
-        /*$config->states(3);
-        $config->threshold(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(2);*/
-
-        // Rule = Amoeba
-        /*$config->states(2);
-        $config->threshold(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
-        $config->neighborhoodSize(3);*/
-
-        /*// Rule = CCA
-        $config->states(14);
-        $config->threshold(1);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
-        $config->neighborhoodSize(1);*/
-
-        /*// Rule = Cubism
-        $config->states(3);
-        $config->threshold(5);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
-        $config->neighborhoodSize(2);*/
-
-        /*// Rule = Cyclic spirals
-        $config->states(8);
-        $config->threshold(5);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(3);*/
+        // or create it manually
+        //$config = new Config();
+        //$config->columns(100);
+        //$config->neighborhoodSize(1);
+        //$config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        //$config->rows(100);
+        //$config->states(10);
+        //$config->threshold(10);
 
         $cca = new CCA($config);
-
         $cca->init();
+
+        // or create it from a state
+        // $cca->loadState(...) @todo
 
         $this->reportTime($output, "CCA initialized.", $starttime);
 

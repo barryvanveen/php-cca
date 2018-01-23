@@ -4,6 +4,7 @@ namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Config\NeighborhoodOptions;
 use Barryvanveen\CCA\Config\Options;
+use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
 
 class Config
@@ -165,6 +166,19 @@ class Config
     public function toArray(): array
     {
         return $this->config;
+    }
+
+    public static function createFromPreset(string $preset): self
+    {
+        $presetConfig = Presets::getPresetConfig($preset);
+
+        $config = new self();
+
+        foreach ($presetConfig as $option => $value) {
+            $config->{$option}($value);
+        }
+
+        return $config;
     }
 
     private function makeSeed(): int

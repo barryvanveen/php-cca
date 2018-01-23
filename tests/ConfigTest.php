@@ -1,17 +1,17 @@
 <?php
 
-namespace Barryvanveen\PhpCca;
+namespace Barryvanveen\CCA\Tests;
 
 use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
 
-/**
- * @covers \Barryvanveen\CCA\Config
- */
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::rows()
      */
     public function it_returns_the_default_values()
     {
@@ -24,6 +24,8 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::rows()
      */
     public function it_sets_the_rows()
     {
@@ -38,6 +40,8 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::neighborhoodType()
      */
     public function it_throws_an_exception_if_given_an_invalid_neighborhood_type()
     {
@@ -50,6 +54,8 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::toArray()
      */
     public function it_returns_an_array_containing_the_configuration()
     {
@@ -65,5 +71,22 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->assertArrayHasKey(Config\Options::NEIGHBORHOOD_TYPE, $output);
         $this->assertEquals(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE, $output[Config\Options::NEIGHBORHOOD_TYPE]);
+    }
+
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::createFromPreset()
+     */
+    public function it_creates_a_preset_configuration()
+    {
+        $config = Config::createFromPreset(Presets::PRESET_313);
+
+        $this->assertInstanceOf(Config::class, $config);
+
+        $this->assertEquals($config->neighborhoodType(), Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $this->assertEquals($config->neighborhoodSize(), 1);
+        $this->assertEquals($config->states(), 3);
+        $this->assertEquals($config->threshold(), 3);
     }
 }
