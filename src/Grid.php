@@ -2,10 +2,7 @@
 
 namespace Barryvanveen\CCA;
 
-use Barryvanveen\CCA\Grid\GridIterator;
-use Traversable;
-
-class Grid implements \IteratorAggregate
+class Grid
 {
     /** @var Config */
     protected $config;
@@ -20,80 +17,29 @@ class Grid implements \IteratorAggregate
     {
         $this->config = $config;
 
-        for ($row = 0; $row < $this->config->rows; $row++) {
-            //$cells[$row] = [];
-
-            for ($column = 0; $column < $this->config->columns; $column++) {
-                $coordinate = new Coordinate($row, $column, $this->config->columns);
+        for ($row = 0; $row < $this->config->rows(); $row++) {
+            for ($column = 0; $column < $this->config->columns(); $column++) {
+                $coordinate = new Coordinate($row, $column, $this->config->columns());
 
                 $this->cells[$coordinate->position()] = new Cell($this->config);
 
-                $this->neighbors[$coordinate->position()] = $this->getMooreNeighbors($coordinate);
+                $this->neighbors[$coordinate->position()] = Neighborhood::createNeighborhoodForCoordinate($this->config, $coordinate);
             }
         }
-    }
-
-    protected function getMooreNeighbors(Coordinate $coordinate, int $size = 1): array
-    {
-        $neigbors = [];
-
-        $size = abs($size);
-
-        for ($rowOffset = -1 * $size; $rowOffset <= $size; $rowOffset++) {
-            for ($columnOffset = -1 * $size; $columnOffset <= $size; $columnOffset++) {
-                if ($rowOffset === 0 && $columnOffset === 0) {
-                    continue;
-                }
-
-                $neigbors[] = new Coordinate(
-                    $this->wrapRow($coordinate->row(), $rowOffset),
-                    $this->wrapColumn($coordinate->column(), $columnOffset),
-                    $this->config->columns
-                );
-            }
-        }
-
-        return $neigbors;
-    }
-
-    protected function wrapRow(int $row, int $rowOffset): int
-    {
-        $row = $row + $rowOffset;
-
-        if ($row < 0) {
-            return $row + $this->config->rows;
-        }
-
-        return $row % $this->config->rows;
-    }
-
-    protected function wrapColumn(int $column, int $columnOffset): int
-    {
-        $column = $column + $columnOffset;
-
-        if ($column < 0) {
-            return $column + $this->config->columns;
-        }
-
-        return $column % $this->config->columns;
     }
 
     public function computeNextState()
     {
-        /**
-         * @var Coordinate $coordinate
-         * @var Cell $cell
-         */
-        foreach ($this as $coordinate => $cell) {
-            $neighborCoordinates = $this->neighbors[$coordinate->position()];
+        foreach ($this->cells as $position => $cell) {
+            $neighborCoordinates = $this->neighbors[$position];
 
-            $neighborStates = $this->getNeighborStates($neighborCoordinates);
+            $neighborStates = $this->getStatesForCoordinates($neighborCoordinates);
 
-            $this->cells[$coordinate->position()]->computeNextState($neighborStates);
+            $this->cells[$position]->computeNextState($neighborStates);
         }
     }
 
-    protected function getNeighborStates(array $coordinates): array
+    protected function getStatesForCoordinates(array $coordinates): array
     {
         $states = [];
 
@@ -107,13 +53,20 @@ class Grid implements \IteratorAggregate
 
     public function setNextState()
     {
-        /**
-         * @var Coordinate $coordinate
-         * @var Cell $cell
-         */
-        foreach ($this as $coordinate => $cell) {
-            $this->cells[$coordinate->position()]->setNextState();
+        foreach ($this->cells as $position => $cell) {
+            $this->cells[$position]->setNextState();
         }
+    }
+
+    public function toArray(): array
+    {
+        $states = [];
+
+        foreach ($this->cells as $position => $cell) {
+            $states[] = $cell->getState();
+        }
+
+        return $states;
     }
     
     public function __toString(): string
@@ -121,7 +74,7 @@ class Grid implements \IteratorAggregate
         $string = '';
 
         // first line: numbered columns
-        for ($column = 0; $column < $this->config->columns; $column++) {
+        for ($column = 0; $column < $this->config->columns(); $column++) {
             if ($column === 0) {
                 $string .= sprintf("  ");
             }
@@ -130,13 +83,13 @@ class Grid implements \IteratorAggregate
         $string .= sprintf("\n");
 
         // rows
-        for ($row = 0; $row < $this->config->rows; $row++) {
+        for ($row = 0; $row < $this->config->rows(); $row++) {
             // number of current row
             $string .= sprintf("%.2d ", $row);
 
             // cell states
-            for ($column = 0; $column < $this->config->columns; $column++) {
-                $coordinate = new Coordinate($row, $column, $this->config->columns);
+            for ($column = 0; $column < $this->config->columns(); $column++) {
+                $coordinate = new Coordinate($row, $column, $this->config->columns());
                 $string .= sprintf("%s ", $this->cells[$coordinate->position()]);
             }
             $string .= sprintf("\n");
@@ -145,16 +98,5 @@ class Grid implements \IteratorAggregate
         $string .= sprintf("\n");
 
         return $string;
-    }
-
-    /**
-     * Retrieve an external iterator
-     * @link http://php.net/manual/en/iteratoraggregate.getiterator.php
-
-     * @return Traversable
-     */
-    public function getIterator()
-    {
-        return new GridIterator($this->cells, $this->config->columns);
     }
 }

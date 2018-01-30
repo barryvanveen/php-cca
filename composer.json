@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": "~7.0",
-        "symfony/console": "3.3"
+        "lunakid/anim-gif": "^1.3"
     },
     "require-dev": {
         "phpunit/phpunit" : "~6.0",
@@ -50,5 +50,8 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "suggest": {
+        "barryvanveen/php-cca-cli": "CLI interface for generating images of CCAs."
     }
 }

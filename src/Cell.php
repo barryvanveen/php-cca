@@ -22,7 +22,7 @@ class Cell
 
     protected function getRandomState(): int
     {
-        return rand(0, $this->config->states - 1);
+        return mt_rand(0, $this->config->states() - 1);
     }
 
     public function getState(): int
@@ -41,21 +41,17 @@ class Cell
             }
         }
 
-        if ($this->willCycle($count)) {
-            $this->nextState = $successorState;
-        } else {
-            $this->nextState = $this->state;
-        }
+        $this->nextState = $this->willCycle($count) ? $successorState : $this->state;
     }
 
     protected function getSuccessorState(): int
     {
-        return ($this->state + 1) % $this->config->states;
+        return ($this->state + 1) % $this->config->states();
     }
 
     protected function willCycle(int $count): bool
     {
-        return $count >= $this->config->threshold;
+        return $count >= $this->config->threshold();
     }
 
     public function setNextState()
