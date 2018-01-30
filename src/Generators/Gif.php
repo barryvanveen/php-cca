@@ -7,7 +7,6 @@ use Exception;
 
 class Gif
 {
-
     /** @var array */
     protected $config;
 
@@ -151,6 +150,8 @@ class Gif
 
     public function save(string $destination = 'image.gif')
     {
+        imagetruecolortopalette($this->image, false, $this->config['states']);
+
         return imagegif($this->image, $destination);
     }
 

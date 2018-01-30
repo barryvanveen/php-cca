@@ -18,16 +18,13 @@ class CCA
         $this->config = $config;
 
         $this->setSeed();
+
+        $this->grid = new Grid($this->config);
     }
 
     private function setSeed()
     {
         mt_srand($this->config->seed());
-    }
-
-    public function init()
-    {
-        $this->grid = new Grid($this->config);
     }
 
     public function cycle(int $cycles = 1): int
