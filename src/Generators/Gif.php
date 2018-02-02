@@ -2,15 +2,17 @@
 
 namespace Barryvanveen\CCA\Generators;
 
-use Barryvanveen\CCA\Exceptions\InvalidStateException;
-use Exception;
+use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Coordinate;
+use Barryvanveen\CCA\Grid;
+use Barryvanveen\CCA\State;
 
 class Gif
 {
-    /** @var array */
+    /** @var Config */
     protected $config;
 
-    /** @var array */
+    /** @var Grid */
     protected $grid;
 
     /** @var mixed */
@@ -19,17 +21,11 @@ class Gif
     /** @var int[] */
     protected $colors;
 
-    protected function __construct(string $state)
+    protected function __construct(State $state)
     {
-        try {
-            $state = json_decode($state, true);
+        $this->config = $state->getConfig();
 
-            $this->config = $state['config'];
-
-            $this->grid = $state['grid'];
-        } catch (Exception $e) {
-            throw new InvalidStateException();
-        }
+        $this->grid = $state->getGrid();
 
         $this->initImage();
 
@@ -38,7 +34,7 @@ class Gif
         $this->createImageOfCCA();
     }
 
-    public static function createFromState(string $state)
+    public static function createFromState(State $state)
     {
         return new self($state);
     }
@@ -50,12 +46,12 @@ class Gif
 
     protected function getImageWidth(): int
     {
-        return $this->config['rows'] * $this->config['cellsize'];
+        return $this->config->columns() * $this->config->cellsize();
     }
 
     protected function getImageHeight(): int
     {
-        return $this->config['columns'] * $this->config['cellsize'];
+        return $this->config->rows() * $this->config->cellsize();
     }
 
     public function initColors()
@@ -82,8 +78,8 @@ class Gif
     {
         $this->fillBackground();
 
-        for ($row = 0; $row < $this->config['rows']; $row++) {
-            for ($column = 0; $column < $this->config['columns']; $column++) {
+        for ($row = 0; $row < $this->config->rows(); $row++) {
+            for ($column = 0; $column < $this->config->columns(); $column++) {
                 $state = $this->getStateFromGrid($row, $column);
 
                 if ($state === 0) {
@@ -109,9 +105,9 @@ class Gif
 
     protected function getStateFromGrid(int $row, int $column): int
     {
-        $position = ($row * $this->config['columns']) + $column;
+        $coordinate = new Coordinate($row, $column, $this->config->columns());
 
-        return $this->grid[$position];
+        return $this->grid->getState($coordinate);
     }
 
     protected function fillCell(int $row, int $column, int $state)
@@ -127,8 +123,8 @@ class Gif
 
     protected function getCellTopLeft(int $row, int $column): array
     {
-        $x = $column * $this->config['cellsize'];
-        $y = $row * $this->config['cellsize'];
+        $x = $column * $this->config->cellsize();
+        $y = $row * $this->config->cellsize();
 
         return [$x, $y];
     }
@@ -137,8 +133,8 @@ class Gif
     {
         list($x, $y) = $this->getCellTopLeft($row, $column);
 
-        $x += ($this->config['cellsize'] - 1);
-        $y += ($this->config['cellsize'] - 1);
+        $x += ($this->config->cellsize() - 1);
+        $y += ($this->config->cellsize() - 1);
 
         return [$x, $y];
     }
@@ -150,7 +146,7 @@ class Gif
 
     public function save(string $destination = 'image.gif')
     {
-        imagetruecolortopalette($this->image, false, $this->config['states']);
+        imagetruecolortopalette($this->image, false, $this->config->states());
 
         return imagegif($this->image, $destination);
     }

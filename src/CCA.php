@@ -42,14 +42,9 @@ class CCA
         return $this->generation;
     }
 
-    public function getState()
+    public function getState(): State
     {
-        $state = [
-            'config' => $this->config->toArray(),
-            'grid' => $this->grid->toArray(),
-        ];
-
-        return json_encode($state);
+        return new State($this->config, $this->grid);
     }
 
     public function printCells()

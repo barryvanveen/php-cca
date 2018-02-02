@@ -23,9 +23,9 @@ class Runner
      *
      * @param int $numIterations
      *
-     * @return string
+     * @return State
      */
-    public function getSingleState(int $numIterations): string
+    public function getSingleState(int $numIterations): State
     {
         do {
             $state = $this->cca->getState();
@@ -41,7 +41,7 @@ class Runner
      *
      * @param int $numIterations
      *
-     * @return array
+     * @return State[]
      */
     public function getFirstStates(int $numIterations): array
     {
@@ -64,7 +64,7 @@ class Runner
      *
      * @throws LoopNotFoundException
      *
-     * @return array
+     * @return State[]
      */
     public function getFirstLoop(int $maxIterations)
     {
@@ -73,7 +73,7 @@ class Runner
 
         do {
             $state = $this->cca->getState();
-            $hash = hash('crc32', $state);
+            $hash = hash('crc32', $state->__toString());
 
             $cycleEnd = false;
             if ($cycleStart = array_search($hash, $hashes)) {

@@ -2,6 +2,7 @@
 
 namespace Barryvanveen\CCA\Generators;
 
+use Barryvanveen\CCA\State;
 use Exception;
 use GifCreator\AnimGif;
 
@@ -11,7 +12,7 @@ class AnimatedGif
     protected $animation;
 
     /**
-     * @param string[] $states
+     * @param State[] $states
      *
      * @throws Exception
      */
