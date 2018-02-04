@@ -5,7 +5,7 @@ namespace Barryvanveen\CCA\Generators;
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\State;
 
-class Gif extends Image
+class Png extends Image
 {
     public static function createFromState(Config $config, State $state)
     {
@@ -16,6 +16,6 @@ class Gif extends Image
     {
         imagetruecolortopalette($this->image, false, $this->config->states());
 
-        return imagegif($this->image, $destination);
+        return imagepng($this->image, $destination);
     }
 }

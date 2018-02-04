@@ -4,33 +4,31 @@ namespace Barryvanveen\CCA;
 
 class State
 {
-    /** @var Config */
-    protected $config;
+    /** @var array */
+    protected $array;
 
-    /** @var Grid */
-    protected $grid;
+    /** @var string */
+    protected $string;
     
-    public function __construct(Config $config, Grid $grid)
+    public function __construct(Grid $grid)
     {
-        $this->config = $config;
-        $this->grid = $grid;
+        $this->array = $grid->toArray();
+
+        $this->string = $grid->__toString();
     }
 
-    public function getConfig(): Config
+    public function toArray(): array
     {
-        return $this->config;
+        return $this->array;
     }
 
-    public function getGrid(): Grid
+    public function toHash(): string
     {
-        return $this->grid;
+        return hash('crc32', $this->string);
     }
 
     public function __toString()
     {
-        return json_encode([
-            'config' => $this->config->toArray(),
-            'grid' => $this->grid->toArray(),
-        ]);
+        return $this->string;
     }
 }

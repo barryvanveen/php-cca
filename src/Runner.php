@@ -73,7 +73,7 @@ class Runner
 
         do {
             $state = $this->cca->getState();
-            $hash = hash('crc32', $state->__toString());
+            $hash = $state->toHash();
 
             $cycleEnd = false;
             if ($cycleStart = array_search($hash, $hashes)) {

@@ -44,7 +44,7 @@ class CCA
 
     public function getState(): State
     {
-        return new State($this->config, $this->grid);
+        return new State($this->grid);
     }
 
     public function printCells()
