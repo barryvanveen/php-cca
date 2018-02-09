@@ -34,7 +34,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $config->rows(123);
 
-        $this->assertEquals($config->rows(), 123);
+        $this->assertEquals(123, $config->rows());
     }
 
     /**
@@ -48,7 +48,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $config->columns(123);
 
-        $this->assertEquals($config->columns(), 123);
+        $this->assertEquals(123, $config->columns());
     }
 
     /**
@@ -62,7 +62,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $config->states(123);
 
-        $this->assertEquals($config->states(), 123);
+        $this->assertEquals(123, $config->states());
     }
 
     /**
@@ -76,7 +76,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $config->threshold(123);
 
-        $this->assertEquals($config->threshold(), 123);
+        $this->assertEquals(123, $config->threshold());
     }
 
     /**
@@ -136,7 +136,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $config->seed(1);
 
-        $this->assertEquals($config->seed(), 1);
+        $this->assertEquals(1, $config->seed());
     }
 
     /**
@@ -150,7 +150,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $config->image_cell_size(2);
 
-        $this->assertEquals($config->image_cell_size(), 2);
+        $this->assertEquals(2, $config->image_cell_size());
     }
 
     /**
@@ -185,9 +185,9 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(Config::class, $config);
 
-        $this->assertEquals($config->neighborhoodType(), Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $this->assertEquals($config->neighborhoodSize(), 1);
-        $this->assertEquals($config->states(), 3);
-        $this->assertEquals($config->threshold(), 3);
+        $this->assertEquals(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE, $config->neighborhoodType());
+        $this->assertEquals(1, $config->neighborhoodSize());
+        $this->assertEquals(3, $config->states());
+        $this->assertEquals(3, $config->threshold());
     }
 }

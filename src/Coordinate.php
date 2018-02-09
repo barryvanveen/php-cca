@@ -21,7 +21,7 @@ class Coordinate
         $this->row = $row;
         $this->column = $column;
         $this->columns = $columns;
-        $this->position = $this->position();
+        $this->position = $this->calculatePosition();
     }
 
     public function __toString(): string
@@ -39,8 +39,13 @@ class Coordinate
         return $this->column;
     }
 
-    public function position(): int
+    protected function calculatePosition(): int
     {
         return ($this->row * $this->columns) + $this->column;
+    }
+
+    public function position(): int
+    {
+        return $this->position;
     }
 }
