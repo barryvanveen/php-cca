@@ -4,11 +4,11 @@ use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Generators\Png;
 use Barryvanveen\CCA\Runner;
 
-require "../vendor/autoload.php";
+require __DIR__."/../vendor/autoload.php";
 
 $preset = Config\Presets::PRESET_CUBISM;
 $maxIterations = 100;
-$output = 'output/static-cubism.png';
+$output = __DIR__."/output/static-cubism.png";
 
 $config = Config::createFromPreset($preset);
 $config->rows(150);

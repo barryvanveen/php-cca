@@ -4,11 +4,11 @@ use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Generators\Gif;
 use Barryvanveen\CCA\Runner;
 
-require "../vendor/autoload.php";
+require __DIR__."/../vendor/autoload.php";
 
 $preset = Config\Presets::PRESET_313;
 $maxIterations = 100;
-$output = 'output/static-313.gif';
+$output = __DIR__."/output/static-313.gif";
 
 $config = Config::createFromPreset($preset);
 
