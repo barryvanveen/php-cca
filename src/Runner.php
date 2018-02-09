@@ -9,6 +9,7 @@ class Runner
     /** @var Config */
     protected $config;
 
+    /** @var CCA */
     protected $cca;
 
     public function __construct(Config $config)

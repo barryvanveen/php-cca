@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Config\NeighborhoodOptions;
@@ -120,9 +122,9 @@ class Config
      *
      * @param int $neighborhoodSize size of neighborhood
      *
-     * @return string
+     * @return int
      */
-    public function neighborhoodSize($neighborhoodSize = null): string
+    public function neighborhoodSize($neighborhoodSize = null): int
     {
         if (isset($neighborhoodSize)) {
             $this->config[Options::NEIGHBORHOOD_SIZE] = (int) $neighborhoodSize;
@@ -185,6 +187,6 @@ class Config
     {
         list($usec, $sec) = explode(' ', microtime());
 
-        return $sec + $usec * 1000000;
+        return intval($sec + $usec * 1000000);
     }
 }
