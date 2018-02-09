@@ -12,7 +12,7 @@ class Png extends Image
         return new self($config, $state);
     }
 
-    public function save(string $destination = 'image.gif')
+    public function save(string $destination = 'image.png')
     {
         imagetruecolortopalette($this->image, false, $this->config->states());
 
