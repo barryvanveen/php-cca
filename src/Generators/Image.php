@@ -56,6 +56,7 @@ abstract class Image
         $this->colors = $this->getEvenlyDistributedColors($this->config->image_hue(), $this->config->states());
     }
 
+    // todo: extra color creation to seperate class
     protected function getEvenlyDistributedColors(int $hue, int $numberOfColors): array
     {
         $saturationStepSize = 1/$numberOfColors;
@@ -66,7 +67,7 @@ abstract class Image
         for ($i = 0; $i<$numberOfColors; $i++) {
             $saturation = ($saturationStart + ($i * $saturationStepSize));
 
-            $rgb = $this->getRgbColorFromHSV($hue, $saturation, 1);
+            $rgb = $this->getRgbColorFromHSV($hue, $saturation, 1.0);
 
             $colors[] = imagecolorallocate($this->image, $rgb->getRed(), $rgb->getGreen(), $rgb->getBlue());
         }
@@ -74,7 +75,7 @@ abstract class Image
         return $colors;
     }
 
-    protected function getRgbColorFromHSV(int $hue, int $saturation, int $value): Color\RgbColor
+    protected function getRgbColorFromHSV(int $hue, float $saturation, float $value): Color\RgbColor
     {
         $hsv = new Color\HsvColor($hue, $saturation, $value);
 
