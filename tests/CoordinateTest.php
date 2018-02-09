@@ -9,7 +9,7 @@ class CoordinateTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_row()
+    public function itReturnsTheRow()
     {
         $coordinate = new Coordinate(1, 2, 10);
 
@@ -19,7 +19,7 @@ class CoordinateTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_column()
+    public function itReturnsTheColumn()
     {
         $coordinate = new Coordinate(1, 2, 10);
 
@@ -29,7 +29,7 @@ class CoordinateTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_position()
+    public function itReturnsThePosition()
     {
         $coordinate = new Coordinate(0, 0, 10);
         $this->assertEquals(0, $coordinate->position());
@@ -47,7 +47,7 @@ class CoordinateTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_a_string_representation()
+    public function itReturnsAStringRepresentation()
     {
         $coordinate = new Coordinate(1, 2, 10);
 

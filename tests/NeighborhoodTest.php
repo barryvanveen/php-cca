@@ -14,7 +14,7 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_an_array()
+    public function itReturnsAnArray()
     {
         $config = new Config();
         $config->rows(10);
@@ -22,7 +22,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
         $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(1);
 
-        $neighborhood = Neighborhood::createNeighborhoodForCoordinate($config, new Coordinate(0, 0, $config->columns()));
+        $neighborhood = Neighborhood::createNeighborhoodForCoordinate(
+            $config,
+            new Coordinate(0, 0, $config->columns())
+        );
 
         $this->assertInternalType('array', $neighborhood);
     }
@@ -30,7 +33,7 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_correct_moore_neighborhood_of_size_1()
+    public function itReturnsTheCorrectMooreNeighborhoodOfSize1()
     {
         $config = new Config();
         $config->rows(10);
@@ -38,7 +41,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
         $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(1);
 
-        $neighborhood = Neighborhood::createNeighborhoodForCoordinate($config, new Coordinate(0, 0, $config->columns()));
+        $neighborhood = Neighborhood::createNeighborhoodForCoordinate(
+            $config,
+            new Coordinate(0, 0, $config->columns())
+        );
 
         $this->assertCount(8, $neighborhood);
 
@@ -55,7 +61,7 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_correct_moore_neighborhood_of_size_2()
+    public function itReturnsTheCorrectMooreNeighborhoodOfSize2()
     {
         $config = new Config();
         $config->rows(10);
@@ -63,7 +69,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
         $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(2);
 
-        $neighborhood = Neighborhood::createNeighborhoodForCoordinate($config, new Coordinate(0, 0, $config->columns()));
+        $neighborhood = Neighborhood::createNeighborhoodForCoordinate(
+            $config,
+            new Coordinate(0, 0, $config->columns())
+        );
 
         $this->assertCount(24, $neighborhood);
 
@@ -96,7 +105,7 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_correct_moore_neighborhood_of_size_3()
+    public function itReturnsTheCorrectMooreNeighborhoodOfSize3()
     {
         $config = new Config();
         $config->rows(10);
@@ -104,7 +113,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
         $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(3);
 
-        $neighborhood = Neighborhood::createNeighborhoodForCoordinate($config, new Coordinate(0, 0, $config->columns()));
+        $neighborhood = Neighborhood::createNeighborhoodForCoordinate(
+            $config,
+            new Coordinate(0, 0, $config->columns())
+        );
 
         $this->assertCount(48, $neighborhood);
     }
@@ -112,7 +124,7 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_correct_neumann_neighborhood_of_size_1()
+    public function itReturnsTheCorrectNeumannNeighborhoodOfSize1()
     {
         $config = new Config();
         $config->rows(10);
@@ -120,7 +132,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
         $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(1);
 
-        $neighborhood = Neighborhood::createNeighborhoodForCoordinate($config, new Coordinate(0, 0, $config->columns()));
+        $neighborhood = Neighborhood::createNeighborhoodForCoordinate(
+            $config,
+            new Coordinate(0, 0, $config->columns())
+        );
 
         $this->assertCount(4, $neighborhood);
 
@@ -133,7 +148,7 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_correct_neumann_neighborhood_of_size_2()
+    public function itReturnsTheCorrectNeumannNeighborhoodOfSize2()
     {
         $config = new Config();
         $config->rows(10);
@@ -141,7 +156,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
         $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(2);
 
-        $neighborhood = Neighborhood::createNeighborhoodForCoordinate($config, new Coordinate(0, 0, $config->columns()));
+        $neighborhood = Neighborhood::createNeighborhoodForCoordinate(
+            $config,
+            new Coordinate(0, 0, $config->columns())
+        );
 
         $this->assertCount(12, $neighborhood);
 
@@ -162,7 +180,7 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_the_correct_neumann_neighborhood_of_size_3()
+    public function itReturnsTheCorrectNeumannNeighborhoodOfSize3()
     {
         $config = new Config();
         $config->rows(10);
@@ -170,7 +188,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
         $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(3);
 
-        $neighborhood = Neighborhood::createNeighborhoodForCoordinate($config, new Coordinate(0, 0, $config->columns()));
+        $neighborhood = Neighborhood::createNeighborhoodForCoordinate(
+            $config,
+            new Coordinate(0, 0, $config->columns())
+        );
 
         $this->assertCount(24, $neighborhood);
     }

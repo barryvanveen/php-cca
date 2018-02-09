@@ -14,7 +14,7 @@ class PresetsTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_returns_an_array_of_configuration_values()
+    public function itReturnsAnArrayOfConfigurationValues()
     {
         $presetOptions = Presets::getPresetConfig(Presets::PRESET_313);
 
@@ -24,7 +24,7 @@ class PresetsTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function it_throws_an_exception_when_given_an_invalid_preset()
+    public function itThrowsAnExceptionWhenGivenAnInvalidPreset()
     {
         $this->expectException(InvalidPresetException::class);
 
@@ -34,7 +34,7 @@ class PresetsTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      */
-    public function all_presets_should_return_valid_config_options_and_values()
+    public function allPresetsShouldReturnValidConfigOptionsAndValues()
     {
         $config = new Config();
 
