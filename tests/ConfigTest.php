@@ -142,15 +142,15 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::image_cell_size()
+     * @covers \Barryvanveen\CCA\Config::imageCellSize()
      */
     public function it_sets_the_cellsize()
     {
         $config = new Config();
 
-        $config->image_cell_size(2);
+        $config->imageCellSize(2);
 
-        $this->assertEquals(2, $config->image_cell_size());
+        $this->assertEquals(2, $config->imageCellSize());
     }
 
     /**

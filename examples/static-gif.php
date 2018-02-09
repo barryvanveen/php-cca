@@ -13,7 +13,7 @@ $output = __DIR__."/output/static-cca.gif";
 $config = Config::createFromPreset($preset);
 $config->rows(100);
 $config->columns(100);
-$config->image_cell_size(5);
+$config->imageCellSize(5);
 
 $runner = new Runner($config);
 $state = $runner->getSingleState($maxIterations);

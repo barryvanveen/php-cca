@@ -23,7 +23,8 @@ class Grid
 
                 $this->cells[$coordinate->position()] = new Cell($this->config);
 
-                $this->neighbors[$coordinate->position()] = Neighborhood::createNeighborhoodForCoordinate($this->config, $coordinate);
+                $this->neighbors[$coordinate->position()] =
+                    Neighborhood::createNeighborhoodForCoordinate($this->config, $coordinate);
             }
         }
     }

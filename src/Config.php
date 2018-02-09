@@ -79,7 +79,7 @@ class Config
      *
      * @return int
      */
-    public function image_cell_size($cellsize = null): int
+    public function imageCellSize($cellsize = null): int
     {
         if (isset($cellsize)) {
             $this->config[Options::IMAGE_CELL_SIZE] = (int) $cellsize;
@@ -88,7 +88,7 @@ class Config
         return $this->config[Options::IMAGE_CELL_SIZE];
     }
 
-    public function image_hue($hue = null): int
+    public function imageHue($hue = null): int
     {
         if (isset($hue) && $this->isValidHue($hue)) {
             $this->config[Options::IMAGE_HUE] = (int) $hue;

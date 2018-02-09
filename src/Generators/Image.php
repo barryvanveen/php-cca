@@ -43,17 +43,17 @@ abstract class Image
 
     protected function getImageWidth(): int
     {
-        return $this->config->columns() * $this->config->image_cell_size();
+        return $this->config->columns() * $this->config->imageCellSize();
     }
 
     protected function getImageHeight(): int
     {
-        return $this->config->rows() * $this->config->image_cell_size();
+        return $this->config->rows() * $this->config->imageCellSize();
     }
 
     protected function initColors()
     {
-        $this->colors = $this->getEvenlyDistributedColors($this->config->image_hue(), $this->config->states());
+        $this->colors = $this->getEvenlyDistributedColors($this->config->imageHue(), $this->config->states());
     }
 
     // todo: extra color creation to seperate class
@@ -131,8 +131,8 @@ abstract class Image
 
     protected function getCellTopLeft(int $row, int $column): array
     {
-        $x = $column * $this->config->image_cell_size();
-        $y = $row * $this->config->image_cell_size();
+        $x = $column * $this->config->imageCellSize();
+        $y = $row * $this->config->imageCellSize();
 
         return [$x, $y];
     }
@@ -141,8 +141,8 @@ abstract class Image
     {
         list($x, $y) = $this->getCellTopLeft($row, $column);
 
-        $x += ($this->config->image_cell_size() - 1);
-        $y += ($this->config->image_cell_size() - 1);
+        $x += ($this->config->imageCellSize() - 1);
+        $y += ($this->config->imageCellSize() - 1);
 
         return [$x, $y];
     }
