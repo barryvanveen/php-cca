@@ -36,7 +36,7 @@ abstract class Image
 
     abstract public static function createFromState(Config $config, State $state);
 
-    public function initImage()
+    protected function initImage()
     {
         $this->image = imagecreatetruecolor($this->getImageWidth(), $this->getImageHeight());
     }
@@ -51,35 +51,34 @@ abstract class Image
         return $this->config->rows() * $this->config->image_cell_size();
     }
 
-    public function initColors()
+    protected function initColors()
     {
-        $this->colors = [];
-
-        $states = $this->config->states();
-
-        $hue = $this->config->image_hue();
-
-        $this->colors = $this->getEvenlyDistributedColors($hue, $states);
+        $this->colors = $this->getEvenlyDistributedColors($this->config->image_hue(), $this->config->states());
     }
 
     protected function getEvenlyDistributedColors(int $hue, int $numberOfColors): array
     {
-        $saturationStepsize = 1/$numberOfColors;
-        $saturationStart = $saturationStepsize/2;
+        $saturationStepSize = 1/$numberOfColors;
+        $saturationStart = $saturationStepSize/2;
 
         $colors = [];
 
         for ($i = 0; $i<$numberOfColors; $i++) {
-            $saturation = ($saturationStart + ($i * $saturationStepsize));
+            $saturation = ($saturationStart + ($i * $saturationStepSize));
 
-            $hsv = new Color\HsvColor($hue, $saturation, 1);
-
-            $rgb = $hsv->toRgb();
+            $rgb = $this->getRgbColorFromHSV($hue, $saturation, 1);
 
             $colors[] = imagecolorallocate($this->image, $rgb->getRed(), $rgb->getGreen(), $rgb->getBlue());
         }
 
         return $colors;
+    }
+
+    protected function getRgbColorFromHSV(int $hue, int $saturation, int $value): Color\RgbColor
+    {
+        $hsv = new Color\HsvColor($hue, $saturation, $value);
+
+        return $hsv->toRgb();
     }
 
     protected function createImage()

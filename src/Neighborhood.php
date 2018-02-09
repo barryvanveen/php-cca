@@ -2,9 +2,6 @@
 
 namespace Barryvanveen\CCA;
 
-use Barryvanveen\CCA\Config\NeighborhoodOptions;
-use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
-
 class Neighborhood
 {
     /** @var Config */
@@ -47,14 +44,11 @@ class Neighborhood
      */
     protected function getNeighborhood(): array
     {
-        switch ($this->config->neighborhoodType()) {
-            case NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE:
-                return $this->getMooreNeighbors($this->coordinate);
-            case NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN:
-                return $this->getNeumannNeighbors($this->coordinate);
-        }
+        $neighborhoodType = $this->config->neighborhoodType();
 
-        throw new InvalidNeighborhoodTypeException();
+        $method = 'get'.ucfirst($neighborhoodType).'Neighbors';
+
+        return $this->{$method}($this->coordinate);
     }
 
     /**
