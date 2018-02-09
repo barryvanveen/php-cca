@@ -5,6 +5,7 @@ namespace Barryvanveen\CCA\Generators;
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\State;
+use Phim\Color;
 
 abstract class Image
 {
@@ -42,32 +43,43 @@ abstract class Image
 
     protected function getImageWidth(): int
     {
-        return $this->config->columns() * $this->config->cellsize();
+        return $this->config->columns() * $this->config->image_cell_size();
     }
 
     protected function getImageHeight(): int
     {
-        return $this->config->rows() * $this->config->cellsize();
+        return $this->config->rows() * $this->config->image_cell_size();
     }
 
     public function initColors()
     {
         $this->colors = [];
 
-        $this->colors[0] = imagecolorallocate($this->image, 50, 149, 96);
-        $this->colors[1] = imagecolorallocate($this->image, 82, 173, 124);
-        $this->colors[2] = imagecolorallocate($this->image, 9, 101, 52);
-        $this->colors[3] = imagecolorallocate($this->image, 50, 104, 134);
-        $this->colors[4] = imagecolorallocate($this->image, 78, 128, 155);
-        $this->colors[5] = imagecolorallocate($this->image, 12, 63, 91);
-        $this->colors[6] = imagecolorallocate($this->image, 211, 147, 71);
-        $this->colors[7] = imagecolorallocate($this->image, 245, 186, 115);
-        $this->colors[8] = imagecolorallocate($this->image, 143, 84, 13);
-        $this->colors[9] = imagecolorallocate($this->image, 211, 102, 71);
-        $this->colors[10] = imagecolorallocate($this->image, 245, 145, 115);
-        $this->colors[11] = imagecolorallocate($this->image, 143, 42, 13);
-        $this->colors[12] = imagecolorallocate($this->image, 16, 18, 111);
-        $this->colors[13] = imagecolorallocate($this->image, 143, 3, 249);
+        $states = $this->config->states();
+
+        $hue = $this->config->image_hue();
+
+        $this->colors = $this->getEvenlyDistributedColors($hue, $states);
+    }
+
+    protected function getEvenlyDistributedColors(int $hue, int $numberOfColors): array
+    {
+        $saturationStepsize = 1/$numberOfColors;
+        $saturationStart = $saturationStepsize/2;
+
+        $colors = [];
+
+        for ($i = 0; $i<$numberOfColors; $i++) {
+            $saturation = ($saturationStart + ($i * $saturationStepsize));
+
+            $hsv = new Color\HsvColor($hue, $saturation, 1);
+
+            $rgb = $hsv->toRgb();
+
+            $colors[] = imagecolorallocate($this->image, $rgb->getRed(), $rgb->getGreen(), $rgb->getBlue());
+        }
+
+        return $colors;
     }
 
     protected function createImage()
@@ -119,8 +131,8 @@ abstract class Image
 
     protected function getCellTopLeft(int $row, int $column): array
     {
-        $x = $column * $this->config->cellsize();
-        $y = $row * $this->config->cellsize();
+        $x = $column * $this->config->image_cell_size();
+        $y = $row * $this->config->image_cell_size();
 
         return [$x, $y];
     }
@@ -129,8 +141,8 @@ abstract class Image
     {
         list($x, $y) = $this->getCellTopLeft($row, $column);
 
-        $x += ($this->config->cellsize() - 1);
-        $y += ($this->config->cellsize() - 1);
+        $x += ($this->config->image_cell_size() - 1);
+        $y += ($this->config->image_cell_size() - 1);
 
         return [$x, $y];
     }
