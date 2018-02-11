@@ -6,6 +6,7 @@ class Options
 {
     const COLUMNS           = 'columns';
     const IMAGE_CELL_SIZE   = 'image_cell_size';
+    const IMAGE_COLORS      = 'image_colors';
     const IMAGE_HUE         = 'image_hue';
     const NEIGHBORHOOD_SIZE = 'neighborhoodSize';
     const NEIGHBORHOOD_TYPE = 'neighborhoodType';
@@ -17,6 +18,7 @@ class Options
     const VALID_OPTIONS = [
         self::COLUMNS,
         self::IMAGE_CELL_SIZE,
+        self::IMAGE_COLORS,
         self::IMAGE_HUE,
         self::NEIGHBORHOOD_SIZE,
         self::NEIGHBORHOOD_TYPE,

@@ -5,7 +5,6 @@ namespace Barryvanveen\CCA\Generators;
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\State;
-use Phim\Color;
 
 abstract class Image
 {
@@ -53,33 +52,11 @@ abstract class Image
 
     protected function initColors()
     {
-        $this->colors = $this->getEvenlyDistributedColors($this->config->imageHue(), $this->config->states());
-    }
+        $colors = Colors::getColors($this->config);
 
-    // todo: extra color creation to seperate class
-    protected function getEvenlyDistributedColors(int $hue, int $numberOfColors): array
-    {
-        $saturationStepSize = 1/$numberOfColors;
-        $saturationStart = $saturationStepSize/2;
-
-        $colors = [];
-
-        for ($i = 0; $i<$numberOfColors; $i++) {
-            $saturation = ($saturationStart + ($i * $saturationStepSize));
-
-            $rgb = $this->getRgbColorFromHSV($hue, $saturation, 1.0);
-
-            $colors[] = imagecolorallocate($this->image, $rgb->getRed(), $rgb->getGreen(), $rgb->getBlue());
+        foreach ($colors as $color) {
+            $this->colors[] = imagecolorallocate($this->image, $color->getRed(), $color->getGreen(), $color->getBlue());
         }
-
-        return $colors;
-    }
-
-    protected function getRgbColorFromHSV(int $hue, float $saturation, float $value): Color\RgbColor
-    {
-        $hsv = new Color\HsvColor($hue, $saturation, $value);
-
-        return $hsv->toRgb();
     }
 
     protected function createImage()
