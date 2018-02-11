@@ -1,6 +1,6 @@
 <?php
 
-namespace Barryvanveen\CCA\Tests;
+namespace Barryvanveen\CCA\Tests\Unit\Config;
 
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
