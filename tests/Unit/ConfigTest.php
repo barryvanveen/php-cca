@@ -6,7 +6,10 @@ use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\NeighborhoodOptions;
 use Barryvanveen\CCA\Config\Options;
 use Barryvanveen\CCA\Config\Presets;
+use Barryvanveen\CCA\Exceptions\InvalidColorException;
+use Barryvanveen\CCA\Exceptions\InvalidHueException;
 use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
+use Phim\Color\RgbColor;
 
 class ConfigTest extends \PHPUnit\Framework\TestCase
 {
@@ -15,6 +18,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
      *
      * @covers \Barryvanveen\CCA\Config::__construct()
      * @covers \Barryvanveen\CCA\Config::makeSeed()
+     * @covers \Barryvanveen\CCA\Config::makeHue()
      */
     public function itReturnsTheDefaultValues()
     {
@@ -23,6 +27,8 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($config->rows(), 48);
 
         $this->assertInternalType("integer", $config->seed());
+        $this->assertInternalType("integer", $config->imageHue());
+        $this->assertTrue(($config->imageHue() >= 0 && $config->imageHue() <= 360));
     }
 
     /**
@@ -153,6 +159,105 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
         $config->imageCellSize(2);
 
         $this->assertEquals(2, $config->imageCellSize());
+    }
+
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::imageColors()
+     * @covers \Barryvanveen\CCA\Config::colorsAreValid()
+     */
+    public function itSetsTheColors()
+    {
+        $config = new Config();
+
+        $config->imageColors([
+            new RgbColor(0, 0, 0),
+            new RgbColor(255, 255, 255),
+        ]);
+
+        $this->assertCount(2, $config->imageColors());
+    }
+
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::imageColors()
+     * @covers \Barryvanveen\CCA\Config::colorsAreValid()
+     */
+    public function itThrowsAnErrorWhenNotSettingColorsWithAnArray()
+    {
+        $config = new Config();
+
+        $this->expectException(InvalidColorException::class);
+        $this->expectExceptionMessage("Colors must be passed as an array.");
+
+        $config->imageColors(new RgbColor(0, 0, 0));
+    }
+
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::imageColors()
+     * @covers \Barryvanveen\CCA\Config::colorsAreValid()
+     */
+    public function itTrowsAnErrorWhenSettingInvalidColors()
+    {
+        $config = new Config();
+
+        $this->expectException(InvalidColorException::class);
+
+        $config->imageColors([
+            'red',
+            'blue',
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Config::imageHue()
+     * @covers \Barryvanveen\CCA\Config::isValidHue()
+     */
+    public function itSetsTheImageHue()
+    {
+        $config = new Config();
+
+        $config->imageHue(123);
+
+        $this->assertEquals(123, $config->imageHue());
+    }
+
+    /**
+     * @test
+     *
+     * @dataProvider invalidHueProvider
+     *
+     * @covers \Barryvanveen\CCA\Config::imageHue()
+     * @covers \Barryvanveen\CCA\Config::isValidHue()
+     */
+    public function itThrowsAnExceptionWhenSettingInvalidHue($hueValue)
+    {
+        $config = new Config();
+
+        $this->expectException(InvalidHueException::class);
+
+        $config->imageHue($hueValue);
+    }
+
+    public function invalidHueProvider()
+    {
+        return [
+            [
+                'foo',
+            ],
+            [
+                -1,
+            ],
+            [
+                361,
+            ],
+        ];
     }
 
     /**

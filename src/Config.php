@@ -112,7 +112,7 @@ class Config
     protected function colorsAreValid($colors): bool
     {
         if (!is_array($colors)) {
-            $colors = [$colors];
+            throw new InvalidColorException("Colors must be passed as an array.");
         }
 
         foreach ($colors as $color) {
