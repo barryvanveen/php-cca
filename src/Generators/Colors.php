@@ -3,6 +3,7 @@
 namespace Barryvanveen\CCA\Generators;
 
 use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Exceptions\InvalidColorsException;
 use Phim\Color;
 use Phim\Color\HsvColor;
 
@@ -24,7 +25,13 @@ class Colors
             return self::getEvenlyDistributedColors($config->imageHue(), $config->states());
         }
 
-        return $config->imageColors();
+        $colors = $config->imageColors();
+
+        if (count($colors) != $config->states()) {
+            throw new InvalidColorsException("Not enough colors specified.");
+        }
+
+        return $colors;
     }
 
     protected static function getEvenlyDistributedColors(int $hue, int $numberOfColors): array
