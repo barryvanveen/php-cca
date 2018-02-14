@@ -6,23 +6,15 @@ use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Generators\AnimatedGif;
 use Barryvanveen\CCA\Runner;
+use Barryvanveen\CCA\Tests\Functional\FunctionalTestCase;
+use GifCreator\AnimGif;
 
 /**
- * @coversNothing
+ * @covers \Barryvanveen\CCA\Generators\AnimatedGif
+ * @covers \Barryvanveen\CCA\Generators\Image
  */
-class AnimatedGifTest extends \PHPUnit\Framework\TestCase
+class AnimatedGifTest extends FunctionalTestCase
 {
-    protected $imageFilename = __DIR__."/animated.gif";
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        if (file_exists($this->imageFilename)) {
-            unlink($this->imageFilename);
-        }
-    }
-
     /**
      * @test
      */
@@ -30,27 +22,49 @@ class AnimatedGifTest extends \PHPUnit\Framework\TestCase
     {
         $config = Config::createFromPreset(Presets::PRESET_CCA);
         $config->seed(1);
-        $config->rows(10);
         $config->columns(10);
+        $config->rows(10);
+        $config->imageCellSize(1);
         $config->imageHue(1);
 
         $runner = new Runner($config);
         $states = $runner->getFirstStates(3);
 
-        $this->assertFileNotExists($this->imageFilename);
+        $this->assertFileNotExists($this->getImageFilename());
 
         $image = AnimatedGif::createFromStates($config, $states);
-        $image->save($this->imageFilename);
+        $image->save($this->getImageFilename());
 
-        $this->assertFileExists($this->imageFilename);
+        $this->assertFileExists($this->getImageFilename());
+
+        $imagesize = getimagesize($this->getImageFilename());
+        $this->assertEquals(10, $imagesize[0]);
+        $this->assertEquals(10, $imagesize[1]);
+        $this->assertEquals("image/gif", $imagesize['mime']);
     }
 
-    public function tearDown()
+    /**
+     * @test
+     */
+    public function itReturnsAnAnimatedGifInstance()
     {
-        if (file_exists($this->imageFilename)) {
-            unlink($this->imageFilename);
-        }
+        $config = Config::createFromPreset(Presets::PRESET_CCA);
+        $config->seed(1);
+        $config->columns(10);
+        $config->rows(10);
+        $config->imageCellSize(1);
+        $config->imageHue(1);
 
-        parent::tearDown();
+        $runner = new Runner($config);
+        $states = $runner->getFirstStates(3);
+
+        $image = AnimatedGif::createFromStates($config, $states);
+
+        $this->assertInstanceOf(AnimGif::class, $image->get());
+    }
+
+    public function getImageFilename(): string
+    {
+        return __DIR__."/animated.gif";
     }
 }

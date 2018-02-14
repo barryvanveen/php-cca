@@ -7,23 +7,14 @@ use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
 use Barryvanveen\CCA\Generators\AnimatedGif;
 use Barryvanveen\CCA\Runner;
+use Barryvanveen\CCA\Tests\Functional\FunctionalTestCase;
 
 /**
- * @coversNothing
+ * @covers \Barryvanveen\CCA\Generators\AnimatedGif
+ * @covers \Barryvanveen\CCA\Generators\Image
  */
-class LoopingAnimatedGifTest extends \PHPUnit\Framework\TestCase
+class LoopingAnimatedGifTest extends FunctionalTestCase
 {
-    protected $imageFilename = __DIR__."/looping.gif";
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        if (file_exists($this->imageFilename)) {
-            unlink($this->imageFilename);
-        }
-    }
-
     /**
      * @test
      */
@@ -48,24 +39,26 @@ class LoopingAnimatedGifTest extends \PHPUnit\Framework\TestCase
     {
         $config = Config::createFromPreset(Presets::PRESET_GH);
         $config->seed(1);
+        $config->columns(8);
         $config->rows(10);
-        $config->columns(10);
+        $config->imageCellSize(1);
 
         $runner = new Runner($config);
         $states = $runner->getFirstLoop(500);
 
         $gif = AnimatedGif::createFromStates($config, $states);
-        $gif->save($this->imageFilename);
+        $gif->save($this->getImageFilename());
 
-        $this->assertFileExists($this->imageFilename);
+        $this->assertFileExists($this->getImageFilename());
+
+        $imagesize = getimagesize($this->getImageFilename());
+        $this->assertEquals(8, $imagesize[0]);
+        $this->assertEquals(10, $imagesize[1]);
+        $this->assertEquals("image/gif", $imagesize['mime']);
     }
 
-    public function tearDown()
+    public function getImageFilename(): string
     {
-        if (file_exists($this->imageFilename)) {
-            unlink($this->imageFilename);
-        }
-
-        parent::tearDown();
+        return __DIR__."/looping.gif";
     }
 }
