@@ -71,6 +71,15 @@ $image = \Barryvanveen\CCA\Generators\AnimatedGif::createFromStates($config, $st
 $image->save('/path/to/output.gif');
 ```
 
+## Examples
+
+The `/examples` folder contains some scripts to generate different kinds of images. Here are some example images:
+
+![static gif from amoeba preset](examples/output/green-amoeba.gif?raw=true "Amoeba preset")
+![static gif from cca preset](examples/output/purple-cca.gif?raw=true "CCA preset")
+![static gif from lavalamp preset](examples/output/blue-lavalamp.gif?raw=true "Lavalamp preset")
+![static gif from cyclic spirals preset](examples/output/green-cyclic-spirals.gif?raw=true "Cyclic spirals preset")
+
 ## Changelog
 
 Please see the [releases](releases) for more information on what has changed recently.
