@@ -80,6 +80,11 @@ The `/examples` folder contains some scripts to generate different kinds of imag
 ![static gif from lavalamp preset](examples/output/blue-lavalamp.gif?raw=true "Lavalamp preset")
 ![static gif from cyclic spirals preset](examples/output/green-cyclic-spirals.gif?raw=true "Cyclic spirals preset")
 
+![animated gif from squarish spirals preset](/examples/output/red-looping-squarish-spirals.gif?raw=true "Looping squarish spirals preset")
+![animated looping gif from cyclic spirals preset](/examples/output/yellow-looping-cyclic-spirals.gif?raw=true "Looping cyclic spirals preset")
+![animated looping gif from cca preset](/examples/output/blue-looping-cca.gif?raw=true "Looping CCA preset")
+![animated looping gif from 313 preset](/examples/output/pink-looping-313.gif?raw=true "Looping 313 preset")
+
 ## Changelog
 
 Please see the [releases](releases) for more information on what has changed recently.
