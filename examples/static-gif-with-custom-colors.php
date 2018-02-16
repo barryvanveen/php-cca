@@ -20,7 +20,7 @@ $config->imageColors([
 ]);
 
 $runner = new Runner($config);
-$state = $runner->getSingleState($maxIterations);
+$state = $runner->getLastState($maxIterations);
 
 $image = Gif::createFromState($config, $state);
 $image->save($output);

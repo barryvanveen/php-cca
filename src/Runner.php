@@ -26,7 +26,7 @@ class Runner
      *
      * @return State
      */
-    public function getSingleState(int $numIterations): State
+    public function getLastState(int $numIterations): State
     {
         do {
             $state = $this->cca->getState();

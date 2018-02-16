@@ -16,7 +16,7 @@ $config->columns(400);
 $config->imageCellSize(5);
 
 $runner = new Runner($config);
-$state = $runner->getSingleState($maxIterations);
+$state = $runner->getLastState($maxIterations);
 
 $image = Png::createFromState($config, $state);
 $image->save($output);

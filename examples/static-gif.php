@@ -16,7 +16,7 @@ $config->columns(100);
 $config->imageCellSize(5);
 
 $runner = new Runner($config);
-$state = $runner->getSingleState($maxIterations);
+$state = $runner->getLastState($maxIterations);
 
 $image = Gif::createFromState($config, $state);
 $image->save($output);

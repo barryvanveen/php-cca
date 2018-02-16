@@ -27,7 +27,7 @@ class StaticGifTest extends FunctionalTestCase
         $config->imageHue(1);
 
         $runner = new Runner($config);
-        $state = $runner->getSingleState(3);
+        $state = $runner->getLastState(3);
 
         $this->assertFileNotExists($this->getImageFilename());
 
@@ -55,7 +55,7 @@ class StaticGifTest extends FunctionalTestCase
         $config->imageHue(1);
 
         $runner = new Runner($config);
-        $state = $runner->getSingleState(3);
+        $state = $runner->getLastState(3);
 
         $this->assertFileNotExists($this->getImageFilename());
 
