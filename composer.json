@@ -1,14 +1,17 @@
 {
     "name": "barryvanveen/php-cca",
     "type": "library",
-    "description": "Create two-dimensional Cyclic Cellular Automaton with PHP",
+    "description": "Create two-dimensional Cyclic Cellular Automaton with PHP. Export results as (animated) images. Includes presets of working rules.",
     "keywords": [
         "barryvanveen",
         "php-cca",
         "cyclic",
         "cellular",
         "automaton",
-        "automata"
+        "automata",
+        "animated",
+        "gif",
+        "png"
     ],
     "homepage": "https://github.com/barryvanveen/php-cca",
     "license": "MIT",
@@ -51,8 +54,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "suggest": {
-        "barryvanveen/php-cca-cli": "CLI interface for generating images of CCAs."
     }
 }
