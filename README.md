@@ -7,11 +7,8 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-This project is just started and still in active development. The idea is to create two-dimensional Cyclic Cellular 
-Automaton (CCA) in PHP. The final goal is to create images and possibly animated gifs of a CCA given a certain 
-configuration.
 
-More information about Cyclic Cellular Automaton can be found at [Wikipedia](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton).
+This project can be used to run two-dimensional [Cyclic Cellular Automaton](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton) (CCA). Results can be saved as static images of animated gifs.  The configuration (of the CCA or images) can be set using various presets or customized to your own liking. 
 
 ## Install
 
@@ -23,14 +20,60 @@ $ composer require barryvanveen/php-cca
 
 ## Usage
 
+### Creating a configuration
+
 ``` php
-$skeleton = new Barryvanveen\PhpCca();
-echo $skeleton->echoPhrase('Hello, League!');
+// from a preset
+$config = \Barryvanveen\CCA\Config::createFromPreset(
+    \Barryvanveen\CCA\Config\Presets::PRESET_CCA
+);
+$config->rows(123);
+ 
+// or build it from scratch
+$config = new \Barryvanveen\CCA\Config();
+$config->states(3);
+$config->rows(123);
 ```
 
-## Change log
+The Config class has methods for all available configuration options. In `\Barryvanveen\CCA\Config\Presets.php` you can find all available presets.
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+### Running the CCA 
+
+```php
+// get a single state
+$runner = new \Barryvanveen\CCA\Runner($config);
+$state = $runner->getLastState(234);
+ 
+// get a set of states
+$runner = new \Barryvanveen\CCA\Runner($config);
+$states = $runner->getFirstStates(123);
+ 
+// get a set of states that loops (if possible)
+$runner = new \Barryvanveen\CCA\Runner($config);
+$states = $runner->getFirstLoop(500);  
+```
+
+The Runner is probably sufficient for most scenarios but if you want more control you can control the CCA yourself. Just look at the Runner implementation to get an idea of how this works.
+
+### Generating images
+
+```php
+// create a static Gif from a single stae
+$image = \Barryvanveen\CCA\Generators\Gif::createFromState($config, $state);
+$image->save('/path/to/output.gif');
+ 
+// create a static Png from a single state
+$image = \Barryvanveen\CCA\Generators\Png::createFromState($config, $state);
+$image->save('/path/to/output.png');
+ 
+// create an animated Gif
+$image = \Barryvanveen\CCA\Generators\AnimatedGif::createFromStates($config, $states);
+$image->save('/path/to/output.gif');
+```
+
+## Changelog
+
+Please see the [releases](releases) for more information on what has changed recently.
 
 ## Testing
 
