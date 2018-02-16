@@ -13,6 +13,8 @@ class Presets
     const PRESET_CCA = 'cca';
     const PRESET_CUBISM = 'cubism';
     const PRESET_CYCLIC_SPIRALS = 'cyclic_spirals';
+    const PRESET_PERFECT = 'perfect';
+    const PRESET_SQUARISH_SPIRALS = 'squarish_spirals';
 
     const VALID_PRESETS = [
         Presets::PRESET_313,
@@ -22,6 +24,8 @@ class Presets
         Presets::PRESET_CCA,
         Presets::PRESET_CUBISM,
         Presets::PRESET_CYCLIC_SPIRALS,
+        Presets::PRESET_PERFECT,
+        Presets::PRESET_SQUARISH_SPIRALS,
     ];
 
     protected static $preset_values = [
@@ -66,6 +70,18 @@ class Presets
             Options::NEIGHBORHOOD_TYPE => NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE,
             Options::STATES => 8,
             Options::THRESHOLD => 5,
+        ],
+        self::PRESET_PERFECT => [
+            Options::NEIGHBORHOOD_SIZE => 1,
+            Options::NEIGHBORHOOD_TYPE => NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE,
+            Options::STATES => 4,
+            Options::THRESHOLD => 3,
+        ],
+        self::PRESET_SQUARISH_SPIRALS => [
+            Options::NEIGHBORHOOD_SIZE => 2,
+            Options::NEIGHBORHOOD_TYPE => NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN,
+            Options::STATES => 6,
+            Options::THRESHOLD => 2,
         ],
     ];
 
