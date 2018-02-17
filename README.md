@@ -18,6 +18,8 @@ Via Composer
 $ composer require barryvanveen/php-cca
 ```
 
+*Please note that you need PHP 7.0 or higher and the GD extension to install this package.*
+
 ## Usage
 
 ### Creating a configuration
@@ -102,6 +104,14 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT
 ## Security
 
 If you discover any security related issues, please email barryvanveen@gmail.com instead of using the issue tracker.
+
+## Acknowledgments
+
+All preset configurations are taken from [http://psoup.math.wisc.edu/mcell/rullex_cycl.html](http://psoup.math.wisc.edu/mcell/rullex_cycl.html) which is the work of Mirek Wójtowicz.
+
+The colors for the images are generated using [talesoft/phim](https://github.com/Talesoft/phim) which is a project by Torben Köhn.
+
+Animated gifs are created using [lunakid/anim-gif](https://github.com/lunakid/AnimGif).
 
 ## Credits
 
