@@ -92,7 +92,8 @@ class Config
     }
 
     /**
-     * Set or get the colors that are used when generating images from states.
+     * Set or get the colors that are used when generating images from states. Setting specific colors
+     * overrides the hue configuration.
      *
      * @param RgbColor[] $colors
      *
@@ -125,7 +126,8 @@ class Config
     }
 
     /**
-     * Set or get the hue (color) that is used when generating images from states.
+     * Set or get the hue (color) that is used when generating images from states. Colors
+     * that are set using the imageColors-method take precedence over the hue.
      *
      * @param int $hue
      *
