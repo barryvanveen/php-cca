@@ -1,8 +1,8 @@
 <?php
 
-namespace Barryvanveen\CCA\Tests\Functional;
+namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
-abstract class FunctionalTestCase extends \PHPUnit\Framework\TestCase implements FunctionalTestCaseInterface
+abstract class ImageTestCase extends \PHPUnit\Framework\TestCase implements ImageTestCaseInterface
 {
     public function setUp()
     {
