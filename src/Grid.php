@@ -59,11 +59,6 @@ class Grid
         }
     }
 
-    public function getState(Coordinate $coordinate): int
-    {
-        return $this->cells[$coordinate->position()]->getState();
-    }
-
     public function toArray(): array
     {
         $states = [];

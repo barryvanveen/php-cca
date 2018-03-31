@@ -1,18 +1,17 @@
 <?php
 
-namespace Barryvanveen\CCA\Tests\Unit;
+namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Generators\Gif;
 use Barryvanveen\CCA\Runner;
-use Barryvanveen\CCA\Tests\Functional\FunctionalTestCase;
 
 /**
  * @covers \Barryvanveen\CCA\Generators\Gif
  * @covers \Barryvanveen\CCA\Generators\Image
  */
-class StaticGifTest extends FunctionalTestCase
+class StaticGifTest extends ImageTestCase
 {
     /**
      * @test
