@@ -16,7 +16,7 @@ class Neighborhood
      * @param Config     $config
      * @param Coordinate $coordinate
      */
-    protected function __construct(Config $config, Coordinate $coordinate)
+    public function __construct(Config $config, Coordinate $coordinate)
     {
         $this->config = $config;
 
@@ -24,25 +24,11 @@ class Neighborhood
     }
 
     /**
-     * @param Config     $config
-     * @param Coordinate $coordinate
-     *
-     * @return Coordinate[]
-     * @throws \Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException
-     */
-    public static function createNeighborhoodForCoordinate(Config $config, Coordinate $coordinate): array
-    {
-        $instance = new self($config, $coordinate);
-
-        return $instance->getNeighborhood();
-    }
-
-    /**
      * @return Coordinate[]
      *
      * @throws \Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException
      */
-    protected function getNeighborhood(): array
+    public function getNeighbors(): array
     {
         $neighborhoodType = $this->config->neighborhoodType();
 
