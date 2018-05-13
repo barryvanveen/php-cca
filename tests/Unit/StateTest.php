@@ -3,8 +3,7 @@
 namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\Config;
-use Barryvanveen\CCA\Grid;
-use Barryvanveen\CCA\GridBuilder;
+use Barryvanveen\CCA\Factories\GridFactory;
 use Barryvanveen\CCA\State;
 
 /**
@@ -21,7 +20,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
         $config->rows(10);
         $config->columns(10);
 
-        $grid = new Grid($config, new GridBuilder($config));
+        $grid = GridFactory::create($config);
 
         $state = new State($grid);
 
@@ -37,7 +36,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
         $config->rows(10);
         $config->columns(10);
 
-        $grid = new Grid($config, new GridBuilder($config));
+        $grid = GridFactory::create($config);
 
         $state = new State($grid);
 
@@ -53,7 +52,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
         $config->rows(10);
         $config->columns(10);
 
-        $grid = new Grid($config, new GridBuilder($config));
+        $grid = GridFactory::create($config);
 
         $state = new State($grid);
 

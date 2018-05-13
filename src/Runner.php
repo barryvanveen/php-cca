@@ -3,6 +3,7 @@
 namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
+use Barryvanveen\CCA\Factories\GridFactory;
 
 class Runner
 {
@@ -16,9 +17,7 @@ class Runner
     {
         $this->config = $config;
 
-        $grid = new Grid($this->config, new GridBuilder($this->config));
-
-        $this->cca = new CCA($this->config, $grid);
+        $this->cca = new CCA($this->config, GridFactory::create($config));
     }
 
     /**

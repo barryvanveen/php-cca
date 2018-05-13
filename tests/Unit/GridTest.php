@@ -6,30 +6,10 @@ use Barryvanveen\CCA\Cell;
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Grid;
-use Barryvanveen\CCA\GridBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class GridTest extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * @test
-     *
-     * @covers \Barryvanveen\CCA\Grid::__construct()
-     */
-    public function itConstructsTheGridUsingTheGridBuilder()
-    {
-        $config = new Config();
-        $config->rows(5);
-        $config->columns(5);
-
-        /** @var GridBuilder|MockObject $gridBuilderStub */
-        $gridBuilderStub = $this->createMock(GridBuilder::class);
-        $gridBuilderStub->expects($this->once())->method('getCells')->will($this->returnValue([]));
-        $gridBuilderStub->expects($this->once())->method('getNeighbors')->will($this->returnValue([]));
-
-        new Grid($config, $gridBuilderStub);
-    }
-
     /**
      * @test
      *
@@ -41,18 +21,14 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $config->rows(5);
         $config->columns(5);
 
-        /** @var GridBuilder|MockObject $gridBuilderStub */
-        $gridBuilderStub = $this->getGridBuilderStubForComputeNextState($config);
+        /** @var Grid|MockObject $gridStub */
+        $gridStub = $this->getGridStubForComputeNextState($config);
 
-        $grid = new Grid($config, $gridBuilderStub);
-
-        $grid->computeNextState();
+        $gridStub->computeNextState();
     }
 
-    protected function getGridBuilderStubForComputeNextState(Config $config)
+    protected function getGridStubForComputeNextState(Config $config)
     {
-        $stub = $this->createMock(GridBuilder::class);
-
         $cells = [];
         $neighbors = [];
 
@@ -72,10 +48,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
             }
         }
 
-        $stub->method('getCells')->willReturn($cells);
-        $stub->method('getNeighbors')->willReturn($neighbors);
-
-        return $stub;
+        return new Grid($config, $cells, $neighbors);
     }
 
     /**
@@ -89,18 +62,14 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $config->rows(5);
         $config->columns(5);
 
-        /** @var GridBuilder|MockObject $gridBuilderStub */
-        $gridBuilderStub = $this->getGridBuilderStubForGetStatesForCoordinates($config);
+        /** @var Grid|MockObject $gridStub */
+        $gridStub = $this->getGridStubForGetStatesForCoordinates($config);
 
-        $grid = new Grid($config, $gridBuilderStub);
-
-        $grid->computeNextState();
+        $gridStub->computeNextState();
     }
 
-    protected function getGridBuilderStubForGetStatesForCoordinates(Config $config)
+    protected function getGridStubForGetStatesForCoordinates(Config $config)
     {
-        $stub = $this->createMock(GridBuilder::class);
-
         $cells = [];
         $neighbors = [];
 
@@ -131,10 +100,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         // set expection for cell 0
         $cells[0]->expects($this->once())->method('computeNextState')->with([123, 234, 345]);
 
-        $stub->method('getCells')->willReturn($cells);
-        $stub->method('getNeighbors')->willReturn($neighbors);
-
-        return $stub;
+        return new Grid($config, $cells, $neighbors);
     }
 
     /**
@@ -148,18 +114,14 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $config->rows(5);
         $config->columns(5);
 
-        /** @var GridBuilder|MockObject $gridBuilderStub */
-        $gridBuilderStub = $this->getGridBuilderStubForSetNextState($config);
+        /** @var Grid|MockObject $gridStub */
+        $gridStub = $this->getGridStubForSetNextState($config);
 
-        $grid = new Grid($config, $gridBuilderStub);
-
-        $grid->setNextState();
+        $gridStub->setNextState();
     }
 
-    protected function getGridBuilderStubForSetNextState(Config $config)
+    protected function getGridStubForSetNextState(Config $config)
     {
-        $stub = $this->createMock(GridBuilder::class);
-
         $cells = [];
         $neighbors = [];
 
@@ -178,10 +140,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
             }
         }
 
-        $stub->method('getCells')->willReturn($cells);
-        $stub->method('getNeighbors')->willReturn($neighbors);
-
-        return $stub;
+        return new Grid($config, $cells, $neighbors);
     }
 
     /**
@@ -195,22 +154,18 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $config->rows(5);
         $config->columns(5);
 
-        /** @var GridBuilder|MockObject $gridBuilderStub */
-        $gridBuilderStub = $this->getGridBuilderStubForToArray($config);
+        /** @var Grid|MockObject $gridStub */
+        $gridStub = $this->getGridStubForToArray($config);
 
-        $grid = new Grid($config, $gridBuilderStub);
-
-        $array = $grid->toArray();
+        $array = $gridStub->toArray();
 
         $this->assertCount(25, $array);
         $this->assertEquals(1000, $array[0]);
         $this->assertEquals(1024, $array[24]);
     }
 
-    protected function getGridBuilderStubForToArray(Config $config)
+    protected function getGridStubForToArray(Config $config)
     {
-        $stub = $this->createMock(GridBuilder::class);
-
         $cells = [];
         $neighbors = [];
 
@@ -230,15 +185,13 @@ class GridTest extends \PHPUnit\Framework\TestCase
             }
         }
 
-        $stub->method('getCells')->willReturn($cells);
-        $stub->method('getNeighbors')->willReturn($neighbors);
-
-        return $stub;
+        return new Grid($config, $cells, $neighbors);
     }
 
     /**
      * @test
      *
+     * @covers \Barryvanveen\CCA\Grid::__construct()
      * @covers \Barryvanveen\CCA\Grid::__toString()
      */
     public function itCanBeConvertedToAString()
@@ -247,12 +200,10 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $config->rows(5);
         $config->columns(5);
 
-        /** @var GridBuilder|MockObject $gridBuilderStub */
-        $gridBuilderStub = $this->getGridBuilderStubForToString($config);
+        /** @var Grid|MockObject $gridStub */
+        $gridStub = $this->getGridStubForToString($config);
 
-        $grid = new Grid($config, $gridBuilderStub);
-
-        $string = (string) $grid;
+        $string = (string) $gridStub;
 
         $expected = "  0 1 2 3 4 
 0 1000 1001 1002 1003 1004 
@@ -266,10 +217,8 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $string);
     }
 
-    protected function getGridBuilderStubForToString(Config $config)
+    protected function getGridStubForToString(Config $config)
     {
-        $stub = $this->createMock(GridBuilder::class);
-
         $cells = [];
         $neighbors = [];
 
@@ -289,9 +238,6 @@ class GridTest extends \PHPUnit\Framework\TestCase
             }
         }
 
-        $stub->method('getCells')->willReturn($cells);
-        $stub->method('getNeighbors')->willReturn($neighbors);
-
-        return $stub;
+        return new Grid($config, $cells, $neighbors);
     }
 }

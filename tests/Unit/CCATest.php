@@ -4,8 +4,8 @@ namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\CCA;
 use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Factories\GridFactory;
 use Barryvanveen\CCA\Grid;
-use Barryvanveen\CCA\GridBuilder;
 use Barryvanveen\CCA\State;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -24,7 +24,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
         $config->columns(5);
         $config->states(3);
 
-        $cca = new CCA($config, new Grid($config, new GridBuilder($config)));
+        $cca = new CCA($config, GridFactory::create($config));
 
         $generation = $cca->cycle(0);
 
@@ -99,7 +99,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
         $config->columns(5);
         $config->states(3);
 
-        $cca = new CCA($config, new Grid($config, new GridBuilder($config)));
+        $cca = new CCA($config, GridFactory::create($config));
 
         $state = $cca->getState();
 
