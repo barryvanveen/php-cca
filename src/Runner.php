@@ -16,7 +16,9 @@ class Runner
     {
         $this->config = $config;
 
-        $this->cca = new CCA($this->config);
+        $grid = new Grid($this->config, new GridBuilder($this->config));
+
+        $this->cca = new CCA($this->config, $grid);
     }
 
     /**

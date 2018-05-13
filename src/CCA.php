@@ -13,11 +13,11 @@ class CCA
     /** @var int */
     protected $generation = 0;
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, Grid $grid)
     {
         $this->config = $config;
 
-        $this->grid = new Grid($this->config, new GridBuilder($this->config));
+        $this->grid = $grid;
     }
 
     public function cycle(int $cycles = 1): int
