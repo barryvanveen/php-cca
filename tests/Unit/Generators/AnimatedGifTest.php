@@ -4,6 +4,7 @@ namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
+use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\AnimatedGif;
 use Barryvanveen\CCA\Runner;
 use GifCreator\AnimGif;
@@ -26,7 +27,7 @@ class AnimatedGifTest extends ImageTestCase
         $config->imageCellSize(1);
         $config->imageHue(1);
 
-        $runner = new Runner($config);
+        $runner = new Runner($config, CCAFactory::create($config));
         $states = $runner->getFirstStates(3);
 
         $this->assertFileNotExists($this->getImageFilename());
@@ -54,7 +55,7 @@ class AnimatedGifTest extends ImageTestCase
         $config->imageCellSize(1);
         $config->imageHue(1);
 
-        $runner = new Runner($config);
+        $runner = new Runner($config, CCAFactory::create($config));
         $states = $runner->getFirstStates(3);
 
         $image = AnimatedGif::createFromStates($config, $states);

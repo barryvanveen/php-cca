@@ -4,6 +4,7 @@ namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
+use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Png;
 use Barryvanveen\CCA\Runner;
 
@@ -25,7 +26,7 @@ class StaticPngTest extends ImageTestCase
         $config->imageCellSize(1);
         $config->imageHue(1);
 
-        $runner = new Runner($config);
+        $runner = new Runner($config, CCAFactory::create($config));
         $state = $runner->getLastState(3);
 
         $this->assertFileNotExists($this->getImageFilename());

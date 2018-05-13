@@ -1,6 +1,7 @@
 <?php
 
 use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\AnimatedGif;
 use Barryvanveen\CCA\Runner;
 
@@ -12,7 +13,7 @@ $output = __DIR__."/output/looping-313.gif";
 
 $config = Config::createFromPreset($preset);
 
-$runner = new Runner($config);
+$runner = new Runner($config, CCAFactory::create($config));
 $states = $runner->getFirstLoop($maxIterations);
 
 $image = AnimatedGif::createFromStates($config, $states);

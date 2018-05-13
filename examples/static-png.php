@@ -1,6 +1,7 @@
 <?php
 
 use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Png;
 use Barryvanveen\CCA\Runner;
 
@@ -15,7 +16,7 @@ $config->rows(150);
 $config->columns(400);
 $config->imageCellSize(5);
 
-$runner = new Runner($config);
+$runner = new Runner($config, CCAFactory::create($config));
 $state = $runner->getLastState($maxIterations);
 
 $image = Png::createFromState($config, $state);

@@ -5,6 +5,7 @@ namespace Barryvanveen\CCA\Tests\Unit\Generators;
 use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
+use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\AnimatedGif;
 use Barryvanveen\CCA\Runner;
 
@@ -27,7 +28,7 @@ class LoopingAnimatedGifTest extends ImageTestCase
 
         $this->expectException(LoopNotFoundException::class);
 
-        $runner = new Runner($config);
+        $runner = new Runner($config, CCAFactory::create($config));
         $runner->getFirstLoop(1);
     }
 
@@ -42,7 +43,7 @@ class LoopingAnimatedGifTest extends ImageTestCase
         $config->rows(10);
         $config->imageCellSize(1);
 
-        $runner = new Runner($config);
+        $runner = new Runner($config, CCAFactory::create($config));
         $states = $runner->getFirstLoop(500);
 
         $gif = AnimatedGif::createFromStates($config, $states);

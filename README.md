@@ -42,16 +42,19 @@ The Config class has methods for all available configuration options. In `\Barry
 ### Running the CCA 
 
 ```php
+use \Barryvanveen\CCA\Runner;
+use \Barryvanveen\CCA\Factories\CCAFactory;
+
 // get a single state
-$runner = new \Barryvanveen\CCA\Runner($config);
+$runner = new Runner($config, CCAFactory::create($config));
 $state = $runner->getLastState(234);
  
 // get a set of states
-$runner = new \Barryvanveen\CCA\Runner($config);
+$runner = new Runner($config, CCAFactory::create($config));
 $states = $runner->getFirstStates(123);
  
 // get a set of states that loops (if possible)
-$runner = new \Barryvanveen\CCA\Runner($config);
+$runner = new Runner($config, CCAFactory::create($config));
 $states = $runner->getFirstLoop(500);  
 ```
 

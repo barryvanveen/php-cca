@@ -3,7 +3,6 @@
 namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
-use Barryvanveen\CCA\Factories\GridFactory;
 
 class Runner
 {
@@ -13,11 +12,11 @@ class Runner
     /** @var CCA */
     protected $cca;
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, CCA $cca)
     {
         $this->config = $config;
 
-        $this->cca = new CCA($this->config, GridFactory::create($config));
+        $this->cca = $cca;
     }
 
     /**
@@ -78,7 +77,7 @@ class Runner
             $hash = $state->toHash();
 
             $cycleEnd = false;
-            if ($cycleStart = array_search($hash, $hashes)) {
+            if ($cycleStart = array_search($hash, $hashes) !== false) {
                 $cycleEnd = count($states)+1;
             }
 

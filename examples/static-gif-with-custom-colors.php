@@ -1,6 +1,7 @@
 <?php
 
 use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Gif;
 use Barryvanveen\CCA\Runner;
 use Phim\Color;
@@ -19,7 +20,7 @@ $config->imageColors([
    Color::get(Color::CHERRYBLOSSOMPINK),
 ]);
 
-$runner = new Runner($config);
+$runner = new Runner($config, CCAFactory::create($config));
 $state = $runner->getLastState($maxIterations);
 
 $image = Gif::createFromState($config, $state);

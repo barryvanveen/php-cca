@@ -1,0 +1,202 @@
+<?php
+
+namespace Barryvanveen\CCA\Tests\Unit;
+
+use Barryvanveen\CCA\CCA;
+use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
+use Barryvanveen\CCA\Factories\GridFactory;
+use Barryvanveen\CCA\Runner;
+use Barryvanveen\CCA\State;
+use PHPUnit\Framework\MockObject\MockObject;
+
+class RunnerTest extends \PHPUnit\Framework\TestCase
+{
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Runner::__construct()
+     * @covers \Barryvanveen\CCA\Runner::getLastState()
+     */
+    public function itReturnsTheLastState()
+    {
+        $config = new Config();
+        $config->rows(5);
+        $config->columns(5);
+        $config->states(3);
+
+        /** @var CCA|MockObject $mockCCA */
+        $mockCCA = $this->createMock(CCA::class);
+
+        $config->seed(1);
+        $state1 = new State(GridFactory::create($config));
+        $config->seed(2);
+        $state2 = new State(GridFactory::create($config));
+        $config->seed(3);
+        $state3 = new State(GridFactory::create($config));
+
+        $mockCCA->expects($this->exactly(3))
+            ->method('getState')
+            ->willReturnOnConsecutiveCalls(
+                $state1,
+                $state2,
+                $state3
+            );
+
+        $mockCCA->expects($this->exactly(3))
+            ->method('cycle')
+            ->willReturnOnConsecutiveCalls(
+                1,
+                2,
+                3
+            );
+
+        $runner = new Runner($config, $mockCCA);
+
+        $lastState = $runner->getLastState(3);
+
+        $this->assertEquals($lastState, $state3);
+    }
+
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Runner::getFirstStates()
+     */
+    public function itReturnsTheFirstStates()
+    {
+        $config = new Config();
+        $config->rows(5);
+        $config->columns(5);
+        $config->states(3);
+
+        /** @var CCA|MockObject $mockCCA */
+        $mockCCA = $this->createMock(CCA::class);
+
+        $config->seed(1);
+        $state1 = new State(GridFactory::create($config));
+        $config->seed(2);
+        $state2 = new State(GridFactory::create($config));
+        $config->seed(3);
+        $state3 = new State(GridFactory::create($config));
+
+        $mockCCA->expects($this->exactly(3))
+            ->method('getState')
+            ->willReturnOnConsecutiveCalls(
+                $state1,
+                $state2,
+                $state3
+            );
+
+        $mockCCA->expects($this->exactly(3))
+            ->method('cycle')
+            ->willReturnOnConsecutiveCalls(
+                1,
+                2,
+                3
+            );
+
+        $runner = new Runner($config, $mockCCA);
+
+        $states = $runner->getFirstStates(3);
+
+        $this->assertEquals($states, [$state1, $state2, $state3]);
+    }
+
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Runner::getFirstLoop()
+     */
+    public function itReturnsTheFirstLoop()
+    {
+        $config = new Config();
+        $config->rows(5);
+        $config->columns(5);
+        $config->states(3);
+
+        /** @var CCA|MockObject $mockCCA */
+        $mockCCA = $this->createMock(CCA::class);
+
+        // $state1 and $state3 are equal -> first loop should [$state1 $state2]
+
+        $config->seed(1);
+        $state1 = new State(GridFactory::create($config));
+        $config->seed(2);
+        $state2 = new State(GridFactory::create($config));
+        $config->seed(1);
+        $state3 = new State(GridFactory::create($config));
+
+        $mockCCA->expects($this->exactly(3))
+            ->method('getState')
+            ->willReturnOnConsecutiveCalls(
+                $state1,
+                $state2,
+                $state3
+            );
+
+        $mockCCA->expects($this->exactly(2))
+            ->method('cycle')
+            ->willReturnOnConsecutiveCalls(
+                1,
+                2,
+                3
+            );
+
+        $runner = new Runner($config, $mockCCA);
+
+        $expected = [];
+        $expected[] = $state2;
+        $expected[] = $state1;
+
+        $states = $runner->getFirstLoop(3);
+
+        $this->assertEquals($states, $expected);
+    }
+
+
+    /**
+     * @test
+     *
+     * @covers \Barryvanveen\CCA\Runner::getFirstLoop()
+     */
+    public function itFailsToFindALoopAndThrowsAnException()
+    {
+        $config = new Config();
+        $config->rows(5);
+        $config->columns(5);
+        $config->states(3);
+
+        /** @var CCA|MockObject $mockCCA */
+        $mockCCA = $this->createMock(CCA::class);
+
+        $config->seed(1);
+        $state1 = new State(GridFactory::create($config));
+        $config->seed(2);
+        $state2 = new State(GridFactory::create($config));
+        $config->seed(3);
+        $state3 = new State(GridFactory::create($config));
+
+        $mockCCA->expects($this->exactly(3))
+            ->method('getState')
+            ->willReturnOnConsecutiveCalls(
+                $state1,
+                $state2,
+                $state3
+            );
+
+        $mockCCA->expects($this->exactly(3))
+            ->method('cycle')
+            ->willReturnOnConsecutiveCalls(
+                1,
+                2,
+                3
+            );
+
+        $runner = new Runner($config, $mockCCA);
+
+        $this->expectException(LoopNotFoundException::class);
+
+        $runner->getFirstLoop(3);
+    }
+}
