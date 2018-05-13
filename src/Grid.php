@@ -13,21 +13,13 @@ class Grid
     /** @var Coordinate[][] */
     protected $neighbors = [];
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, GridBuilder $builder)
     {
         $this->config = $config;
 
-        for ($row = 0; $row < $this->config->rows(); $row++) {
-            for ($column = 0; $column < $this->config->columns(); $column++) {
-                $coordinate = new Coordinate($row, $column, $this->config->columns());
+        $this->cells = $builder->getCells();
 
-                $this->cells[$coordinate->position()] = new Cell($this->config);
-
-                $neighborhood = new Neighborhood($this->config, $coordinate);
-
-                $this->neighbors[$coordinate->position()] = $neighborhood->getNeighbors();
-            }
-        }
+        $this->neighbors = $builder->getNeighbors();
     }
 
     public function computeNextState()
