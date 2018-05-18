@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed code style errors
 - Fixed errors resulting from strict_types=1
 - Fixed error in finding loop in Barryvanveen\CCA\Runner
+- Fixed possible bug with mixed types in Barryvanveen\CCA\Runner
 
 ## [1.0.1] - 2018-03-31
 ### Changed

@@ -88,7 +88,7 @@ class Runner
             $hashes[] = $hash;
 
             if ($cycleEnd !== false) {
-                $states = array_slice($states, $cycleStart, $cycleEnd);
+                $states = array_slice($states, (int) $cycleStart, $cycleEnd);
 
                 return $states;
             }
