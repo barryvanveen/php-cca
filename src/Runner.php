@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
@@ -77,8 +79,9 @@ class Runner
             $hash = $state->toHash();
 
             $cycleEnd = false;
-            if ($cycleStart = array_search($hash, $hashes) !== false) {
-                $cycleEnd = count($states)+1;
+            $cycleStart = array_search($hash, $hashes);
+            if ($cycleStart !== false) {
+                $cycleEnd = count($states);
             }
 
             $states[] = $state;

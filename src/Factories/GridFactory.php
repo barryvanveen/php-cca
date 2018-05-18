@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Factories;
 
 use Barryvanveen\CCA\Cell;

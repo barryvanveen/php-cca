@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Added `Barryvanveen\CCA\Factories\CCAFactory`.
 - Added `Barryvanveen\CCA\Factories\GridFactory`.
 - Added tests for all classes that weren't fully tested.
+- Add stricter code style checking
+- Enforce declaration of strict_types=1
 ### Changed
 - An instance of `Barryvanveen\CCA\CCA` should now be passed to `Barryvanveen\CCA\Runner`.
 - An instance of `Barryvanveen\CCA\Grid` should now be passed to `Barryvanveen\CCA\CCA`.
@@ -14,6 +16,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Deprecated
 ### Removed
 ### Fixed
+- Fixed code style errors
+- Fixed errors resulting from strict_types=1
+- Fixed error in finding loop in Barryvanveen\CCA\Runner
 
 ## [1.0.1] - 2018-03-31
 ### Changed

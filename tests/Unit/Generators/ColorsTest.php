@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Tests\Generators;
 
 use Barryvanveen\CCA\Config;
@@ -43,7 +45,7 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
         $config = Config::createFromPreset(Config\Presets::PRESET_313);
         $config->states(3);
         $config->imageColors([
-            new RgbColor(0, 1, 2)
+            new RgbColor(0, 1, 2),
         ]);
 
         $this->expectException(InvalidColorsException::class);

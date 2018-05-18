@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\CCA;
@@ -146,11 +148,12 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
         $runner = new Runner($config, $mockCCA);
 
         $expected = [];
-        $expected[] = $state2;
         $expected[] = $state1;
+        $expected[] = $state2;
 
         $states = $runner->getFirstLoop(3);
 
+        $this->assertCount(2, $states);
         $this->assertEquals($states, $expected);
     }
 

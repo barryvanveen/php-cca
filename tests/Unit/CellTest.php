@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\Cell;
@@ -56,7 +58,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
         $currentState = $cell->getState();
 
         $nextState = $currentState + 1;
-        if ($nextState == 3) {
+        if ($nextState === 3) {
             $nextState = 0;
         }
 
