@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit;
 
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Config\NeighborhoodOptions;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Neighborhood;
+use Barryvanveen\CCA\OldConfig;
 
 /**
  * @covers \Barryvanveen\CCA\Neighborhood
@@ -18,10 +19,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsAnArray()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(10);
         $config->columns(10);
-        $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(1);
 
         $neighborhood = new Neighborhood(
@@ -37,10 +38,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectMooreNeighborhoodOfSize1()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(10);
         $config->columns(10);
-        $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(1);
 
         $neighborhood = new Neighborhood(
@@ -66,10 +67,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectMooreNeighborhoodOfSize2()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(10);
         $config->columns(10);
-        $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(2);
 
         $neighborhood = new Neighborhood(
@@ -111,10 +112,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectMooreNeighborhoodOfSize3()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(10);
         $config->columns(10);
-        $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
         $config->neighborhoodSize(3);
 
         $neighborhood = new Neighborhood(
@@ -130,10 +131,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectNeumannNeighborhoodOfSize1()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(10);
         $config->columns(10);
-        $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(1);
 
         $neighborhood = new Neighborhood(
@@ -155,10 +156,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectNeumannNeighborhoodOfSize2()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(10);
         $config->columns(10);
-        $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(2);
 
         $neighborhood = new Neighborhood(
@@ -188,10 +189,10 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectNeumannNeighborhoodOfSize3()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(10);
         $config->columns(10);
-        $config->neighborhoodType(Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
+        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
         $config->neighborhoodSize(3);
 
         $neighborhood = new Neighborhood(

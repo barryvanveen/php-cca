@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\CCA;
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
 use Barryvanveen\CCA\Factories\GridFactory;
+use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Runner;
 use Barryvanveen\CCA\State;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -22,7 +22,7 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheLastState()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -67,7 +67,7 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheFirstStates()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -112,7 +112,7 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheFirstLoop()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -165,7 +165,7 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      */
     public function itFailsToFindALoopAndThrowsAnException()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
         $config->states(3);

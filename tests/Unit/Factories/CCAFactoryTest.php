@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Barryvanveen\CCA\Tests\Unit\Factories;
 
 use Barryvanveen\CCA\CCA;
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Factories\CCAFactory;
+use Barryvanveen\CCA\OldConfig;
 
 class CCAFactoryTest extends \PHPUnit\Framework\TestCase
 {
@@ -17,7 +17,7 @@ class CCAFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsACCA()
     {
-        $config = new Config;
+        $config = new OldConfig;
         $config->rows(5);
         $config->columns(5);
         $config->states(3);

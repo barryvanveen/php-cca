@@ -13,7 +13,7 @@ use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
 use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use Phim\Color\RgbColor;
 
-class Config implements ConfigInterface
+class OldConfig implements ConfigInterface
 {
     protected $config = [
         Options::COLUMNS           => 48,

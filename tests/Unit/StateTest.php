@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit;
 
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Factories\GridFactory;
+use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\State;
 
 /**
@@ -18,7 +19,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsAnArray()
     {
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
+        $config = OldConfig::createFromPreset(Presets::PRESET_313);
         $config->rows(10);
         $config->columns(10);
 
@@ -34,7 +35,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsAHash()
     {
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
+        $config = OldConfig::createFromPreset(Presets::PRESET_313);
         $config->rows(10);
         $config->columns(10);
 
@@ -50,7 +51,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsAString()
     {
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
+        $config = OldConfig::createFromPreset(Presets::PRESET_313);
         $config->rows(10);
         $config->columns(10);
 

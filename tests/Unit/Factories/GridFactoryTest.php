@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit\Factories;
 
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Factories\GridFactory;
+use Barryvanveen\CCA\OldConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class GridFactoryTest extends \PHPUnit\Framework\TestCase
@@ -20,8 +20,8 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function itSeedsTheRandomNumbersOnConstruct()
     {
-        /** @var Config|MockObject $configMock */
-        $configMock = $this->getMockBuilder(Config::class)
+        /** @var OldConfig|MockObject $configMock */
+        $configMock = $this->getMockBuilder(OldConfig::class)
             ->setMethods(['seed'])
             ->getMock();
 
@@ -42,7 +42,7 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsDifferentStatesForDifferentSeeds()
     {
-        $config = new Config;
+        $config = new OldConfig;
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -65,7 +65,7 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsEqualStatesForEqualSeeds()
     {
-        $config = new Config;
+        $config = new OldConfig;
         $config->rows(5);
         $config->columns(5);
         $config->states(3);

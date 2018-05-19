@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Png;
+use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Runner;
 
 /**
@@ -21,7 +21,7 @@ class StaticPngTest extends ImageTestCase
      */
     public function itCreatesAStaticGifImage()
     {
-        $config = Config::createFromPreset(Presets::PRESET_CCA);
+        $config = OldConfig::createFromPreset(Presets::PRESET_CCA);
         $config->seed(1);
         $config->columns(5);
         $config->rows(10);

@@ -1,17 +1,18 @@
 <?php
 
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Config\Presets;
+use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Png;
 use Barryvanveen\CCA\Runner;
 
 require __DIR__."/../vendor/autoload.php";
 
-$preset = Config\Presets::PRESET_CUBISM;
+$preset = Presets::PRESET_CUBISM;
 $maxIterations = 100;
 $output = __DIR__."/output/static-cubism.png";
 
-$config = Config::createFromPreset($preset);
+$config = OldConfig::createFromPreset($preset);
 $config->rows(150);
 $config->columns(400);
 $config->imageCellSize(5);

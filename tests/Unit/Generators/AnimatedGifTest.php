@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\AnimatedGif;
+use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Runner;
 use GifCreator\AnimGif;
 
@@ -22,7 +22,7 @@ class AnimatedGifTest extends ImageTestCase
      */
     public function itCreatesAnAnimatedGifImage()
     {
-        $config = Config::createFromPreset(Presets::PRESET_CCA);
+        $config = OldConfig::createFromPreset(Presets::PRESET_CCA);
         $config->seed(1);
         $config->columns(10);
         $config->rows(10);
@@ -50,7 +50,7 @@ class AnimatedGifTest extends ImageTestCase
      */
     public function itReturnsAnAnimatedGifInstance()
     {
-        $config = Config::createFromPreset(Presets::PRESET_CCA);
+        $config = OldConfig::createFromPreset(Presets::PRESET_CCA);
         $config->seed(1);
         $config->columns(10);
         $config->rows(10);
