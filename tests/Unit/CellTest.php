@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\Cell;
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\OldConfig;
 
 /**
  * @covers \Barryvanveen\CCA\Cell
@@ -17,7 +17,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsARandomState()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->states(3);
 
         $cell = new Cell($config);
@@ -32,7 +32,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
      */
     public function itDoesNotChangeStateIfThresholdIsNotMet()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->states(3);
         $config->threshold(1);
 
@@ -50,7 +50,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
      */
     public function itChangesStateIfThresholdIsMet()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->states(3);
         $config->threshold(1);
 
@@ -73,7 +73,7 @@ class CellTest extends \PHPUnit\Framework\TestCase
      */
     public function itOutputsToString()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->states(3);
         $config->threshold(1);
 

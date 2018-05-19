@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit\Config;
 
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Config\Options;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\InvalidPresetException;
+use Barryvanveen\CCA\OldConfig;
 
 /**
  * @covers \Barryvanveen\CCA\Config\Presets
@@ -38,7 +39,7 @@ class PresetsTest extends \PHPUnit\Framework\TestCase
      */
     public function allPresetsShouldReturnValidConfigOptionsAndValues()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         foreach (Presets::VALID_PRESETS as $preset) {
             $presetOptions = Presets::getPresetConfig($preset);
@@ -46,7 +47,7 @@ class PresetsTest extends \PHPUnit\Framework\TestCase
             $this->assertInternalType("array", $presetOptions);
 
             foreach ($presetOptions as $option => $value) {
-                $this->assertContains($option, Config\Options::VALID_OPTIONS);
+                $this->assertContains($option, Options::VALID_OPTIONS);
 
                 try {
                     $config->{$option}($value); // this line should not trigger an error

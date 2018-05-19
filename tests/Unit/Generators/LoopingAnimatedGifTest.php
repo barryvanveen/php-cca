@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\AnimatedGif;
+use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Runner;
 
 /**
@@ -22,7 +22,7 @@ class LoopingAnimatedGifTest extends ImageTestCase
      */
     public function itCannotFindALoop()
     {
-        $config = Config::createFromPreset(Presets::PRESET_CCA);
+        $config = OldConfig::createFromPreset(Presets::PRESET_CCA);
         $config->seed(1);
         $config->rows(10);
         $config->columns(10);
@@ -39,7 +39,7 @@ class LoopingAnimatedGifTest extends ImageTestCase
      */
     public function itCreatesAnAnimatedGifImage()
     {
-        $config = Config::createFromPreset(Presets::PRESET_GH);
+        $config = OldConfig::createFromPreset(Presets::PRESET_GH);
         $config->seed(1);
         $config->columns(8);
         $config->rows(10);

@@ -6,10 +6,10 @@ namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\CCA;
 use Barryvanveen\CCA\Cell;
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Factories\GridFactory;
 use Barryvanveen\CCA\Grid;
+use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\State;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -23,7 +23,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itStartsAtGeneration0()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -42,7 +42,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itCallsGridForOnceCycle()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -70,7 +70,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itCallsGridForMultipleCycles()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -98,7 +98,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheStateOfTheGrid()
     {
-        $config = new Config;
+        $config = new OldConfig;
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -115,7 +115,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itPrintsTheCurrentGrid()
     {
-        $config = new Config;
+        $config = new OldConfig;
         $config->rows(5);
         $config->columns(5);
         $config->states(3);
@@ -137,7 +137,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
         $cca->printCells();
     }
 
-    protected function getGridStubForToArray(Config $config)
+    protected function getGridStubForToArray(OldConfig $config)
     {
         $cells = [];
         $neighbors = [];

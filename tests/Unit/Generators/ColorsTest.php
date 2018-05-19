@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Generators;
 
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\InvalidColorsException;
 use Barryvanveen\CCA\Generators\Colors;
+use Barryvanveen\CCA\OldConfig;
 use Phim\Color\RgbColor;
 
 /**
@@ -23,7 +24,7 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
         $color2 = new RgbColor(3, 4, 5);
         $color3 = new RgbColor(6, 7, 8);
 
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
+        $config = OldConfig::createFromPreset(Presets::PRESET_313);
         $config->states(3);
         $config->imageColors([
             $color1,
@@ -42,7 +43,7 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
      */
     public function itThrowsAnExceptionWhenTooFewColorsAreSpecified()
     {
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
+        $config = OldConfig::createFromPreset(Presets::PRESET_313);
         $config->states(3);
         $config->imageColors([
             new RgbColor(0, 1, 2),
@@ -59,7 +60,7 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsColorsCreatedBasedOnTheHue()
     {
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
+        $config = OldConfig::createFromPreset(Presets::PRESET_313);
         $config->states(3);
 
         $colors = Colors::getColors($config);

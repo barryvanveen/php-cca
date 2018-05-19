@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit;
 
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Config\NeighborhoodOptions;
 use Barryvanveen\CCA\Config\Options;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\InvalidColorException;
 use Barryvanveen\CCA\Exceptions\InvalidHueException;
 use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
+use Barryvanveen\CCA\OldConfig;
 use Phim\Color\RgbColor;
 
-class ConfigTest extends \PHPUnit\Framework\TestCase
+class OldConfigTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::__construct()
-     * @covers \Barryvanveen\CCA\Config::makeSeed()
-     * @covers \Barryvanveen\CCA\Config::makeHue()
+     * @covers \Barryvanveen\CCA\OldConfig::__construct()
+     * @covers \Barryvanveen\CCA\OldConfig::makeSeed()
+     * @covers \Barryvanveen\CCA\OldConfig::makeHue()
      */
     public function itReturnsTheDefaultValues()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $this->assertEquals($config->rows(), 48);
 
@@ -36,11 +36,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::rows()
+     * @covers \Barryvanveen\CCA\OldConfig::rows()
      */
     public function itSetsTheRows()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->rows(123);
 
@@ -50,11 +50,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::columns()
+     * @covers \Barryvanveen\CCA\OldConfig::columns()
      */
     public function itSetsTheColumns()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->columns(123);
 
@@ -64,11 +64,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::states()
+     * @covers \Barryvanveen\CCA\OldConfig::states()
      */
     public function itSetsTheStates()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->states(123);
 
@@ -78,11 +78,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::threshold()
+     * @covers \Barryvanveen\CCA\OldConfig::threshold()
      */
     public function itSetsTheThreshold()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->threshold(123);
 
@@ -92,11 +92,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::neighborhoodType()
+     * @covers \Barryvanveen\CCA\OldConfig::neighborhoodType()
      */
     public function itSetsTheNeighborhoodType()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
 
@@ -110,11 +110,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::neighborhoodType()
+     * @covers \Barryvanveen\CCA\OldConfig::neighborhoodType()
      */
     public function itThrowsAnExceptionIfGivenAnInvalidNeighborhoodType()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $this->expectException(InvalidNeighborhoodTypeException::class);
 
@@ -124,11 +124,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::neighborhoodSize()
+     * @covers \Barryvanveen\CCA\OldConfig::neighborhoodSize()
      */
     public function itSetsTheNeighborhoodSize()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->neighborhoodSize(123);
 
@@ -138,11 +138,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::seed()
+     * @covers \Barryvanveen\CCA\OldConfig::seed()
      */
     public function itSetsTheSeed()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->seed(1);
 
@@ -152,11 +152,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::imageCellSize()
+     * @covers \Barryvanveen\CCA\OldConfig::imageCellSize()
      */
     public function itSetsTheCellsize()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->imageCellSize(2);
 
@@ -166,12 +166,12 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::imageColors()
-     * @covers \Barryvanveen\CCA\Config::colorsAreValid()
+     * @covers \Barryvanveen\CCA\OldConfig::imageColors()
+     * @covers \Barryvanveen\CCA\OldConfig::colorsAreValid()
      */
     public function itSetsTheColors()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->imageColors([
             new RgbColor(0, 0, 0),
@@ -184,12 +184,12 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::imageColors()
-     * @covers \Barryvanveen\CCA\Config::colorsAreValid()
+     * @covers \Barryvanveen\CCA\OldConfig::imageColors()
+     * @covers \Barryvanveen\CCA\OldConfig::colorsAreValid()
      */
     public function itThrowsAnErrorWhenNotSettingColorsWithAnArray()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $this->expectException(InvalidColorException::class);
         $this->expectExceptionMessage("Colors must be passed as an array.");
@@ -200,12 +200,12 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::imageColors()
-     * @covers \Barryvanveen\CCA\Config::colorsAreValid()
+     * @covers \Barryvanveen\CCA\OldConfig::imageColors()
+     * @covers \Barryvanveen\CCA\OldConfig::colorsAreValid()
      */
     public function itTrowsAnErrorWhenSettingInvalidColors()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $this->expectException(InvalidColorException::class);
 
@@ -218,12 +218,12 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::imageHue()
-     * @covers \Barryvanveen\CCA\Config::isValidHue()
+     * @covers \Barryvanveen\CCA\OldConfig::imageHue()
+     * @covers \Barryvanveen\CCA\OldConfig::isValidHue()
      */
     public function itSetsTheImageHue()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->imageHue(123);
 
@@ -235,12 +235,12 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
      *
      * @dataProvider invalidHueProvider
      *
-     * @covers \Barryvanveen\CCA\Config::imageHue()
-     * @covers \Barryvanveen\CCA\Config::isValidHue()
+     * @covers \Barryvanveen\CCA\OldConfig::imageHue()
+     * @covers \Barryvanveen\CCA\OldConfig::isValidHue()
      */
     public function itThrowsAnExceptionWhenSettingInvalidHue($hueValue)
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $this->expectException(InvalidHueException::class);
 
@@ -265,11 +265,11 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::toArray()
+     * @covers \Barryvanveen\CCA\OldConfig::toArray()
      */
     public function itReturnsAnArrayContainingTheConfiguration()
     {
-        $config = new Config();
+        $config = new OldConfig();
 
         $config->rows(123);
         $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
@@ -286,13 +286,13 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     /**
      * @test
      *
-     * @covers \Barryvanveen\CCA\Config::createFromPreset()
+     * @covers \Barryvanveen\CCA\OldConfig::createFromPreset()
      */
     public function itCreatesAPresetConfiguration()
     {
-        $config = Config::createFromPreset(Presets::PRESET_313);
+        $config = OldConfig::createFromPreset(Presets::PRESET_313);
 
-        $this->assertInstanceOf(Config::class, $config);
+        $this->assertInstanceOf(OldConfig::class, $config);
 
         $this->assertEquals(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE, $config->neighborhoodType());
         $this->assertEquals(1, $config->neighborhoodSize());

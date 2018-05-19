@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Builders;
 
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\OldConfig;
 
 class ConfigBuilder
 {
-    /** @var Config */
+    /** @var OldConfig */
     protected $config;
 
     public function __construct()
     {
-        $this->config = new Config();
+        $this->config = new OldConfig();
     }
 }

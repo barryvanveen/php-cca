@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\Cell;
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Grid;
+use Barryvanveen\CCA\OldConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class GridTest extends \PHPUnit\Framework\TestCase
@@ -19,7 +19,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
      */
     public function itCallsComputeNextStateOnEachCell()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
 
@@ -29,7 +29,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $gridStub->computeNextState();
     }
 
-    protected function getGridStubForComputeNextState(Config $config)
+    protected function getGridStubForComputeNextState(OldConfig $config)
     {
         $cells = [];
         $neighbors = [];
@@ -60,7 +60,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
      */
     public function itPassesNeighboringStatesForComputingNextState()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
 
@@ -70,7 +70,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $gridStub->computeNextState();
     }
 
-    protected function getGridStubForGetStatesForCoordinates(Config $config)
+    protected function getGridStubForGetStatesForCoordinates(OldConfig $config)
     {
         $cells = [];
         $neighbors = [];
@@ -112,7 +112,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
      */
     public function itCallsSetNextStateOnEachCell()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
 
@@ -122,7 +122,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $gridStub->setNextState();
     }
 
-    protected function getGridStubForSetNextState(Config $config)
+    protected function getGridStubForSetNextState(OldConfig $config)
     {
         $cells = [];
         $neighbors = [];
@@ -152,7 +152,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
      */
     public function itCanBeConvertedToAnArrayOfStates()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
 
@@ -166,7 +166,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1024, $array[24]);
     }
 
-    protected function getGridStubForToArray(Config $config)
+    protected function getGridStubForToArray(OldConfig $config)
     {
         $cells = [];
         $neighbors = [];
@@ -198,7 +198,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
      */
     public function itCanBeConvertedToAString()
     {
-        $config = new Config();
+        $config = new OldConfig();
         $config->rows(5);
         $config->columns(5);
 
@@ -219,7 +219,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $string);
     }
 
-    protected function getGridStubForToString(Config $config)
+    protected function getGridStubForToString(OldConfig $config)
     {
         $cells = [];
         $neighbors = [];
