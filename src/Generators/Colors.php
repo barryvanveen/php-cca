@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Generators;
 
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Exceptions\InvalidColorsException;
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use Phim\Color;
 use Phim\Color\HsvColor;
 
@@ -14,14 +14,15 @@ class Colors
     const HSV_VALUE = 1.0;
 
     /**
-     * @param Config $config
+     * @param ConfigInterface $config
      *
      * @return Color\RgbColor[]
      *
      * @throws \Barryvanveen\CCA\Exceptions\InvalidColorException
+     * @throws \Barryvanveen\CCA\Exceptions\InvalidColorsException
      * @throws \Barryvanveen\CCA\Exceptions\InvalidHueException
      */
-    public static function getColors(Config $config): array
+    public static function getColors(ConfigInterface $config): array
     {
         if ($config->imageColors() === null) {
             return self::getEvenlyDistributedColors($config->imageHue(), $config->states());

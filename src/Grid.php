@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA;
 
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
+
 class Grid
 {
-    /** @var Config */
+    /** @var ConfigInterface */
     protected $config;
 
     /** @var Cell[] */
@@ -15,7 +17,7 @@ class Grid
     /** @var Coordinate[][] */
     protected $neighbors = [];
 
-    public function __construct(Config $config, array $cells, array $neighbors)
+    public function __construct(ConfigInterface $config, array $cells, array $neighbors)
     {
         $this->config = $config;
 

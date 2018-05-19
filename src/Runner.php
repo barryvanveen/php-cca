@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
 
 class Runner
 {
-    /** @var Config */
+    /** @var ConfigInterface */
     protected $config;
 
     /** @var CCA */
     protected $cca;
 
-    public function __construct(Config $config, CCA $cca)
+    public function __construct(ConfigInterface $config, CCA $cca)
     {
         $this->config = $config;
 

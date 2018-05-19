@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Generators;
 
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use Barryvanveen\CCA\State;
 
 abstract class Image
 {
-    /** @var Config */
+    /** @var ConfigInterface */
     protected $config;
 
     /** @var array */
@@ -22,7 +22,7 @@ abstract class Image
     /** @var int[] */
     protected $colors;
 
-    protected function __construct(Config $config, State $state)
+    protected function __construct(ConfigInterface $config, State $state)
     {
         $this->config = $config;
 
@@ -35,7 +35,7 @@ abstract class Image
         $this->createImage();
     }
 
-    abstract public static function createFromState(Config $config, State $state);
+    abstract public static function createFromState(ConfigInterface $config, State $state);
 
     protected function initImage()
     {

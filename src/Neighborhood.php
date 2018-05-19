@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA;
 
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
+
 class Neighborhood
 {
-    /** @var Config */
+    /** @var ConfigInterface */
     protected $config;
 
     /** @var Coordinate */
@@ -15,10 +17,10 @@ class Neighborhood
     /**
      * Neighborhood constructor.
      *
-     * @param Config     $config
+     * @param ConfigInterface $config
      * @param Coordinate $coordinate
      */
-    public function __construct(Config $config, Coordinate $coordinate)
+    public function __construct(ConfigInterface $config, Coordinate $coordinate)
     {
         $this->config = $config;
 
@@ -27,8 +29,6 @@ class Neighborhood
 
     /**
      * @return Coordinate[]
-     *
-     * @throws \Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException
      */
     public function getNeighbors(): array
     {
