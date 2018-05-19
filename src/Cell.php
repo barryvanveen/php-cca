@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA;
 
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
+
 class Cell
 {
-    /** @var Config */
+    /** @var ConfigInterface */
     protected $config;
 
     /** @var int */
@@ -15,7 +17,7 @@ class Cell
     /** @var int */
     protected $nextState;
 
-    public function __construct(Config $config)
+    public function __construct(ConfigInterface $config)
     {
         $this->config = $config;
 

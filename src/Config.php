@@ -10,9 +10,10 @@ use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\InvalidColorException;
 use Barryvanveen\CCA\Exceptions\InvalidHueException;
 use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use Phim\Color\RgbColor;
 
-class Config
+class Config implements ConfigInterface
 {
     protected $config = [
         Options::COLUMNS           => 48,

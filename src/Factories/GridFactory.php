@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Barryvanveen\CCA\Factories;
 
 use Barryvanveen\CCA\Cell;
-use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Grid;
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use Barryvanveen\CCA\Neighborhood;
 
 class GridFactory
 {
-    public static function create(Config $config)
+    public static function create(ConfigInterface $config)
     {
         self::setSeed($config);
 
@@ -23,12 +23,12 @@ class GridFactory
         return new Grid($config, $cells, $neighbors);
     }
 
-    protected static function setSeed(Config $config)
+    protected static function setSeed(ConfigInterface $config)
     {
         mt_srand($config->seed());
     }
 
-    protected static function getCells(Config $config)
+    protected static function getCells(ConfigInterface $config)
     {
         $cells = [];
 
@@ -43,7 +43,7 @@ class GridFactory
         return $cells;
     }
 
-    protected static function getNeighbors(Config $config)
+    protected static function getNeighbors(ConfigInterface $config)
     {
         $neighbors = [];
 
