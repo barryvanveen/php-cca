@@ -7,9 +7,9 @@ namespace Barryvanveen\CCA\Config;
 class Options
 {
     const COLUMNS           = 'columns';
-    const IMAGE_CELL_SIZE   = 'image_cell_size';
-    const IMAGE_COLORS      = 'image_colors';
-    const IMAGE_HUE         = 'image_hue';
+    const IMAGE_CELL_SIZE   = 'imageCellSize';
+    const IMAGE_COLORS      = 'imageColors';
+    const IMAGE_HUE         = 'imageHue';
     const NEIGHBORHOOD_SIZE = 'neighborhoodSize';
     const NEIGHBORHOOD_TYPE = 'neighborhoodType';
     const ROWS              = 'rows';

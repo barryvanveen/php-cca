@@ -6,14 +6,11 @@ namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Config\NeighborhoodOptions;
 use Barryvanveen\CCA\Config\Options;
-use Barryvanveen\CCA\Config\Presets;
-use Barryvanveen\CCA\Exceptions\InvalidColorException;
-use Barryvanveen\CCA\Exceptions\InvalidHueException;
-use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
+use Barryvanveen\CCA\Config\Validator;
 use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use Phim\Color\RgbColor;
 
-class OldConfig implements ConfigInterface
+class Config implements ConfigInterface
 {
     protected $config = [
         Options::COLUMNS           => 48,
@@ -28,11 +25,17 @@ class OldConfig implements ConfigInterface
         Options::THRESHOLD         => 3,
     ];
 
-    public function __construct()
+    public function __construct(array $config)
     {
+        // set defaults
         $this->config[Options::IMAGE_HUE] = $this->makeHue();
-
         $this->config[Options::SEED] = $this->makeSeed();
+
+        // validate config
+        Validator::validate($config);
+
+        // override defaults
+        $this->config = array_merge($this->config, $config);
     }
 
     protected function makeHue(): int
@@ -47,19 +50,6 @@ class OldConfig implements ConfigInterface
         return intval($sec + $usec * 1000000);
     }
 
-    public static function createFromPreset(string $preset): self
-    {
-        $presetConfig = Presets::getPresetOptions($preset);
-
-        $config = new self();
-
-        foreach ($presetConfig as $option => $value) {
-            $config->{$option}($value);
-        }
-
-        return $config;
-    }
-
     /**
      * Set or get the number of columns in the grid.
      *
@@ -69,10 +59,6 @@ class OldConfig implements ConfigInterface
      */
     public function columns($columns = null): int
     {
-        if (isset($columns)) {
-            $this->config[Options::COLUMNS] = (int) $columns;
-        }
-
         return $this->config[Options::COLUMNS];
     }
 
@@ -85,10 +71,6 @@ class OldConfig implements ConfigInterface
      */
     public function imageCellSize($cellsize = null): int
     {
-        if (isset($cellsize)) {
-            $this->config[Options::IMAGE_CELL_SIZE] = (int) $cellsize;
-        }
-
         return $this->config[Options::IMAGE_CELL_SIZE];
     }
 
@@ -99,31 +81,10 @@ class OldConfig implements ConfigInterface
      * @param RgbColor[] $colors
      *
      * @return RgbColor[]|null
-     *
-     * @throws InvalidColorException
      */
     public function imageColors($colors = null)
     {
-        if (isset($colors) && $this->colorsAreValid($colors)) {
-            $this->config[Options::IMAGE_COLORS] = $colors;
-        }
-
         return $this->config[Options::IMAGE_COLORS];
-    }
-
-    protected function colorsAreValid($colors): bool
-    {
-        if (!is_array($colors)) {
-            throw new InvalidColorException("Colors must be passed as an array.");
-        }
-
-        foreach ($colors as $color) {
-            if (!$color instanceof RgbColor) {
-                throw new InvalidColorException();
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -133,29 +94,10 @@ class OldConfig implements ConfigInterface
      * @param int $hue
      *
      * @return int
-     *
-     * @throws InvalidHueException
      */
     public function imageHue($hue = null): int
     {
-        if (isset($hue) && $this->isValidHue($hue)) {
-            $this->config[Options::IMAGE_HUE] = (int) $hue;
-        }
-
-        return $this->config[Options::IMAGE_HUE];
-    }
-
-    protected function isValidHue($hue): bool
-    {
-        if (!is_int($hue)) {
-            throw new InvalidHueException("Hue is not an integer.");
-        }
-
-        if ($hue < 0 || $hue > 360) {
-            throw new InvalidHueException("Hue should be an integer between 0 and 360.");
-        }
-
-        return true;
+         return $this->config[Options::IMAGE_HUE];
     }
 
     /**
@@ -167,10 +109,6 @@ class OldConfig implements ConfigInterface
      */
     public function neighborhoodSize($neighborhoodSize = null): int
     {
-        if (isset($neighborhoodSize)) {
-            $this->config[Options::NEIGHBORHOOD_SIZE] = (int) $neighborhoodSize;
-        }
-
         return $this->config[Options::NEIGHBORHOOD_SIZE];
     }
 
@@ -183,19 +121,9 @@ class OldConfig implements ConfigInterface
      * @param string $neighborhoodType
      *
      * @return string type of neighborhood
-     *
-     * @throws \Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException
      */
     public function neighborhoodType($neighborhoodType = null): string
     {
-        if (isset($neighborhoodType)) {
-            if (!in_array($neighborhoodType, NeighborhoodOptions::NEIGHBORHOOD_TYPES)) {
-                throw new InvalidNeighborhoodTypeException();
-            }
-
-            $this->config[Options::NEIGHBORHOOD_TYPE] = (string) $neighborhoodType;
-        }
-
         return $this->config[Options::NEIGHBORHOOD_TYPE];
     }
 
@@ -208,10 +136,6 @@ class OldConfig implements ConfigInterface
      */
     public function rows($rows = null): int
     {
-        if (isset($rows)) {
-            $this->config[Options::ROWS] = (int) $rows;
-        }
-
         return $this->config[Options::ROWS];
     }
 
@@ -224,10 +148,6 @@ class OldConfig implements ConfigInterface
      */
     public function seed($seed = null): int
     {
-        if (isset($seed)) {
-            $this->config[Options::SEED] = (int) $seed;
-        }
-
         return $this->config[Options::SEED];
     }
 
@@ -240,10 +160,6 @@ class OldConfig implements ConfigInterface
      */
     public function states($states = null): int
     {
-        if (isset($states)) {
-            $this->config[Options::STATES] = (int) $states;
-        }
-
         return $this->config[Options::STATES];
     }
 
@@ -256,10 +172,6 @@ class OldConfig implements ConfigInterface
      */
     public function threshold($threshold = null): int
     {
-        if (isset($threshold)) {
-            $this->config[Options::THRESHOLD] = (int) $threshold;
-        }
-
         return $this->config[Options::THRESHOLD];
     }
 
