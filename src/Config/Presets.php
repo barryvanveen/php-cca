@@ -30,7 +30,7 @@ class Presets
         Presets::PRESET_SQUARISH_SPIRALS,
     ];
 
-    protected static $preset_values = [
+    protected static $preset_options = [
         self::PRESET_313 => [
             Options::NEIGHBORHOOD_SIZE => 1,
             Options::NEIGHBORHOOD_TYPE => NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE,
@@ -87,12 +87,12 @@ class Presets
         ],
     ];
 
-    public static function getPresetConfig(string $preset): array
+    public static function getPresetOptions(string $preset): array
     {
         if (!in_array($preset, Presets::VALID_PRESETS)) {
             throw new InvalidPresetException();
         }
 
-        return self::$preset_values[$preset];
+        return self::$preset_options[$preset];
     }
 }
