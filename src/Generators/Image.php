@@ -57,7 +57,12 @@ abstract class Image
         $colors = Colors::getColors($this->config);
 
         foreach ($colors as $color) {
-            $this->colors[] = imagecolorallocate($this->image, (int) $color->getRed(), (int) $color->getGreen(), (int) $color->getBlue());
+            $this->colors[] = imagecolorallocate(
+                $this->image,
+                (int) $color->getRed(),
+                (int) $color->getGreen(),
+                (int) $color->getBlue()
+            );
         }
     }
 
