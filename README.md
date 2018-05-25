@@ -25,36 +25,38 @@ $ composer require barryvanveen/php-cca
 ### Creating a configuration
 
 ``` php
-// from a preset
-$config = \Barryvanveen\CCA\Config::createFromPreset(
-    \Barryvanveen\CCA\Config\Presets::PRESET_CCA
-);
-$config->rows(123);
+// using the ConfigBuilder
+$builder = Builders\ConfigBuilder::createFromPreset(Config\Presets::PRESET_CCA);
+$builder->rows(50);
+$builder->columns(50);
+$config = $builder->get();
  
 // or build it from scratch
-$config = new \Barryvanveen\CCA\Config();
-$config->states(3);
-$config->rows(123);
+$config = new Config([
+    Config\Options::NEIGHBORHOOD_SIZE => 1,
+    Config\Options::NEIGHBORHOOD_TYPE => Config\NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN,
+    Config\Options::STATES => 14,
+    Config\Options::THRESHOLD => 1,
+    Config\Options::ROWS => 50,
+    Config\Options::COLUMNS => 50,
+]);
 ```
 
-The Config class has methods for all available configuration options. In `\Barryvanveen\CCA\Config\Presets.php` you can find all available presets.
+In `\Barryvanveen\CCA\Config\Presets.php` you can find all available presets.
 
 ### Running the CCA 
 
 ```php
-use \Barryvanveen\CCA\Runner;
-use \Barryvanveen\CCA\Factories\CCAFactory;
-
 // get a single state
-$runner = new Runner($config, CCAFactory::create($config));
+$runner = new Runner($config, Factories\CCAFactory::create($config));
 $state = $runner->getLastState(234);
  
 // get a set of states
-$runner = new Runner($config, CCAFactory::create($config));
+$runner = new Runner($config, Factories\CCAFactory::create($config));
 $states = $runner->getFirstStates(123);
  
 // get a set of states that loops (if possible)
-$runner = new Runner($config, CCAFactory::create($config));
+$runner = new Runner($config, Factories\CCAFactory::create($config));
 $states = $runner->getFirstLoop(500);  
 ```
 
@@ -64,15 +66,15 @@ The Runner is probably sufficient for most scenarios but if you want more contro
 
 ```php
 // create a static Gif from a single stae
-$image = \Barryvanveen\CCA\Generators\Gif::createFromState($config, $state);
+$image = Generators\Gif::createFromState($config, $state);
 $image->save('/path/to/output.gif');
  
 // create a static Png from a single state
-$image = \Barryvanveen\CCA\Generators\Png::createFromState($config, $state);
+$image = Generators\Png::createFromState($config, $state);
 $image->save('/path/to/output.png');
  
 // create an animated Gif
-$image = \Barryvanveen\CCA\Generators\AnimatedGif::createFromStates($config, $states);
+$image = Generators\AnimatedGif::createFromStates($config, $states);
 $image->save('/path/to/output.gif');
 ```
 
