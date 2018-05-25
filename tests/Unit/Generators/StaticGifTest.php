@@ -7,7 +7,6 @@ namespace Barryvanveen\CCA\Tests\Unit\Generators;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Gif;
-use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Runner;
 
 /**
@@ -21,12 +20,15 @@ class StaticGifTest extends ImageTestCase
      */
     public function itCreatesAStaticGifImage()
     {
-        $config = OldConfig::createFromPreset(Presets::PRESET_CCA);
-        $config->seed(1);
-        $config->columns(5);
-        $config->rows(10);
-        $config->imageCellSize(1);
-        $config->imageHue(1);
+        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_CCA);
+        $builder->seed(1);
+        $builder->columns(5);
+        $builder->rows(10);
+        $builder->imageCellSize(1);
+        $builder->imageHue(1);
+
+        $config = $builder->get();
 
         $runner = new Runner($config, CCAFactory::create($config));
         $state = $runner->getLastState(3);
@@ -49,12 +51,15 @@ class StaticGifTest extends ImageTestCase
      */
     public function itCreatesALargerStaticGifImage()
     {
-        $config = OldConfig::createFromPreset(Presets::PRESET_CCA);
-        $config->seed(1);
-        $config->columns(5);
-        $config->rows(10);
-        $config->imageCellSize(3);
-        $config->imageHue(1);
+        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_CCA);
+        $builder->seed(1);
+        $builder->columns(5);
+        $builder->rows(10);
+        $builder->imageCellSize(3);
+        $builder->imageHue(1);
+
+        $config = $builder->get();
 
         $runner = new Runner($config, CCAFactory::create($config));
         $state = $runner->getLastState(3);

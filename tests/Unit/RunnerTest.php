@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit;
 
+use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\CCA;
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
 use Barryvanveen\CCA\Factories\GridFactory;
-use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Runner;
 use Barryvanveen\CCA\State;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -22,19 +22,24 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheLastState()
     {
-        $config = new OldConfig();
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
 
         /** @var CCA|MockObject $mockCCA */
         $mockCCA = $this->createMock(CCA::class);
 
-        $config->seed(1);
+        $builder->seed(1);
+        $config = $builder->get();
         $state1 = new State(GridFactory::create($config));
-        $config->seed(2);
+
+        $builder->seed(2);
+        $config = $builder->get();
         $state2 = new State(GridFactory::create($config));
-        $config->seed(3);
+
+        $builder->seed(3);
+        $config = $builder->get();
         $state3 = new State(GridFactory::create($config));
 
         $mockCCA->expects($this->exactly(3))
@@ -67,19 +72,24 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheFirstStates()
     {
-        $config = new OldConfig();
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
 
         /** @var CCA|MockObject $mockCCA */
         $mockCCA = $this->createMock(CCA::class);
 
-        $config->seed(1);
+        $builder->seed(1);
+        $config = $builder->get();
         $state1 = new State(GridFactory::create($config));
-        $config->seed(2);
+
+        $builder->seed(2);
+        $config = $builder->get();
         $state2 = new State(GridFactory::create($config));
-        $config->seed(3);
+
+        $builder->seed(3);
+        $config = $builder->get();
         $state3 = new State(GridFactory::create($config));
 
         $mockCCA->expects($this->exactly(3))
@@ -112,21 +122,26 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheFirstLoop()
     {
-        $config = new OldConfig();
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
 
         /** @var CCA|MockObject $mockCCA */
         $mockCCA = $this->createMock(CCA::class);
 
         // $state1 and $state3 are equal -> first loop should [$state1 $state2]
 
-        $config->seed(1);
+        $builder->seed(1);
+        $config = $builder->get();
         $state1 = new State(GridFactory::create($config));
-        $config->seed(2);
+
+        $builder->seed(2);
+        $config = $builder->get();
         $state2 = new State(GridFactory::create($config));
-        $config->seed(1);
+
+        $builder->seed(1);
+        $config = $builder->get();
         $state3 = new State(GridFactory::create($config));
 
         $mockCCA->expects($this->exactly(3))
@@ -165,19 +180,24 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      */
     public function itFailsToFindALoopAndThrowsAnException()
     {
-        $config = new OldConfig();
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
 
         /** @var CCA|MockObject $mockCCA */
         $mockCCA = $this->createMock(CCA::class);
 
-        $config->seed(1);
+        $builder->seed(1);
+        $config = $builder->get();
         $state1 = new State(GridFactory::create($config));
-        $config->seed(2);
+
+        $builder->seed(2);
+        $config = $builder->get();
         $state2 = new State(GridFactory::create($config));
-        $config->seed(3);
+
+        $builder->seed(3);
+        $config = $builder->get();
         $state3 = new State(GridFactory::create($config));
 
         $mockCCA->expects($this->exactly(3))
