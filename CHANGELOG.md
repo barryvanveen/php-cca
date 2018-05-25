@@ -9,10 +9,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Added tests for all classes that weren't fully tested.
 - Add stricter code style checking
 - Enforce declaration of strict_types=1
+- Added `Barryvanveen\CCA\Builders\ConfigBuilder`.
 ### Changed
 - An instance of `Barryvanveen\CCA\CCA` should now be passed to `Barryvanveen\CCA\Runner`.
 - An instance of `Barryvanveen\CCA\Grid` should now be passed to `Barryvanveen\CCA\CCA`.
 - Replaced static constructor of `Barryvanveen\CCA\Neighborhood` with normal constructor.
+- `Barryvanveen\CCA\Config` can only be instantiated with options, they cannot be changed later.
 ### Deprecated
 ### Removed
 ### Fixed
