@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Generators;
 
-use Barryvanveen\CCA\Interfaces\ConfigInterface;
+use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\State;
 use GifCreator\AnimGif;
 
@@ -14,12 +14,12 @@ class AnimatedGif
     protected $animation;
 
     /**
-     * @param ConfigInterface $config
+     * @param Config $config
      * @param State[] $states
      *
      * @throws \Exception
      */
-    protected function __construct(ConfigInterface $config, array $states)
+    protected function __construct(Config $config, array $states)
     {
         $images = [];
 
@@ -32,14 +32,14 @@ class AnimatedGif
     }
 
     /**
-     * @param ConfigInterface $config
+     * @param Config $config
      * @param State[] $states
      *
      * @return AnimatedGif
      *
      * @throws \Exception
      */
-    public static function createFromStates(ConfigInterface $config, array $states)
+    public static function createFromStates(Config $config, array $states)
     {
         return new self($config, $states);
     }

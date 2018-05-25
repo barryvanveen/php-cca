@@ -6,9 +6,9 @@ namespace Barryvanveen\CCA\Tests\Unit;
 
 use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\Cell;
+use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Grid;
-use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class GridTest extends \PHPUnit\Framework\TestCase
@@ -32,7 +32,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $gridStub->computeNextState();
     }
 
-    protected function getGridStubForComputeNextState(ConfigInterface $config)
+    protected function getGridStubForComputeNextState(Config $config)
     {
         $cells = [];
         $neighbors = [];
@@ -75,7 +75,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $gridStub->computeNextState();
     }
 
-    protected function getGridStubForGetStatesForCoordinates(ConfigInterface $config)
+    protected function getGridStubForGetStatesForCoordinates(Config $config)
     {
         $cells = [];
         $neighbors = [];
@@ -129,7 +129,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $gridStub->setNextState();
     }
 
-    protected function getGridStubForSetNextState(ConfigInterface $config)
+    protected function getGridStubForSetNextState(Config $config)
     {
         $cells = [];
         $neighbors = [];
@@ -175,7 +175,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1024, $array[24]);
     }
 
-    protected function getGridStubForToArray(ConfigInterface $config)
+    protected function getGridStubForToArray(Config $config)
     {
         $cells = [];
         $neighbors = [];
@@ -230,7 +230,7 @@ class GridTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($expected, $string);
     }
 
-    protected function getGridStubForToString(ConfigInterface $config)
+    protected function getGridStubForToString(Config $config)
     {
         $cells = [];
         $neighbors = [];

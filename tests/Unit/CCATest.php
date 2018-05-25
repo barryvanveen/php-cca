@@ -7,10 +7,10 @@ namespace Barryvanveen\CCA\Tests\Unit;
 use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\CCA;
 use Barryvanveen\CCA\Cell;
+use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Factories\GridFactory;
 use Barryvanveen\CCA\Grid;
-use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use Barryvanveen\CCA\State;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -148,7 +148,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
         $cca->printCells();
     }
 
-    protected function getGridStubForToArray(ConfigInterface $config)
+    protected function getGridStubForToArray(Config $config)
     {
         $cells = [];
         $neighbors = [];

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Generators;
 
-use Barryvanveen\CCA\Interfaces\ConfigInterface;
+use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\State;
 
 class Png extends Image
 {
-    public static function createFromState(ConfigInterface $config, State $state)
+    public static function createFromState(Config $config, State $state)
     {
         return new self($config, $state);
     }

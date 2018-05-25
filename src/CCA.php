@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA;
 
-use Barryvanveen\CCA\Interfaces\ConfigInterface;
-
 class CCA
 {
-    /** @var ConfigInterface */
+    /** @var Config */
     protected $config;
 
     /** @var Grid */
@@ -17,7 +15,7 @@ class CCA
     /** @var int */
     protected $generation = 0;
 
-    public function __construct(ConfigInterface $config, Grid $grid)
+    public function __construct(Config $config, Grid $grid)
     {
         $this->config = $config;
 
