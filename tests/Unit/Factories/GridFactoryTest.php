@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit\Factories;
 
+use Barryvanveen\CCA\Builders\ConfigBuilder;
+use Barryvanveen\CCA\Config;
 use Barryvanveen\CCA\Factories\GridFactory;
-use Barryvanveen\CCA\OldConfig;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class GridFactoryTest extends \PHPUnit\Framework\TestCase
@@ -20,8 +21,11 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function itSeedsTheRandomNumbersOnConstruct()
     {
-        /** @var OldConfig|MockObject $configMock */
-        $configMock = $this->getMockBuilder(OldConfig::class)
+        /** @var Config|MockObject $configMock */
+        $configMock = $this->getMockBuilder(Config::class)
+            ->setConstructorArgs([
+                [],
+            ])
             ->setMethods(['seed'])
             ->getMock();
 
@@ -42,16 +46,21 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsDifferentStatesForDifferentSeeds()
     {
-        $config = new OldConfig;
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
-        $config->seed(123);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
+        $builder->seed(123);
+
+        $config = $builder->get();
 
         $grid1 = GridFactory::create($config);
         $state1 = $grid1->toArray();
 
-        $config->seed(321);
+        $builder->seed(321);
+
+        $config = $builder->get();
+
         $grid2 = GridFactory::create($config);
         $state2 = $grid2->toArray();
 
@@ -65,11 +74,13 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsEqualStatesForEqualSeeds()
     {
-        $config = new OldConfig;
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
-        $config->seed(123);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
+        $builder->seed(123);
+
+        $config = $builder->get();
 
         $grid1 = GridFactory::create($config);
         $state1 = $grid1->toArray();

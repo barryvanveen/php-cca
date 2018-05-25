@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit;
 
+use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\CCA;
 use Barryvanveen\CCA\Cell;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Factories\GridFactory;
 use Barryvanveen\CCA\Grid;
-use Barryvanveen\CCA\OldConfig;
+use Barryvanveen\CCA\Interfaces\ConfigInterface;
 use Barryvanveen\CCA\State;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -23,10 +24,12 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itStartsAtGeneration0()
     {
-        $config = new OldConfig();
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
+
+        $config = $builder->get();
 
         $cca = new CCA($config, GridFactory::create($config));
 
@@ -42,10 +45,12 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itCallsGridForOnceCycle()
     {
-        $config = new OldConfig();
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
+
+        $config = $builder->get();
 
         /** @var Grid|MockObject $gridMock */
         $gridMock = $this->createMock(Grid::class);
@@ -70,10 +75,12 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itCallsGridForMultipleCycles()
     {
-        $config = new OldConfig();
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
+
+        $config = $builder->get();
 
         /** @var Grid|MockObject $gridMock */
         $gridMock = $this->createMock(Grid::class);
@@ -98,10 +105,12 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheStateOfTheGrid()
     {
-        $config = new OldConfig;
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
+
+        $config = $builder->get();
 
         $cca = new CCA($config, GridFactory::create($config));
 
@@ -115,10 +124,12 @@ class CCATest extends \PHPUnit\Framework\TestCase
      */
     public function itPrintsTheCurrentGrid()
     {
-        $config = new OldConfig;
-        $config->rows(5);
-        $config->columns(5);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(5);
+        $builder->columns(5);
+        $builder->states(3);
+
+        $config = $builder->get();
 
         $grid = $this->getGridStubForToArray($config);
 
@@ -137,7 +148,7 @@ class CCATest extends \PHPUnit\Framework\TestCase
         $cca->printCells();
     }
 
-    protected function getGridStubForToArray(OldConfig $config)
+    protected function getGridStubForToArray(ConfigInterface $config)
     {
         $cells = [];
         $neighbors = [];

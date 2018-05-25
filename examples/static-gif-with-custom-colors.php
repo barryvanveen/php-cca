@@ -1,7 +1,6 @@
 <?php
 
 use Barryvanveen\CCA\Config\Presets;
-use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Gif;
 use Barryvanveen\CCA\Runner;
@@ -13,13 +12,16 @@ $preset = Presets::PRESET_313;
 $maxIterations = 150;
 $output = __DIR__."/output/static-313-with-custom-colors.gif";
 
-$config = OldConfig::createFromPreset($preset);
-$config->imageCellSize(2);
-$config->imageColors([
+$builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+$builder->createFromPreset($preset);
+$builder->imageCellSize(2);
+$builder->imageColors([
    Color::get(Color::BRIGHTPINK),
    Color::get(Color::CANDYPINK),
    Color::get(Color::CHERRYBLOSSOMPINK),
 ]);
+
+$config = $builder->get();
 
 $runner = new Runner($config, CCAFactory::create($config));
 $state = $runner->getLastState($maxIterations);

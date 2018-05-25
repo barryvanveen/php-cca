@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit;
 
+use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\Config\NeighborhoodOptions;
 use Barryvanveen\CCA\Coordinate;
 use Barryvanveen\CCA\Neighborhood;
-use Barryvanveen\CCA\OldConfig;
 
 /**
  * @covers \Barryvanveen\CCA\Neighborhood
@@ -19,11 +19,13 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsAnArray()
     {
-        $config = new OldConfig();
-        $config->rows(10);
-        $config->columns(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(1);
+        $builder = new ConfigBuilder();
+        $builder->rows(10);
+        $builder->columns(10);
+        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $builder->neighborhoodSize(1);
+
+        $config = $builder->get();
 
         $neighborhood = new Neighborhood(
             $config,
@@ -38,11 +40,13 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectMooreNeighborhoodOfSize1()
     {
-        $config = new OldConfig();
-        $config->rows(10);
-        $config->columns(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(1);
+        $builder = new ConfigBuilder();
+        $builder->rows(10);
+        $builder->columns(10);
+        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $builder->neighborhoodSize(1);
+
+        $config = $builder->get();
 
         $neighborhood = new Neighborhood(
             $config,
@@ -67,11 +71,13 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectMooreNeighborhoodOfSize2()
     {
-        $config = new OldConfig();
-        $config->rows(10);
-        $config->columns(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(2);
+        $builder = new ConfigBuilder();
+        $builder->rows(10);
+        $builder->columns(10);
+        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $builder->neighborhoodSize(2);
+
+        $config = $builder->get();
 
         $neighborhood = new Neighborhood(
             $config,
@@ -112,11 +118,13 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectMooreNeighborhoodOfSize3()
     {
-        $config = new OldConfig();
-        $config->rows(10);
-        $config->columns(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $config->neighborhoodSize(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(10);
+        $builder->columns(10);
+        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
+        $builder->neighborhoodSize(3);
+
+        $config = $builder->get();
 
         $neighborhood = new Neighborhood(
             $config,
@@ -131,11 +139,13 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectNeumannNeighborhoodOfSize1()
     {
-        $config = new OldConfig();
-        $config->rows(10);
-        $config->columns(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
-        $config->neighborhoodSize(1);
+        $builder = new ConfigBuilder();
+        $builder->rows(10);
+        $builder->columns(10);
+        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
+        $builder->neighborhoodSize(1);
+
+        $config = $builder->get();
 
         $neighborhood = new Neighborhood(
             $config,
@@ -156,11 +166,13 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectNeumannNeighborhoodOfSize2()
     {
-        $config = new OldConfig();
-        $config->rows(10);
-        $config->columns(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
-        $config->neighborhoodSize(2);
+        $builder = new ConfigBuilder();
+        $builder->rows(10);
+        $builder->columns(10);
+        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
+        $builder->neighborhoodSize(2);
+
+        $config = $builder->get();
 
         $neighborhood = new Neighborhood(
             $config,
@@ -189,11 +201,13 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheCorrectNeumannNeighborhoodOfSize3()
     {
-        $config = new OldConfig();
-        $config->rows(10);
-        $config->columns(10);
-        $config->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
-        $config->neighborhoodSize(3);
+        $builder = new ConfigBuilder();
+        $builder->rows(10);
+        $builder->columns(10);
+        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN);
+        $builder->neighborhoodSize(3);
+
+        $config = $builder->get();
 
         $neighborhood = new Neighborhood(
             $config,

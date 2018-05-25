@@ -1,7 +1,6 @@
 <?php
 
 use Barryvanveen\CCA\Config\Presets;
-use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Gif;
 use Barryvanveen\CCA\Runner;
@@ -12,10 +11,13 @@ $preset = Presets::PRESET_CCA;
 $maxIterations = 300;
 $output = __DIR__."/output/static-cca.gif";
 
-$config = OldConfig::createFromPreset($preset);
-$config->rows(100);
-$config->columns(100);
-$config->imageCellSize(5);
+$builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+$builder->createFromPreset($preset);
+$builder->rows(100);
+$builder->columns(100);
+$builder->imageCellSize(5);
+
+$config = $builder->get();
 
 $runner = new Runner($config, CCAFactory::create($config));
 $state = $runner->getLastState($maxIterations);

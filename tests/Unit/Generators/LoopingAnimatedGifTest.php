@@ -8,7 +8,6 @@ use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\AnimatedGif;
-use Barryvanveen\CCA\OldConfig;
 use Barryvanveen\CCA\Runner;
 
 /**
@@ -22,11 +21,14 @@ class LoopingAnimatedGifTest extends ImageTestCase
      */
     public function itCannotFindALoop()
     {
-        $config = OldConfig::createFromPreset(Presets::PRESET_CCA);
-        $config->seed(1);
-        $config->rows(10);
-        $config->columns(10);
-        $config->imageHue(1);
+        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_CCA);
+        $builder->seed(1);
+        $builder->rows(10);
+        $builder->columns(10);
+        $builder->imageHue(1);
+
+        $config = $builder->get();
 
         $this->expectException(LoopNotFoundException::class);
 
@@ -39,11 +41,14 @@ class LoopingAnimatedGifTest extends ImageTestCase
      */
     public function itCreatesAnAnimatedGifImage()
     {
-        $config = OldConfig::createFromPreset(Presets::PRESET_GH);
-        $config->seed(1);
-        $config->columns(8);
-        $config->rows(10);
-        $config->imageCellSize(1);
+        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_GH);
+        $builder->seed(1);
+        $builder->columns(8);
+        $builder->rows(10);
+        $builder->imageCellSize(1);
+
+        $config = $builder->get();
 
         $runner = new Runner($config, CCAFactory::create($config));
         $states = $runner->getFirstLoop(500);

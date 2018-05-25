@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Generators;
 
+use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\InvalidColorsException;
 use Barryvanveen\CCA\Generators\Colors;
-use Barryvanveen\CCA\OldConfig;
 use Phim\Color\RgbColor;
 
 /**
@@ -24,13 +24,16 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
         $color2 = new RgbColor(3, 4, 5);
         $color3 = new RgbColor(6, 7, 8);
 
-        $config = OldConfig::createFromPreset(Presets::PRESET_313);
-        $config->states(3);
-        $config->imageColors([
+        $builder = new ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_313);
+        $builder->states(3);
+        $builder->imageColors([
             $color1,
             $color2,
             $color3,
         ]);
+
+        $config = $builder->get();
 
         $colors = Colors::getColors($config);
 
@@ -43,11 +46,14 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
      */
     public function itThrowsAnExceptionWhenTooFewColorsAreSpecified()
     {
-        $config = OldConfig::createFromPreset(Presets::PRESET_313);
-        $config->states(3);
-        $config->imageColors([
+        $builder = new ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_313);
+        $builder->states(3);
+        $builder->imageColors([
             new RgbColor(0, 1, 2),
         ]);
+
+        $config = $builder->get();
 
         $this->expectException(InvalidColorsException::class);
         $this->expectExceptionMessage("Not enough colors specified.");
@@ -60,8 +66,11 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsColorsCreatedBasedOnTheHue()
     {
-        $config = OldConfig::createFromPreset(Presets::PRESET_313);
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_313);
+        $builder->states(3);
+
+        $config = $builder->get();
 
         $colors = Colors::getColors($config);
 
