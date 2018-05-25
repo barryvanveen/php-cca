@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA;
 
-use Barryvanveen\CCA\Interfaces\ConfigInterface;
-
 class Neighborhood
 {
-    /** @var ConfigInterface */
+    /** @var Config */
     protected $config;
 
     /** @var Coordinate */
@@ -17,10 +15,10 @@ class Neighborhood
     /**
      * Neighborhood constructor.
      *
-     * @param ConfigInterface $config
+     * @param Config $config
      * @param Coordinate $coordinate
      */
-    public function __construct(ConfigInterface $config, Coordinate $coordinate)
+    public function __construct(Config $config, Coordinate $coordinate)
     {
         $this->config = $config;
 
