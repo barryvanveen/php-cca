@@ -12,13 +12,13 @@ use Phim\Color\RgbColor;
 class Config
 {
     protected $config = [
-        Options::COLUMNS           => 48,
+        Options::COLUMNS           => 10,
         Options::IMAGE_CELL_SIZE   => 2,
         Options::IMAGE_COLORS      => null,
         Options::IMAGE_HUE         => null,
         Options::NEIGHBORHOOD_TYPE => NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE,
         Options::NEIGHBORHOOD_SIZE => 1,
-        Options::ROWS              => 48,
+        Options::ROWS              => 10,
         Options::SEED              => null,
         Options::STATES            => 3,
         Options::THRESHOLD         => 3,
