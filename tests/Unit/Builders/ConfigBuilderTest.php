@@ -12,6 +12,19 @@ use Phim\Color\RgbColor;
 
 class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
 {
+    /** @var ConfigBuilder */
+    protected $configBuilder;
+
+    public function setUp()
+    {
+        $this->configBuilder = new ConfigBuilder();
+    }
+
+    protected function getConfig()
+    {
+        return $this->configBuilder->get();
+    }
+
     /**
      * @test
      *
@@ -20,12 +33,10 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsTheDefaultValues()
     {
-        $builder = new ConfigBuilder();
-
-        $config = $builder->get();
+        $config = $this->configBuilder->get();
 
         $this->assertInstanceOf(Config::class, $config);
-        $this->assertEquals($config->rows(), 48);
+        $this->assertEquals($config->rows(), 10);
     }
 
     /**
@@ -35,8 +46,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itCreatesAPresetConfiguration()
     {
-        $builder = new ConfigBuilder();
-        $config = $builder->createFromPreset(Presets::PRESET_313)->get();
+        $this->configBuilder = $this->configBuilder->createFromPreset(Presets::PRESET_313);
+
+        $config = $this->configBuilder->get();
 
         $this->assertInstanceOf(Config::class, $config);
 
@@ -53,13 +65,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheColumns()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->columns(123);
 
-        $builder->columns(123);
-
-        $config = $builder->get();
-
-        $this->assertEquals(123, $config->columns());
+        $this->assertEquals(123, $this->getConfig()->columns());
     }
 
     /**
@@ -69,13 +77,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheImageCellSize()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->imageCellSize(123);
 
-        $builder->imageCellSize(123);
-
-        $config = $builder->get();
-
-        $this->assertEquals(123, $config->imageCellSize());
+        $this->assertEquals(123, $this->getConfig()->imageCellSize());
     }
 
     /**
@@ -85,19 +89,15 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheImageColors()
     {
-        $builder = new ConfigBuilder();
-
-        $builder->imageColors([
+        $this->configBuilder->imageColors([
             new RgbColor(0, 123, 255),
             new RgbColor(255, 255, 255),
         ]);
 
-        $config = $builder->get();
-
         $this->assertEquals([
             new RgbColor(0, 123, 255),
             new RgbColor(255, 255, 255),
-        ], $config->imageColors());
+        ], $this->getConfig()->imageColors());
     }
 
     /**
@@ -107,13 +107,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheImageHue()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->imageHue(321);
 
-        $builder->imageHue(321);
-
-        $config = $builder->get();
-
-        $this->assertEquals(321, $config->imageHue());
+        $this->assertEquals(321, $this->getConfig()->imageHue());
     }
 
     /**
@@ -123,13 +119,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheNeighborhoodSize()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->neighborhoodSize(2);
 
-        $builder->neighborhoodSize(2);
-
-        $config = $builder->get();
-
-        $this->assertEquals(2, $config->neighborhoodSize());
+        $this->assertEquals(2, $this->getConfig()->neighborhoodSize());
     }
 
     /**
@@ -139,13 +131,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheNeighborhoodType()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
 
-        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-
-        $config = $builder->get();
-
-        $this->assertEquals(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE, $config->neighborhoodType());
+        $this->assertEquals(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE, $this->getConfig()->neighborhoodType());
     }
 
     /**
@@ -155,13 +143,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheRows()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->rows(101);
 
-        $builder->rows(101);
-
-        $config = $builder->get();
-
-        $this->assertEquals(101, $config->rows());
+        $this->assertEquals(101, $this->getConfig()->rows());
     }
 
     /**
@@ -171,13 +155,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheSeed()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->seed(456123);
 
-        $builder->seed(456123);
-
-        $config = $builder->get();
-
-        $this->assertEquals(456123, $config->seed());
+        $this->assertEquals(456123, $this->getConfig()->seed());
     }
 
     /**
@@ -187,13 +167,9 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheStates()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->states(2);
 
-        $builder->states(2);
-
-        $config = $builder->get();
-
-        $this->assertEquals(2, $config->states());
+        $this->assertEquals(2, $this->getConfig()->states());
     }
 
     /**
@@ -203,12 +179,8 @@ class ConfigBuilderTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsTheThreshold()
     {
-        $builder = new ConfigBuilder();
+        $this->configBuilder->threshold(1);
 
-        $builder->threshold(1);
-
-        $config = $builder->get();
-
-        $this->assertEquals(1, $config->threshold());
+        $this->assertEquals(1, $this->getConfig()->threshold());
     }
 }

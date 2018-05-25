@@ -23,7 +23,7 @@ class ConfigTest extends \PHPUnit\Framework\TestCase
     {
         $config = new Config([]);
 
-        $this->assertEquals($config->rows(), 48);
+        $this->assertEquals($config->rows(), 10);
 
         $this->assertInternalType("integer", $config->seed());
         $this->assertInternalType("integer", $config->imageHue());
