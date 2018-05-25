@@ -20,10 +20,6 @@ class NeighborhoodTest extends \PHPUnit\Framework\TestCase
     public function itReturnsAnArray()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(10);
-        $builder->columns(10);
-        $builder->neighborhoodType(NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE);
-        $builder->neighborhoodSize(1);
 
         $config = $builder->get();
 

@@ -80,8 +80,6 @@ class CellTest extends \PHPUnit\Framework\TestCase
     public function itOutputsToString()
     {
         $builder = new ConfigBuilder();
-        $builder->states(3);
-        $builder->threshold(1);
 
         $config = $builder->get();
 

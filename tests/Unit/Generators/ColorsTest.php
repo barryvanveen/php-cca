@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Barryvanveen\CCA\Tests\Generators;
 
 use Barryvanveen\CCA\Builders\ConfigBuilder;
-use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\InvalidColorsException;
 use Barryvanveen\CCA\Generators\Colors;
 use Phim\Color\RgbColor;
@@ -25,7 +24,6 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
         $color3 = new RgbColor(6, 7, 8);
 
         $builder = new ConfigBuilder();
-        $builder->createFromPreset(Presets::PRESET_313);
         $builder->states(3);
         $builder->imageColors([
             $color1,
@@ -47,7 +45,6 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
     public function itThrowsAnExceptionWhenTooFewColorsAreSpecified()
     {
         $builder = new ConfigBuilder();
-        $builder->createFromPreset(Presets::PRESET_313);
         $builder->states(3);
         $builder->imageColors([
             new RgbColor(0, 1, 2),
@@ -67,7 +64,6 @@ class ColorsTest extends \PHPUnit\Framework\TestCase
     public function itReturnsColorsCreatedBasedOnTheHue()
     {
         $builder = new ConfigBuilder();
-        $builder->createFromPreset(Presets::PRESET_313);
         $builder->states(3);
 
         $config = $builder->get();

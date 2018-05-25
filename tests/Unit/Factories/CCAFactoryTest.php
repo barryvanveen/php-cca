@@ -18,9 +18,6 @@ class CCAFactoryTest extends \PHPUnit\Framework\TestCase
     public function itReturnsACCA()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
-        $builder->states(3);
 
         $config = $builder->get();
 

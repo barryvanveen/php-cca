@@ -21,8 +21,8 @@ class GridTest extends \PHPUnit\Framework\TestCase
     public function itCallsComputeNextStateOnEachCell()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
+        $builder->rows(2);
+        $builder->columns(2);
 
         $config = $builder->get();
 
@@ -64,8 +64,8 @@ class GridTest extends \PHPUnit\Framework\TestCase
     public function itPassesNeighboringStatesForComputingNextState()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
+        $builder->rows(2);
+        $builder->columns(2);
 
         $config = $builder->get();
 
@@ -118,8 +118,8 @@ class GridTest extends \PHPUnit\Framework\TestCase
     public function itCallsSetNextStateOnEachCell()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
+        $builder->rows(2);
+        $builder->columns(2);
 
         $config = $builder->get();
 

@@ -23,9 +23,6 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
     public function itReturnsTheLastState()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
-        $builder->states(3);
 
         /** @var CCA|MockObject $mockCCA */
         $mockCCA = $this->createMock(CCA::class);
@@ -75,7 +72,6 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
         $builder = new ConfigBuilder();
         $builder->rows(5);
         $builder->columns(5);
-        $builder->states(3);
 
         /** @var CCA|MockObject $mockCCA */
         $mockCCA = $this->createMock(CCA::class);
@@ -125,7 +121,6 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
         $builder = new ConfigBuilder();
         $builder->rows(5);
         $builder->columns(5);
-        $builder->states(3);
 
         /** @var CCA|MockObject $mockCCA */
         $mockCCA = $this->createMock(CCA::class);
@@ -183,7 +178,6 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
         $builder = new ConfigBuilder();
         $builder->rows(5);
         $builder->columns(5);
-        $builder->states(3);
 
         /** @var CCA|MockObject $mockCCA */
         $mockCCA = $this->createMock(CCA::class);
