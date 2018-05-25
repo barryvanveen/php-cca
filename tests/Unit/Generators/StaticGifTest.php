@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
+use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\Gif;
@@ -20,8 +21,7 @@ class StaticGifTest extends ImageTestCase
      */
     public function itCreatesAStaticGifImage()
     {
-        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
-        $builder->createFromPreset(Presets::PRESET_CCA);
+        $builder = ConfigBuilder::createFromPreset(Presets::PRESET_313);
         $builder->seed(1);
         $builder->columns(5);
         $builder->rows(10);
@@ -51,8 +51,7 @@ class StaticGifTest extends ImageTestCase
      */
     public function itCreatesALargerStaticGifImage()
     {
-        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
-        $builder->createFromPreset(Presets::PRESET_CCA);
+        $builder = ConfigBuilder::createFromPreset(Presets::PRESET_313);
         $builder->seed(1);
         $builder->columns(5);
         $builder->rows(10);

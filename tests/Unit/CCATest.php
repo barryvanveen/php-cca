@@ -25,9 +25,6 @@ class CCATest extends \PHPUnit\Framework\TestCase
     public function itStartsAtGeneration0()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
-        $builder->states(3);
 
         $config = $builder->get();
 
@@ -46,9 +43,6 @@ class CCATest extends \PHPUnit\Framework\TestCase
     public function itCallsGridForOnceCycle()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
-        $builder->states(3);
 
         $config = $builder->get();
 
@@ -76,9 +70,6 @@ class CCATest extends \PHPUnit\Framework\TestCase
     public function itCallsGridForMultipleCycles()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
-        $builder->states(3);
 
         $config = $builder->get();
 
@@ -106,9 +97,6 @@ class CCATest extends \PHPUnit\Framework\TestCase
     public function itReturnsTheStateOfTheGrid()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
-        $builder->states(3);
 
         $config = $builder->get();
 
@@ -127,7 +115,6 @@ class CCATest extends \PHPUnit\Framework\TestCase
         $builder = new ConfigBuilder();
         $builder->rows(5);
         $builder->columns(5);
-        $builder->states(3);
 
         $config = $builder->get();
 

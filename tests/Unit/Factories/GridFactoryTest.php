@@ -32,10 +32,6 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
         $configMock->expects($this->once())
             ->method('seed');
 
-        $configMock->rows(5);
-        $configMock->columns(5);
-        $configMock->states(3);
-
         GridFactory::create($configMock);
     }
 
@@ -47,9 +43,6 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
     public function itReturnsDifferentStatesForDifferentSeeds()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
-        $builder->states(3);
         $builder->seed(123);
 
         $config = $builder->get();
@@ -58,7 +51,6 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
         $state1 = $grid1->toArray();
 
         $builder->seed(321);
-
         $config = $builder->get();
 
         $grid2 = GridFactory::create($config);
@@ -75,9 +67,6 @@ class GridFactoryTest extends \PHPUnit\Framework\TestCase
     public function itReturnsEqualStatesForEqualSeeds()
     {
         $builder = new ConfigBuilder();
-        $builder->rows(5);
-        $builder->columns(5);
-        $builder->states(3);
         $builder->seed(123);
 
         $config = $builder->get();
