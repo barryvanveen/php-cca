@@ -48,7 +48,7 @@ class Neighborhood
     {
         $neigbors = [];
 
-        $size = abs($this->config->neighborhoodSize());
+        $size = (int) abs($this->config->neighborhoodSize());
 
         for ($rowOffset = -1 * $size; $rowOffset <= $size; $rowOffset++) {
             for ($columnOffset = -1 * $size; $columnOffset <= $size; $columnOffset++) {
@@ -78,7 +78,7 @@ class Neighborhood
     {
         $neigbors = [];
 
-        $size = abs($this->config->neighborhoodSize());
+        $size = (int) abs($this->config->neighborhoodSize());
 
         for ($rowOffset = -1 * $size; $rowOffset <= $size; $rowOffset++) {
             for ($columnOffset = -1 * $size; $columnOffset <= $size; $columnOffset++) {
