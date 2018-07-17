@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\Config\Presets;
+use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\AnimatedGif;
 use Barryvanveen\CCA\Runner;
 use GifCreator\AnimGif;
@@ -19,14 +22,14 @@ class AnimatedGifTest extends ImageTestCase
      */
     public function itCreatesAnAnimatedGifImage()
     {
-        $config = Config::createFromPreset(Presets::PRESET_CCA);
-        $config->seed(1);
-        $config->columns(10);
-        $config->rows(10);
-        $config->imageCellSize(1);
-        $config->imageHue(1);
+        $builder = ConfigBuilder::createFromPreset(Presets::PRESET_313);
+        $builder->seed(1);
+        $builder->imageCellSize(1);
+        $builder->imageHue(1);
 
-        $runner = new Runner($config);
+        $config = $builder->get();
+
+        $runner = new Runner($config, CCAFactory::create($config));
         $states = $runner->getFirstStates(3);
 
         $this->assertFileNotExists($this->getImageFilename());
@@ -47,14 +50,14 @@ class AnimatedGifTest extends ImageTestCase
      */
     public function itReturnsAnAnimatedGifInstance()
     {
-        $config = Config::createFromPreset(Presets::PRESET_CCA);
-        $config->seed(1);
-        $config->columns(10);
-        $config->rows(10);
-        $config->imageCellSize(1);
-        $config->imageHue(1);
+        $builder = ConfigBuilder::createFromPreset(Presets::PRESET_313);
+        $builder->seed(1);
+        $builder->imageCellSize(1);
+        $builder->imageHue(1);
 
-        $runner = new Runner($config);
+        $config = $builder->get();
+
+        $runner = new Runner($config, CCAFactory::create($config));
         $states = $runner->getFirstStates(3);
 
         $image = AnimatedGif::createFromStates($config, $states);

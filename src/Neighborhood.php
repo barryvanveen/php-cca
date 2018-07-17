@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA;
+
+use Barryvanveen\CCA\Config\NeighborhoodOptions;
 
 class Neighborhood
 {
@@ -13,10 +17,10 @@ class Neighborhood
     /**
      * Neighborhood constructor.
      *
-     * @param Config     $config
+     * @param Config $config
      * @param Coordinate $coordinate
      */
-    protected function __construct(Config $config, Coordinate $coordinate)
+    public function __construct(Config $config, Coordinate $coordinate)
     {
         $this->config = $config;
 
@@ -24,95 +28,59 @@ class Neighborhood
     }
 
     /**
-     * @param Config     $config
-     * @param Coordinate $coordinate
-     *
-     * @return Coordinate[]
-     * @throws \Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException
-     */
-    public static function createNeighborhoodForCoordinate(Config $config, Coordinate $coordinate): array
-    {
-        $instance = new self($config, $coordinate);
-
-        return $instance->getNeighborhood();
-    }
-
-    /**
-     * @return Coordinate[]
-     *
-     * @throws \Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException
-     */
-    protected function getNeighborhood(): array
-    {
-        $neighborhoodType = $this->config->neighborhoodType();
-
-        $method = 'get'.ucfirst($neighborhoodType).'Neighbors';
-
-        return $this->{$method}($this->coordinate);
-    }
-
-    /**
-     * Retrieve an array of Moore neighborhood neighbors for the given coordinate.
-     *
-     * @param Coordinate $coordinate
-     *
      * @return Coordinate[]
      */
-    protected function getMooreNeighbors(Coordinate $coordinate): array
+    public function getNeighbors(): array
     {
-        $neigbors = [];
+        $neighbors = [];
 
-        $size = abs($this->config->neighborhoodSize());
+        $offsets = range(-1 * $this->config->neighborhoodSize(), $this->config->neighborhoodSize());
 
-        for ($rowOffset = -1 * $size; $rowOffset <= $size; $rowOffset++) {
-            for ($columnOffset = -1 * $size; $columnOffset <= $size; $columnOffset++) {
-                if ($rowOffset === 0 && $columnOffset === 0) {
+        foreach ($offsets as $rowOffset) {
+            foreach ($offsets as $columnOffset) {
+                if (!$this->isValidNeighbor($rowOffset, $columnOffset)) {
                     continue;
                 }
 
-                $neigbors[] = new Coordinate(
-                    $this->wrapRow($coordinate->row(), $rowOffset),
-                    $this->wrapColumn($coordinate->column(), $columnOffset),
-                    $this->config->columns()
-                );
+                $neighbors[] = $this->createCoordinateFromOffsets($this->coordinate, $rowOffset, $columnOffset);
             }
         }
 
-        return $neigbors;
+        return $neighbors;
+    }
+
+    protected function createCoordinateFromOffsets(Coordinate $current, int $rowOffset, int $columnOffset): Coordinate
+    {
+        return new Coordinate(
+            $this->wrapRow($current->row(), $rowOffset),
+            $this->wrapColumn($current->column(), $columnOffset),
+            $this->config->columns()
+        );
     }
 
     /**
-     * Retrieve an array of Neumann neighborhood neighbors for the given coordinate.
+     * Determine if the offsets result in a valid neighbor.
      *
-     * @param Coordinate $coordinate
+     * @param int $rowOffset
+     * @param int $columnOffset
      *
-     * @return Coordinate[]
+     * @return bool
      */
-    protected function getNeumannNeighbors(Coordinate $coordinate): array
+    protected function isValidNeighbor(int $rowOffset, int $columnOffset): bool
     {
-        $neigbors = [];
-
-        $size = abs($this->config->neighborhoodSize());
-
-        for ($rowOffset = -1 * $size; $rowOffset <= $size; $rowOffset++) {
-            for ($columnOffset = -1 * $size; $columnOffset <= $size; $columnOffset++) {
-                if ($rowOffset === 0 && $columnOffset === 0) {
-                    continue;
-                }
-
-                if ((abs($rowOffset) + abs($columnOffset)) > $this->config->neighborhoodSize()) {
-                    continue;
-                }
-
-                $neigbors[] = new Coordinate(
-                    $this->wrapRow($coordinate->row(), $rowOffset),
-                    $this->wrapColumn($coordinate->column(), $columnOffset),
-                    $this->config->columns()
-                );
-            }
+        if (abs($rowOffset) + abs($columnOffset) === 0) {
+            return false;
         }
 
-        return $neigbors;
+        if ($this->config->neighborhoodType() === NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE) {
+            return true;
+        }
+
+        if ((abs($rowOffset) + abs($columnOffset)) > $this->config->neighborhoodSize()) {
+            return false;
+        }
+
+        return true;
     }
 
     protected function wrapRow(int $row, int $rowOffset): int

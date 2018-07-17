@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Tests\Unit;
 
-use Barryvanveen\CCA\Config;
-use Barryvanveen\CCA\Grid;
+use Barryvanveen\CCA\Config\Presets;
+use Barryvanveen\CCA\Factories\GridFactory;
 use Barryvanveen\CCA\State;
 
 /**
@@ -16,11 +18,14 @@ class StateTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsAnArray()
     {
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
-        $config->rows(10);
-        $config->columns(10);
+        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_313);
+        $builder->rows(10);
+        $builder->columns(10);
 
-        $grid = new Grid($config);
+        $config = $builder->get();
+
+        $grid = GridFactory::create($config);
 
         $state = new State($grid);
 
@@ -32,11 +37,14 @@ class StateTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsAHash()
     {
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
-        $config->rows(10);
-        $config->columns(10);
+        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_313);
+        $builder->rows(10);
+        $builder->columns(10);
 
-        $grid = new Grid($config);
+        $config = $builder->get();
+
+        $grid = GridFactory::create($config);
 
         $state = new State($grid);
 
@@ -48,11 +56,14 @@ class StateTest extends \PHPUnit\Framework\TestCase
      */
     public function itReturnsAString()
     {
-        $config = Config::createFromPreset(Config\Presets::PRESET_313);
-        $config->rows(10);
-        $config->columns(10);
+        $builder = new \Barryvanveen\CCA\Builders\ConfigBuilder();
+        $builder->createFromPreset(Presets::PRESET_313);
+        $builder->rows(10);
+        $builder->columns(10);
 
-        $grid = new Grid($config);
+        $config = $builder->get();
+
+        $grid = GridFactory::create($config);
 
         $state = new State($grid);
 

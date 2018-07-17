@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA;
 
 class Grid
@@ -13,20 +15,13 @@ class Grid
     /** @var Coordinate[][] */
     protected $neighbors = [];
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, array $cells, array $neighbors)
     {
         $this->config = $config;
 
-        for ($row = 0; $row < $this->config->rows(); $row++) {
-            for ($column = 0; $column < $this->config->columns(); $column++) {
-                $coordinate = new Coordinate($row, $column, $this->config->columns());
+        $this->cells = $cells;
 
-                $this->cells[$coordinate->position()] = new Cell($this->config);
-
-                $this->neighbors[$coordinate->position()] =
-                    Neighborhood::createNeighborhoodForCoordinate($this->config, $coordinate);
-            }
-        }
+        $this->neighbors = $neighbors;
     }
 
     public function computeNextState()

@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Tests\Unit;
 
+use Barryvanveen\CCA\Builders\ConfigBuilder;
 use Barryvanveen\CCA\Cell;
-use Barryvanveen\CCA\Config;
 
 /**
  * @covers \Barryvanveen\CCA\Cell
@@ -15,8 +17,10 @@ class CellTest extends \PHPUnit\Framework\TestCase
      */
     public function itSetsARandomState()
     {
-        $config = new Config();
-        $config->states(3);
+        $builder = new ConfigBuilder();
+        $builder->states(3);
+
+        $config = $builder->get();
 
         $cell = new Cell($config);
 
@@ -30,9 +34,11 @@ class CellTest extends \PHPUnit\Framework\TestCase
      */
     public function itDoesNotChangeStateIfThresholdIsNotMet()
     {
-        $config = new Config();
-        $config->states(3);
-        $config->threshold(1);
+        $builder = new ConfigBuilder();
+        $builder->states(3);
+        $builder->threshold(1);
+
+        $config = $builder->get();
 
         $cell = new Cell($config);
         $currentState = $cell->getState();
@@ -48,15 +54,17 @@ class CellTest extends \PHPUnit\Framework\TestCase
      */
     public function itChangesStateIfThresholdIsMet()
     {
-        $config = new Config();
-        $config->states(3);
-        $config->threshold(1);
+        $builder = new ConfigBuilder();
+        $builder->states(3);
+        $builder->threshold(1);
+
+        $config = $builder->get();
 
         $cell = new Cell($config);
         $currentState = $cell->getState();
 
         $nextState = $currentState + 1;
-        if ($nextState == 3) {
+        if ($nextState === 3) {
             $nextState = 0;
         }
 
@@ -71,9 +79,9 @@ class CellTest extends \PHPUnit\Framework\TestCase
      */
     public function itOutputsToString()
     {
-        $config = new Config();
-        $config->states(3);
-        $config->threshold(1);
+        $builder = new ConfigBuilder();
+
+        $config = $builder->get();
 
         $cell = new Cell($config);
         $currentState = $cell->getState();

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Generators;
 
 use Barryvanveen\CCA\Config;
@@ -55,7 +57,12 @@ abstract class Image
         $colors = Colors::getColors($this->config);
 
         foreach ($colors as $color) {
-            $this->colors[] = imagecolorallocate($this->image, $color->getRed(), $color->getGreen(), $color->getBlue());
+            $this->colors[] = imagecolorallocate(
+                $this->image,
+                (int) $color->getRed(),
+                (int) $color->getGreen(),
+                (int) $color->getBlue()
+            );
         }
     }
 

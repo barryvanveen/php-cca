@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Generators;
 
 use Barryvanveen\CCA\Config;
@@ -14,6 +16,8 @@ class AnimatedGif
     /**
      * @param Config $config
      * @param State[] $states
+     *
+     * @throws \Exception
      */
     protected function __construct(Config $config, array $states)
     {
@@ -32,6 +36,8 @@ class AnimatedGif
      * @param State[] $states
      *
      * @return AnimatedGif
+     *
+     * @throws \Exception
      */
     public static function createFromStates(Config $config, array $states)
     {

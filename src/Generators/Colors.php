@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Generators;
 
 use Barryvanveen\CCA\Config;
@@ -16,8 +18,7 @@ class Colors
      *
      * @return Color\RgbColor[]
      *
-     * @throws \Barryvanveen\CCA\Exceptions\InvalidColorException
-     * @throws \Barryvanveen\CCA\Exceptions\InvalidHueException
+     * @throws \Barryvanveen\CCA\Exceptions\InvalidColorsException
      */
     public static function getColors(Config $config): array
     {
@@ -27,7 +28,7 @@ class Colors
 
         $colors = $config->imageColors();
 
-        if (count($colors) != $config->states()) {
+        if (count($colors) !== $config->states()) {
             throw new InvalidColorsException("Not enough colors specified.");
         }
 

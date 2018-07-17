@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
@@ -12,11 +14,11 @@ class Runner
     /** @var CCA */
     protected $cca;
 
-    public function __construct(Config $config)
+    public function __construct(Config $config, CCA $cca)
     {
         $this->config = $config;
 
-        $this->cca = new CCA($this->config);
+        $this->cca = $cca;
     }
 
     /**
@@ -76,23 +78,31 @@ class Runner
             $state = $this->cca->getState();
             $hash = $state->toHash();
 
-            $cycleEnd = false;
-            if ($cycleStart = array_search($hash, $hashes)) {
-                $cycleEnd = count($states)+1;
+            $firstOccurence = array_search($hash, $hashes);
+            if ($this->loopIsFound($firstOccurence)) {
+                if ($this->loopIsTooShort($states, $firstOccurence)) {
+                    throw new LoopNotFoundException();
+                }
+
+                return array_slice($states, (int) $firstOccurence);
             }
 
             $states[] = $state;
             $hashes[] = $hash;
 
-            if ($cycleEnd !== false) {
-                $states = array_slice($states, $cycleStart, $cycleEnd);
-
-                return $states;
-            }
-
             $iteration = $this->cca->cycle();
         } while ($iteration < $maxIterations);
 
         throw new LoopNotFoundException();
+    }
+
+    protected function loopIsFound($firstOccurence)
+    {
+        return $firstOccurence !== false;
+    }
+
+    protected function loopIsTooShort($states, $firstOccurence)
+    {
+        return ((count($states) - (int) $firstOccurence) === 1);
     }
 }

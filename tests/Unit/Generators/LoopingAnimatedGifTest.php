@@ -1,12 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Barryvanveen\CCA\Tests\Unit\Generators;
 
-use Barryvanveen\CCA\Config;
+use Barryvanveen\CCA\Builders\ConfigBuilder;
+use Barryvanveen\CCA\CCA;
 use Barryvanveen\CCA\Config\Presets;
 use Barryvanveen\CCA\Exceptions\LoopNotFoundException;
+use Barryvanveen\CCA\Factories\CCAFactory;
 use Barryvanveen\CCA\Generators\AnimatedGif;
 use Barryvanveen\CCA\Runner;
+use Barryvanveen\CCA\Tests\Unit\MockHelper;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * @covers \Barryvanveen\CCA\Generators\AnimatedGif
@@ -14,20 +20,22 @@ use Barryvanveen\CCA\Runner;
  */
 class LoopingAnimatedGifTest extends ImageTestCase
 {
+    use MockHelper;
+
     /**
      * @test
      */
     public function itCannotFindALoop()
     {
-        $config = Config::createFromPreset(Presets::PRESET_CCA);
-        $config->seed(1);
-        $config->rows(10);
-        $config->columns(10);
-        $config->imageHue(1);
+        $builder = ConfigBuilder::createFromPreset(Presets::PRESET_313);
+        $builder->seed(1);
+        $builder->imageHue(1);
+
+        $config = $builder->get();
 
         $this->expectException(LoopNotFoundException::class);
 
-        $runner = new Runner($config);
+        $runner = new Runner($config, CCAFactory::create($config));
         $runner->getFirstLoop(1);
     }
 
@@ -36,14 +44,11 @@ class LoopingAnimatedGifTest extends ImageTestCase
      */
     public function itCreatesAnAnimatedGifImage()
     {
-        $config = Config::createFromPreset(Presets::PRESET_GH);
-        $config->seed(1);
-        $config->columns(8);
-        $config->rows(10);
-        $config->imageCellSize(1);
+        /** @var CCA|MockObject $mockCCA */
+        list($mockCCA, $config, $state1, $state2, $state3) = $this->getCCAMockWithLoopingStates();
 
-        $runner = new Runner($config);
-        $states = $runner->getFirstLoop(500);
+        $runner = new Runner($config, $mockCCA);
+        $states = $runner->getFirstLoop(3);
 
         $gif = AnimatedGif::createFromStates($config, $states);
         $gif->save($this->getImageFilename());
@@ -51,7 +56,7 @@ class LoopingAnimatedGifTest extends ImageTestCase
         $this->assertFileExists($this->getImageFilename());
 
         $imagesize = getimagesize($this->getImageFilename());
-        $this->assertEquals(8, $imagesize[0]);
+        $this->assertEquals(10, $imagesize[0]);
         $this->assertEquals(10, $imagesize[1]);
         $this->assertEquals("image/gif", $imagesize['mime']);
     }

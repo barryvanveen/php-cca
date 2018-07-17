@@ -6,32 +6,35 @@ namespace Barryvanveen\CCA;
 
 use Barryvanveen\CCA\Config\NeighborhoodOptions;
 use Barryvanveen\CCA\Config\Options;
-use Barryvanveen\CCA\Config\Presets;
-use Barryvanveen\CCA\Exceptions\InvalidColorException;
-use Barryvanveen\CCA\Exceptions\InvalidHueException;
-use Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException;
+use Barryvanveen\CCA\Config\Validator;
 use Phim\Color\RgbColor;
 
 class Config
 {
     protected $config = [
-        Options::COLUMNS           => 48,
+        Options::COLUMNS           => 10,
         Options::IMAGE_CELL_SIZE   => 2,
         Options::IMAGE_COLORS      => null,
         Options::IMAGE_HUE         => null,
         Options::NEIGHBORHOOD_TYPE => NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE,
         Options::NEIGHBORHOOD_SIZE => 1,
-        Options::ROWS              => 48,
+        Options::ROWS              => 10,
         Options::SEED              => null,
         Options::STATES            => 3,
         Options::THRESHOLD         => 3,
     ];
 
-    public function __construct()
+    public function __construct(array $config)
     {
+        // set defaults
         $this->config[Options::IMAGE_HUE] = $this->makeHue();
-
         $this->config[Options::SEED] = $this->makeSeed();
+
+        // validate config
+        Validator::validate($config);
+
+        // override defaults
+        $this->config = array_merge($this->config, $config);
     }
 
     protected function makeHue(): int
@@ -46,219 +49,105 @@ class Config
         return intval($sec + $usec * 1000000);
     }
 
-    public static function createFromPreset(string $preset): self
-    {
-        $presetConfig = Presets::getPresetConfig($preset);
-
-        $config = new self();
-
-        foreach ($presetConfig as $option => $value) {
-            $config->{$option}($value);
-        }
-
-        return $config;
-    }
-
     /**
-     * Set or get the number of columns in the grid.
+     * Get the number of columns in the grid.
      *
      * @param  int number of columns
      *
      * @return int
      */
-    public function columns($columns = null): int
+    public function columns(): int
     {
-        if (isset($columns)) {
-            $this->config[Options::COLUMNS] = (int) $columns;
-        }
-
         return $this->config[Options::COLUMNS];
     }
 
     /**
-     * Set or get the size of each cell in the image that is created.
-     *
-     * @param int $cellsize
+     * Get the size of each cell in the image that is created.
      *
      * @return int
      */
-    public function imageCellSize($cellsize = null): int
+    public function imageCellSize(): int
     {
-        if (isset($cellsize)) {
-            $this->config[Options::IMAGE_CELL_SIZE] = (int) $cellsize;
-        }
-
         return $this->config[Options::IMAGE_CELL_SIZE];
     }
 
     /**
-     * Set or get the colors that are used when generating images from states. Setting specific colors
-     * overrides the hue configuration.
-     *
-     * @param RgbColor[] $colors
+     * Get the colors that are used when generating images from states.
      *
      * @return RgbColor[]|null
-     *
-     * @throws InvalidColorException
      */
-    public function imageColors($colors = null)
+    public function imageColors()
     {
-        if (isset($colors) && $this->colorsAreValid($colors)) {
-            $this->config[Options::IMAGE_COLORS] = $colors;
-        }
-
         return $this->config[Options::IMAGE_COLORS];
     }
 
-    protected function colorsAreValid($colors): bool
-    {
-        if (!is_array($colors)) {
-            throw new InvalidColorException("Colors must be passed as an array.");
-        }
-
-        foreach ($colors as $color) {
-            if (!$color instanceof RgbColor) {
-                throw new InvalidColorException();
-            }
-        }
-
-        return true;
-    }
-
     /**
-     * Set or get the hue (color) that is used when generating images from states. Colors
-     * that are set using the imageColors-method take precedence over the hue.
-     *
-     * @param int $hue
-     *
-     * @return int
-     *
-     * @throws InvalidHueException
-     */
-    public function imageHue($hue = null): int
-    {
-        if (isset($hue) && $this->isValidHue($hue)) {
-            $this->config[Options::IMAGE_HUE] = (int) $hue;
-        }
-
-        return $this->config[Options::IMAGE_HUE];
-    }
-
-    protected function isValidHue($hue): bool
-    {
-        if (!is_int($hue)) {
-            throw new InvalidHueException("Hue is not an integer.");
-        }
-
-        if ($hue < 0 || $hue > 360) {
-            throw new InvalidHueException("Hue should be an integer between 0 and 360.");
-        }
-
-        return true;
-    }
-
-    /**
-     * Set or get the size (eg range) of the neighborhood.
-     *
-     * @param int $neighborhoodSize size of neighborhood
+     * Get the hue (color) that is used when generating images from states.
      *
      * @return int
      */
-    public function neighborhoodSize($neighborhoodSize = null): int
+    public function imageHue(): int
     {
-        if (isset($neighborhoodSize)) {
-            $this->config[Options::NEIGHBORHOOD_SIZE] = (int) $neighborhoodSize;
-        }
+         return $this->config[Options::IMAGE_HUE];
+    }
 
+    /**
+     * Get the size (eg range) of the neighborhood.
+     *
+     * @return int
+     */
+    public function neighborhoodSize(): int
+    {
         return $this->config[Options::NEIGHBORHOOD_SIZE];
     }
 
     /**
-     * Set or get the neighborhood function, eg Moore or Neumann
-     *
-     * @see NeighborhoodOptions::NEIGHBORHOOD_TYPE_MOORE
-     * @see NeighborhoodOptions::NEIGHBORHOOD_TYPE_NEUMANN
-     *
-     * @param string $neighborhoodType
+     * Get the neighborhood function, eg Moore or Neumann
      *
      * @return string type of neighborhood
-     *
-     * @throws \Barryvanveen\CCA\Exceptions\InvalidNeighborhoodTypeException
      */
-    public function neighborhoodType($neighborhoodType = null): string
+    public function neighborhoodType(): string
     {
-        if (isset($neighborhoodType)) {
-            if (!in_array($neighborhoodType, NeighborhoodOptions::NEIGHBORHOOD_TYPES)) {
-                throw new InvalidNeighborhoodTypeException();
-            }
-
-            $this->config[Options::NEIGHBORHOOD_TYPE] = (string) $neighborhoodType;
-        }
-
         return $this->config[Options::NEIGHBORHOOD_TYPE];
     }
 
     /**
-     * Set or get the number of rows in the grid.
-     *
-     * @param  int number of rows
+     * Get the number of rows in the grid.
      *
      * @return int
      */
-    public function rows($rows = null): int
+    public function rows(): int
     {
-        if (isset($rows)) {
-            $this->config[Options::ROWS] = (int) $rows;
-        }
-
         return $this->config[Options::ROWS];
     }
 
     /**
-     * Set or get a seed for the random number generator. Use this for reproducable of runs.
-     *
-     * @param int $seed
+     * Get a seed for the random number generator. Use this for reproducable of runs.
      *
      * @return int
      */
-    public function seed($seed = null): int
+    public function seed(): int
     {
-        if (isset($seed)) {
-            $this->config[Options::SEED] = (int) $seed;
-        }
-
         return $this->config[Options::SEED];
     }
 
     /**
-     * Set or get the number of states that are cycled through.
-     *
-     * @param  int number of states
+     * Get the number of states that are cycled through.
      *
      * @return int
      */
-    public function states($states = null): int
+    public function states(): int
     {
-        if (isset($states)) {
-            $this->config[Options::STATES] = (int) $states;
-        }
-
         return $this->config[Options::STATES];
     }
 
     /**
-     * Set or get the threshold of the cells.
-     *
-     * @param  int threshold
+     * Get the threshold of the cells.
      *
      * @return int
      */
-    public function threshold($threshold = null): int
+    public function threshold(): int
     {
-        if (isset($threshold)) {
-            $this->config[Options::THRESHOLD] = (int) $threshold;
-        }
-
         return $this->config[Options::THRESHOLD];
     }
 
