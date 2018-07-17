@@ -124,6 +124,8 @@ class RunnerTest extends \PHPUnit\Framework\TestCase
      * @test
      *
      * @covers \Barryvanveen\CCA\Runner::getFirstLoop()
+     * @covers \Barryvanveen\CCA\Runner::loopIsFound()
+     * @covers \Barryvanveen\CCA\Runner::loopIsTooShort()
      */
     public function itFindsALoopThatIsTooShortAndThrowsAnException()
     {
