@@ -78,24 +78,31 @@ class Runner
             $state = $this->cca->getState();
             $hash = $state->toHash();
 
-            $cycleEnd = false;
-            $cycleStart = array_search($hash, $hashes);
-            if ($cycleStart !== false) {
-                $cycleEnd = count($states);
+            $firstOccurence = array_search($hash, $hashes);
+            if ($this->loopIsFound($firstOccurence)) {
+                if ($this->loopIsTooShort($states, $firstOccurence)) {
+                    throw new LoopNotFoundException();
+                }
+
+                return array_slice($states, (int) $firstOccurence);
             }
 
             $states[] = $state;
             $hashes[] = $hash;
 
-            if ($cycleEnd !== false) {
-                $states = array_slice($states, (int) $cycleStart, $cycleEnd);
-
-                return $states;
-            }
-
             $iteration = $this->cca->cycle();
         } while ($iteration < $maxIterations);
 
         throw new LoopNotFoundException();
+    }
+
+    protected function loopIsFound($firstOccurence)
+    {
+        return $firstOccurence !== false;
+    }
+
+    protected function loopIsTooShort($states, $firstOccurence)
+    {
+        return ((count($states) - (int) $firstOccurence) === 1);
     }
 }
