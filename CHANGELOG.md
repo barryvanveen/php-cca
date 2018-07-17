@@ -9,6 +9,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 ### Fixed
 
+## [2.0.1] - 2018-07-17
+### Fixed
+- Fix code coverage
+
 ## [2.0.0] - 2018-07-17
 ### Added
 - Added `Barryvanveen\CCA\Factories\CCAFactory`.
