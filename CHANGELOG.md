@@ -4,6 +4,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][unreleased]
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+
+## [2.0.0] - 2018-07-17
+### Added
 - Added `Barryvanveen\CCA\Factories\CCAFactory`.
 - Added `Barryvanveen\CCA\Factories\GridFactory`.
 - Added tests for all classes that weren't fully tested.
@@ -16,8 +23,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Replaced static constructor of `Barryvanveen\CCA\Neighborhood` with normal constructor.
 - `Barryvanveen\CCA\Config` can only be instantiated with options, they cannot be changed later.
 - `Barryvanveen\CCA\Config` now defaults to a 10x10 grid (was 48x48).
-### Deprecated
-### Removed
+- Refactor complex code in Runner and tests.
 ### Fixed
 - Fixed code style errors.
 - Fixed errors resulting from strict_types=1.
